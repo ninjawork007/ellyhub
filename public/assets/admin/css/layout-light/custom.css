@@ -1,0 +1,166 @@
+
+/*  Added by virsa on 15-2-2021*/
+
+/* Parsley Css Start  */
+input.parsley-success,
+select.parsley-success,
+textarea.parsley-success {
+  color: #468847;
+  background-color: #DFF0D8;
+  border: 1px solid #D6E9C6;
+}
+
+input.parsley-error,
+select.parsley-error,
+textarea.parsley-error {
+  color: #B94A48;
+  background-color: #F2DEDE;
+  border: 1px solid #EED3D7;
+}
+
+.parsley-errors-list {
+  margin: 2px 0 3px;
+  padding: 0;
+  list-style-type: none;
+  font-size: 0.9em;
+  line-height: 0.9em;
+  opacity: 0;
+  color: #B94A48;
+
+  transition: all .3s ease-in;
+  -o-transition: all .3s ease-in;
+  -moz-transition: all .3s ease-in;
+  -webkit-transition: all .3s ease-in;
+}
+
+.parsley-errors-list.filled {
+  opacity: 1;
+}
+
+
+/* Parsley Css  End */
+
+
+.center {
+    text-align: center;
+}
+.alert.alert-error.alert-dismissible.fade.show {
+    color: #fb0017;
+    background-color: #dc35452e;
+    border-color: #dc3545;
+}
+ 
+img.edit_img {
+    height: 100px;
+    float: right;
+    padding: 0px;
+    border: 1px solid gray;
+    width: 100px;
+    right: 5px !important;
+    margin: 4px 10px 0px 0px;
+}
+
+/*  img.edit_img:hover {
+    width: 200px;
+    height: 200px;
+    padding: 5px;
+    border: 1px solid gray;
+    z-index: 999999999;
+    margin-left: -192px;
+}  
+ */
+i.fa.fa-trash.delete_gallery {
+    cursor: pointer;
+    float: right;
+    margin: 10px -20px 0px 0px;
+    z-index: 999999999;
+    border: 1px solid red;
+    color: red;
+    padding: 2px;
+    font-size: smaller;
+}
+ 
+ button#add_more_size {
+    margin-top: 10px;
+    margin-left: 15px;
+}
+
+span.remove.color-remove {
+    float: right;
+    margin-top: -55px;
+    padding: 5px;
+    background: red;
+    color: white;
+    border-radius: 10px;
+    font-size: x-small;
+    cursor: pointer;
+}
+small, .small {
+    font-size: 70%;
+    font-weight: 400;
+}
+
+label {
+    font-weight: 600;
+	    color: #544e4e;
+     
+}
+ .tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -60px;
+  
+  /* Fade in tooltip - takes 1 second to go from 0% to 100% opac: */
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+.profile-pic {
+    border-bottom: 1px solid #c5c6c7;
+    margin-bottom: 20px;
+}
+.profile-pic img {
+    width: 140px;
+    border-radius: 50%;
+    height: 140px;
+    border: 2px solid #e18006;
+    margin-bottom: 10px;
+}
+.fa.fa-bell {
+    margin-left: 70px;
+}
+.no {
+    color: #ff8e00;
+    position: absolute;
+    right: 11px;
+    bottom: 24px;
+    background: #282f3a;
+    border-radius: 50px;
+    width: 13px;
+    height: 13px;
+    font-size: 8px;
+    text-align: center;
+}
+
+.table-striped tbody tr:nth-of-type(not-read) {
+    background-color: #cccccc2e; 
+}

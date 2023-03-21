@@ -1,0 +1,619 @@
+@extends('layouts.web')
+@section('pagebodyclass')
+single-product full-width normal light-bg
+@endsection
+@section('content')
+<nav class="amrcart-breadcrumb" style="display:none">
+    <a href="{{url('/')}}">Home</a>
+    @if($product->category_id)
+    <span class="delimiter">
+        <i class="icon amr-breadcrumbs-arrow-right"></i>
+    </span>
+    <a href="#">{{ App\Http\Controllers\CommonController::getCategoryName($product->category_id) }}</a>
+
+    @endif
+
+    @if($product->sub_category_id)
+    <span class="delimiter">
+        <i class="icon amr-breadcrumbs-arrow-right"></i>
+    </span>
+    <a href="#">{{ App\Http\Controllers\CommonController::getSubCategoryName($product->sub_category_id) }}</a>
+    @endif
+
+    @if($product->child_category_id)
+    <span class="delimiter">
+        <i class="icon amr-breadcrumbs-arrow-right"></i>
+    </span>
+    <a href="#"></a>{{ App\Http\Controllers\CommonController::getChildCategoryName($product->child_category_id) }}
+    @endif
+    <span class="delimiter">
+        <i class="icon amr-breadcrumbs-arrow-right"></i>
+    </span>
+    {{$product->name}}
+</nav>
+
+    <div class="product-detail-section">
+        <div class="product-detail-left">
+        <div class="product-images-wrapper thumb-count-4">
+                @if($product->discount) @if($product->discount_type=='flat')
+                <span class="onsale">₹{{ $product->discount}} Off</span>
+                @else
+                <span class="onsale">{{ $product->discount}}% Off</span>
+                @endif
+                @endif
+                <!-- .onsale -->
+                <div id="amr-single-product-gallery"
+                    class="amr-single-product-gallery amr-single-product-gallery--with-images amr-single-product-gallery--columns-4 images"
+                    data-columns="4">
+                    <div class="amr-single-product-gallery-images" data-ride="amr-slick-carousel"
+                        data-wrap=".amrcart-product-gallery__wrapper"
+                        data-slick="{&quot;infinite&quot;:false,&quot;slidesToShow&quot;:1,&quot;slidesToScroll&quot;:1,&quot;dots&quot;:false,&quot;arrows&quot;:false,&quot;asNavFor&quot;:&quot;#amr-single-product-gallery .amr-single-product-gallery-thumbnails__wrapper&quot;}">
+                        <div class="amrcart-product-gallery amrcart-product-gallery--with-images amrcart-product-gallery--columns-4 images"
+                            data-columns="4">
+                            <a href="#" class="amrcart-product-gallery__trigger">🔍</a>
+                            <figure class="amrcart-product-gallery__wrapper ">
+
+                                @if(count($product_gallery))
+                                @foreach($product_gallery as $key)
+                                <div data-thumb="{{url('public/')}}/{{ $key->images}}')}}"
+                                    class="amrcart-product-gallery__image">
+                                    <a href="{{url('public/')}}/{{ $key->images}}" tabindex="0" data-fancybox="product-image">
+                                        <img width="600" height="600" src="{{url('public/')}}/{{ $key->images}}"
+                                            class="attachment-shop_single size-shop_single wp-post-image"
+                                            alt="">
+                                    </a>
+                                </div>
+                                @endforeach
+                                @endif
+                            </figure>
+                        </div>
+                        <!-- .amrcart-product-gallery -->
+                    </div>
+                    <!-- .amr-single-product-gallery-images -->
+                    <div class="amr-single-product-gallery-thumbnails" data-ride="amr-slick-carousel"
+                        data-wrap=".amr-single-product-gallery-thumbnails__wrapper"
+                        data-slick="{&quot;infinite&quot;:false,&quot;slidesToShow&quot;:4,&quot;slidesToScroll&quot;:1,&quot;dots&quot;:false,&quot;arrows&quot;:true,&quot;vertical&quot;:true,&quot;verticalSwiping&quot;:true,&quot;focusOnSelect&quot;:true,&quot;touchMove&quot;:true,&quot;prevArrow&quot;:&quot;&lt;a href=\&quot;#\&quot;&gt;&lt;i class=\&quot;icon amr-arrow-up\&quot;&gt;&lt;\/i&gt;&lt;\/a&gt;&quot;,&quot;nextArrow&quot;:&quot;&lt;a href=\&quot;#\&quot;&gt;&lt;i class=\&quot;icon amr-arrow-down\&quot;&gt;&lt;\/i&gt;&lt;\/a&gt;&quot;,&quot;asNavFor&quot;:&quot;#amr-single-product-gallery .amrcart-product-gallery__wrapper&quot;,&quot;responsive&quot;:[{&quot;breakpoint&quot;:765,&quot;settings&quot;:{&quot;vertical&quot;:false,&quot;horizontal&quot;:true,&quot;verticalSwiping&quot;:false,&quot;slidesToShow&quot;:4}}]}">
+                        <figure class="amr-single-product-gallery-thumbnails__wrapper">
+                            @if(count($product_gallery))
+                            @foreach($product_gallery as $key)
+                            <figure data-thumb="{{url('public/')}}/{{ $key->images}}"
+                                class="amr-wc-product-gallery__image">
+                                <img width="180" height="180" src="{{url('public/')}}/{{ $key->images}}"
+                                    class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt="">
+                            </figure>
+                            @endforeach
+                            @endif
+                        </figure>
+                        <!-- .amr-single-product-gallery-thumbnails__wrapper -->
+                    </div>
+                    <!-- .amr-single-product-gallery-thumbnails -->
+                </div>
+                <!-- .amr-single-product-gallery -->
+            </div>
+
+        </div>
+        <div class="product-detail-right">
+            <div class="sticky">
+            <h1 class="product_title entry-title">{{$product->name}}</h1>
+            @if($product->brand)
+            <div class="product-brand">
+                <a href="{{url('brand/')}}/{{$product->brand}}">{{ App\Http\Controllers\CommonController::getBrandName($product->brand) }}</a>
+            </div>
+            @endif
+                <div class="cat-and-sku">
+                    <span class="sku_wrapper">SKU:
+                        <span class="sku">5487FB8/11</span>
+                    </span>
+                </div>
+                    @if($product->vendor_id)
+                <div class="desctiption-tab about-vendor">
+                        Sold by: <a href="{{url('vendor/')}}/{{$product->vendor_id}}" class='text-success'>{{ App\Http\Controllers\CommonController::getVendorName($product->vendor_id) }}</a>
+                </div>
+                    @endif
+            </div>
+        </div>
+    </div>
+    </div>
+<div id="primary" class="content-area product-detail-section">
+    <main id="main" class="site-main">
+        <div class="product product-type-simple">
+            <div class="single-product-wrapper">
+
+                <div class="summary entry-summary">
+                    <div class="product-summary-top">
+                        <div class="single-product-header">
+
+                            <div class="rating-and-sharing-wrapper">
+                                <div class="amrcart-product-rating">
+                                    <div class="star-rating">
+                                        <span style="width:100%">Rated
+                                            <strong class="rating">5.00</strong> out of 5 based on
+                                            <span class="rating">1</span> customer rating</span>
+                                    </div>
+                                    <a rel="nofollow" class="amrcart-review-link" href="#productReviews">(<span
+                                            class="review-count">1</span> customer review)</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- .single-product-header -->
+                        <div class="single-product-meta">
+                            <div class="product-actions">
+                                <div class="price">
+                                    @if($product->discount)
+                                    <del>₹{{ $product->mrp_price}}</del>
+                                    @endif
+                                    <ins>
+                                        ₹{{ $product->sale_price}}
+                                    </ins>
+                                </div>
+                            </div>
+                            @if(count($product_size))
+                            <div class="amr-product-size">
+                                <label class="a-form-label">Size:</label>
+                                <select class="form-control" id="product_size" name="product_size" onchange="change_product_size('{{$product->id}}')">
+                                    @foreach($product_size as $key)
+                                    <option value="{{$key->name}}" data-value="{{$key->price}}">{{$key->name}} - ₹{{$key->price}}
+                                    </option>
+                                    @endforeach
+                                </select>
+
+                            </div>
+                            @endif
+                            @if(count($product_colors))
+                            <div class="amr-product-color">
+                                <ul id="menu">
+                                    @foreach($product_colors as $key)
+                                    <li class="color-list" data-value="{{$key->color_code}}">
+                                        <div class="color-col" style="background-color: {{$key->color_code}}">
+                                        </div>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            @endif
+                        </div>
+                        <div class="product-actions-wrapper">
+                            <?php
+                                        $stock=0;
+                                        if(count($product_size)){
+                                            foreach ($product_size as $key) {
+                                                $stock+=$key->quantity;
+                                            }
+                                        }
+                                        ?>
+                            <div class="amr-product-avai alert alert-{{($product->stock)?'success':'error'}}">
+                                {{ ($product->stock)? $product->stock.' in stock': 'Out of Stock'}}
+                            </div>
+                            <div class="product-actions">
+                                <!-- .single-product-header -->
+                              
+                                <div class="amr-product-quantity main_qiantity">
+                                    <label>Quantity: </label>
+                                    <!-- <div class="def-number-input amr-number-input">
+                                        <button class="minus button detail"
+                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                                            data-id="{{$product->id}}">-</button>
+                                        @if(count($cart))
+                                        <input class="quantity" min="0" max="{{ $product->stock}}" name="quantity"
+                                            value="{{$cart[0]->product_quantity}}" type="number"
+                                            id="detail_input{{$product->id}}" readonly="" />
+                                        @else
+                                        <input class="quantity" min="0" max="{{ $product->stock}}" name="quantity"
+                                            value="0" type="number" id="detail_input{{$product->id}}" readonly="" />
+                                        @endif
+                                        <button class="plus button detail"
+                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                                            data-id="{{$product->id}}">+</button>
+                                    </div> -->
+                                    <div class="def-number-input amr-number-input quantity_div">
+                                        <select name="quantity" id="detail_input{{$product->id}}">
+                                            <option value="">Select</option>
+                                            <?php 
+                                            for ($i=1; $i <= $product->stock; $i++) { 
+                                                echo '<option value="'.$i.'">'.$i.'</option>';
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                               
+                                
+                                <!-- .quantity -->
+                                <p><button class="single_add_to_cart_button button alt" data-id="{{$product->id}}" name="add-to-cart" >Add to cart</button></p>
+                                <!-- .cart -->
+                               
+                                <p class="text-center"><a class="add-to-wishlist {{($wishlist)?'red':''}}" onclick="add_wishlist('{{$product->id}}','wishlist')" href="JavaScript:void(0);"><i class="icon amr-favorites"></i> Add to Wishlist</a></p>
+                            </div>
+                            <!-- .product-actions -->
+                            <div class="text-center"><a class="main-color" href="{{route('vendor_register')}}">Become a Vendor?</a></div>
+                        </div>
+                        <!-- .single-product-meta -->
+
+                        <!-- .rating-and-sharing-wrapper -->
+                        <div class="amrcart-product-details__short-description">
+                            {!! $product->short_description!!}
+                        </div>
+                        <!-- .amrcart-product-details__short-description -->
+
+                        @if($product->shipping_time)
+                        <div class="alert alert-info">
+                            <i class="icon amr-order-tracking"></i> Shipping: <b>{{$product->estimate_time}}</b>
+                        </div>
+                        @endif
+                        @if($product->policy)
+                        <div class="alert alert-info">
+                            {!!$product->policy!!}</b>
+                        </div>
+                        @endif
+                    </div>
+                    <div class="product-ful-description-section">
+                        <div class="desctiption-tab product-description">
+                            <h2>Description</h2>
+                            {!!$product->description!!}
+                        </div>
+                        <div id="productReviews" class="desctiption-tab product-reviews d-none">
+                            <h2>Product reviews</h2>
+                            <ul class="nav nav-pills" role="tablist" id="productTabDetail">
+                                <li class="nav-item"><a class="nav-link active" id="reviews-tab" data-toggle="tab"
+                                        href="#reviews-content" role="tab" aria-controls="reviews-content"
+                                        aria-selected="true">Customer's Reviews</a></li>
+                                <li class="nav-item"><a class="nav-link" id="add-reviews-tab" data-toggle="tab"
+                                        href="#add-reviews-content" role="tab" aria-controls="add-reviews-content"
+                                        aria-selected="false">Add Reviews</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="reviews-content" role="tabpanel"
+                                    aria-labelledby="reviews-tab">
+                                    <div id="comments">
+                                        <ol class="commentlist">
+                                                <li class="comment">
+                                                    <div class="comment_container" id="comment-83">
+                                                        <div class="comment-text">
+                                                            <div class="star-rating">
+                                                                <span style="width:100%">Rated
+                                                                    <strong class="rating">5</strong> out of 5</span>
+                                                            </div>
+                                                            <p class="meta">
+                                                                <strong itemprop="author"
+                                                                    class="amrcart-review__author">first
+                                                                    last</strong>
+                                                                <span class="amrcart-review__dash">&ndash;</span>
+                                                                <time datetime="2017-06-21T08:05:40+00:00"
+                                                                    itemprop="datePublished"
+                                                                    class="amrcart-review__published-date">June 21,
+                                                                    2017</time>
+                                                            </p>
+                                                            <div class="description">
+                                                                <p>Farmart is great. Farmart is the most valuable
+                                                                    business
+                                                                    resource we have EVER purchased. I have gotten at
+                                                                    least
+                                                                    50 times the value from Farmart. I just can't get
+                                                                    enough
+                                                                    of Farmart. I want to get a T-Shirt with Farmart on
+                                                                    it
+                                                                    so I can show it off to everyone.</p>
+                                                            </div>
+                                                            <!-- /.description -->
+                                                        </div>
+                                                        <!-- /.comment-text -->
+                                                    </div>
+                                                    <!-- /.comment_container -->
+                                                </li>
+                                                <!-- /.comment -->
+                                        </ol>
+                                        <!-- /.commentlist -->
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="add-reviews-content" role="tabpanel"
+                                    aria-labelledby="add-reviews-tab">
+                                    <div class="advanced-review-comment">
+                                        <div id="review_form_wrapper">
+                                            <div id="review_form">
+                                                <div class="comment-respond" id="respond">
+                                                    <h3 class="comment-reply-title" id="reply-title">Add a review</h3>
+                                                    <form novalidate="" class="comment-form" id="commentform"
+                                                        method="post" action="#">
+                                                        <div class="comment-form-rating">
+                                                            <label>Your Rating</label>
+                                                            <p class="stars">
+                                                                <span><a href="#" class="star-1">1</a><a href="#"
+                                                                        class="star-2">2</a><a href="#"
+                                                                        class="star-3">3</a><a href="#"
+                                                                        class="star-4">4</a><a href="#"
+                                                                        class="star-5">5</a></span>
+                                                            </p>
+                                                        </div>
+                                                        <p class="comment-form-comment">
+                                                            <label for="comment">Your Review</label>
+                                                            <textarea aria-required="true" rows="8" cols="45"
+                                                                name="comment" id="comment"></textarea>
+                                                        </p>
+                                                        <p class="comment-form-author">
+                                                            <label for="author">Name
+                                                                <span class="required">*</span>
+                                                            </label>
+                                                            <input type="text" aria-required="true" size="30" value=""
+                                                                name="author" id="author">
+                                                        </p>
+                                                        <p class="comment-form-email">
+                                                            <label for="email">Email
+                                                                <span class="required">*</span>
+                                                            </label>
+                                                            <input type="text" aria-required="true" size="30" value=""
+                                                                name="email" id="email">
+                                                        </p>
+                                                        <p class="form-submit">
+                                                            <input type="submit" value="Add Review" class="submit"
+                                                                id="submit" name="submit">
+                                                            <input type="hidden" id="comment_post_ID" value="185"
+                                                                name="comment_post_ID">
+                                                            <input type="hidden" value="0" id="comment_parent"
+                                                                name="comment_parent">
+                                                        </p>
+                                                    </form>
+                                                    <!-- /.comment-form -->
+                                                </div>
+                                                <!-- /.comment-respond -->
+                                            </div>
+                                            <!-- /#review_form -->
+                                        </div>
+                                        <!-- /#review_form_wrapper -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="desctiption-tab product-policy-content">
+                            <h2>Terms and Conditions</h2>
+                            {!!$product->policy!!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <input type="hidden" id="is_size" value="<?= (count($product_size))?true:false ?>">
+    <input type="hidden" id="size" value="">
+    <input type="hidden" id="is_color" value="{{(count($product_colors))?true:false}}">
+    <input type="hidden" value="{{$product->stock}}" id="stock">
+    <input type="hidden" id="color" value="">
+        </div>
+    <div class="related-products-section white-bg">
+                <h3>Similar Products</h3>
+    </div>
+
+           
+
+            <script>
+function remove_cart_item(id){
+    swal({
+        text: " Do you want to remove item from cart?",
+        icon: "warning",
+        buttons: true,
+        successMode: false,
+      })
+      .then((willWishlist) => {
+        if (willWishlist) {
+            $.ajax({
+            url:'/remove_from_cart_ajax',
+            data:{cartid:id},
+            cache:false,
+            success:function(res){
+                var ress = JSON.parse(res);
+                if (ress.success) {
+                    $('#cart_remove'+id+'').fadeOut(1200).css({'background-color':'#f2dede'});
+                    get_cart();
+                    $('.total').html('₹'+ress.total);
+                    $('.count').html(ress.count);
+                    $('.title-item-count').html('('+ress.count+' Items)');
+                    if (ress.count=='0') {
+                        $('body').removeClass('show-mini-cart');
+                    }
+                }else{
+                    alert("error");
+                }
+            }
+          });  
+        } 
+      });
+}
+$('.minus.button.detail').click(function() {
+    id = $(this).attr('data-id');
+    quantity = $('#detail_input' + id).val();
+    $.ajax({
+        url: "/add_to_cart_ajax",
+        data: {
+            product_id: id,
+            quantity: quantity
+        },
+        cache: false,
+        success: function(response) {
+            var ress = jQuery.parseJSON(response);
+            if (ress.success) {
+                $('.mini-cart').addClass('open');
+                $('.list-cart').html(ress.data);
+                $('.count').html(ress.count);
+                $('.total').html('₹' + ress.total);
+                $('.title-item-count').html('('+ress.count+' Items)');
+            } else {
+                console.log(response);
+            }
+        }
+    });
+});
+
+$('.single_add_to_cart_button').click(function() {
+    amenties = {}
+    id = $(this).attr('data-id');
+    quantity = $('#detail_input' + id).val();
+    if (quantity=='') {
+        swal("Please select Quantity.");
+        return false;
+    }
+    
+    var stock = $('#stock').val();
+    if ($('#is_size').val()) {
+        if ($('#product_size').val() == '') {
+            alert("Please select size.");
+            return false;
+        } else {
+            amenties["size"] = $('#product_size').val();
+        }
+    }
+
+    if ($('#is_color').val()) {
+        if ($('#color').val() == '') {
+            alert("Please select color.");
+            return false;
+        } else {
+            amenties["color"] = $('#color').val();
+        }
+    }
+
+    // if (quantity > $('#stock').val()) {
+    //  alert("Only "+$('#stock').val()+" product available.");
+    //  $('#detail_input'+id).val(0);
+    //  return false;
+    // }
+    var jsonstr = JSON.stringify(amenties);
+
+    $.ajax({
+        url: "/add_to_cart_ajax",
+        data: {
+            product_id: id,
+            quantity: quantity,
+            amenties: jsonstr
+        },
+        cache: false,
+        success: function(response) {
+            var ress = jQuery.parseJSON(response);
+            if (ress.success) {
+                $('body').addClass('show-mini-cart');
+                $('.list-cart').html(ress.data);
+                $('.count').html(ress.count);
+                $('.total').html('₹' + ress.total);
+                $('.title-item-count').html('('+ress.count+' Items)');
+            }
+        }
+    });
+});
+
+
+            $('.color-list').on('click', function() {
+                $('.color-list').removeClass('active');
+                $(this).addClass('active');
+                console.log($(this).attr('data-value'));
+                $('#color').val($(this).attr('data-value'));
+            });
+
+            $('#product_size').change(function() {
+                var value = $(this).val();
+                var product_id = "{{$product->id}}";
+                $('#size').val(value);
+            });
+            get_cart();
+
+            function get_cart() {
+                $.ajax({
+                    url: "/get_cart_ajax",
+                    cache: false,
+                    success: function(response) {
+                        var ress = jQuery.parseJSON(response);
+                        if (ress.success) {
+                            $('.list-cart').html(ress.data);
+                            $('.count').html(ress.count);
+                            $('.total').html('₹' + ress.total);
+                            $('.title-item-count').html('('+ress.count+' Items)');
+                        } else {
+                            //console.log(response);
+                            $('.title-item-count').html('('+ress.count+' Items)');
+                        }
+                    }
+                });
+            }
+            get_wishlist();
+
+            function get_wishlist() {
+                $.ajax({
+                    url: "/get_wishlist_ajax",
+                    cache: false,
+                    success: function(response) {
+                        var ress = jQuery.parseJSON(response);
+                        console.log(ress);
+                        if (ress.success) {
+                            $('#top-cart-wishlist-count').html(ress.count);
+                        } else {
+                            //console.log(response);
+                        }
+                    }
+                });
+
+            }
+            function change_product_size(productid){
+                var size = $('#product_size').val();
+                if (size=='') {
+                    window.location.reload(true);
+                }
+                $('body').addClass('loader-show');
+                $('body').removeClass('loader-hide');
+                $.ajax({
+                    url:"{{route('change_product_size')}}",
+                    data:{productid:productid,size:size},
+                    cache:false,
+                    success:function(response){
+                        var ress = JSON.parse(response);
+                        $('body').addClass('loader-hide');
+                        $('body').removeClass('loader-show');
+                        console.log(ress);
+                        if (ress.success) {
+                            $('.price').html(ress.data.price);
+                            $('.quantity_div').html(ress.data.product_count);
+                            if (!ress.data.is_count) {
+                                $('.amr-product-avai.alert').addClass('alert-error');
+                                $('.amr-product-avai.alert').removeClass('alert-success');
+                                $('.amr-product-avai.alert').html('Out of stock');
+                                $('.main_qiantity').hide();
+                            }else{
+                                $('.amr-product-avai.alert').removeClass('alert-error');
+                                $('.amr-product-avai.alert').addClass('alert-success');
+                                $('.amr-product-avai.alert').html(ress.data.is_count+' in stock');
+                                $('.main_qiantity').show();
+                            }
+                        }
+                    }
+                });
+            }
+$(function(){
+    var size = $('#product_size').val();
+    var productid = "{{$product->id}}";
+     $.ajax({
+        url:"{{route('change_product_size')}}",
+        data:{productid:productid,size:size},
+        cache:false,
+        success:function(response){
+            var ress = JSON.parse(response);
+            $('body').addClass('loader-hide');
+            $('body').removeClass('loader-show');
+            console.log(ress);
+            if (ress.success) {
+                $('.price').html(ress.data.price);
+                $('.quantity_div').html(ress.data.product_count);
+                if (!ress.data.is_count) {
+                    $('.amr-product-avai.alert').addClass('alert-error');
+                    $('.amr-product-avai.alert').removeClass('alert-success');
+                    $('.amr-product-avai.alert').html('Out of stock');
+                    $('.main_qiantity').hide();
+                }else{
+                    $('.amr-product-avai.alert').removeClass('alert-error');
+                    $('.amr-product-avai.alert').addClass('alert-success');
+                    $('.amr-product-avai.alert').html(ress.data.is_count+' in stock');
+                    $('.main_qiantity').show();
+                }
+            }
+        }
+    });
+});
+            </script>
+
+            @endsection
