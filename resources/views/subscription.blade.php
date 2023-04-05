@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+
+	<title>My Profile</title>
+	<!-- Favicons -->
+
+	<link rel="shortcut icon" href="assets/img/favicon.png">
+	<link href="//fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"> 
+
+	
+
+	<!-- Bootstrap CSS -->
+
+	<link rel="stylesheet" href="{{url('public/assets/provider/plugins/bootstrap/css/bootstrap.min.css')}}">
+
+
+
+	<!-- Fontawesome CSS -->
+
+	<link rel="stylesheet" href="{{url('public/assets/provider/plugins/fontawesome/css/fontawesome.min.css')}}">
+
+	<link rel="stylesheet" href="{{url('public/assets/provider/plugins/fontawesome/css/all.min.css')}}">
+
+
+
+	<!-- Main CSS -->
+
+	<link rel="stylesheet" href="{{url('public/assets/provider/css/style.css')}}">
+
+</head>
+
+<body>
+
+	<div class="main-wrapper">
+
+		<header class="header">
+
+			<nav class="navbar navbar-expand-lg header-nav">
+
+				<div class="navbar-header">
+
+					<a id="mobile_btn" href="javascript:void(0);">
+
+						<span class="bar-icon">
+
+							<span></span>
+
+							<span></span>
+
+							<span></span>
+
+						</span>
+
+					</a>
+
+					<a href="index.html" class="navbar-brand logo">
+
+						<img src="https://professionaler.com/beauty_advisor/public/assets/images/logo.PNG" class="img-fluid" alt="Logo">
+
+					</a>
+
+					<a href="index.html" class="navbar-brand logo-small">
+
+						<img src="https://professionaler.com/beauty_advisor/public/assets/images/logo.PNG" class="img-fluid" alt="Logo">
+
+					</a>
+
+				</div>
+
+				<div class="main-menu-wrapper">
+
+					<div class="menu-header">
+
+						<a href="#" class="menu-logo">
+
+							<img src="https://professionaler.com/beauty_advisor/public/assets/images/logo.PNG" class="img-fluid" alt="Logo">
+
+						</a>
+
+						<a id="menu_close" class="menu-close" href="javascript:void(0);"> <i class="fas fa-times"></i></a>
+
+					</div>
+
+					<!---<ul class="main-nav">
+
+						<li>
+
+							<a href="index.html">Home</a> 
+
+						</li>
+
+						<li>
+
+							<a href="categories.html">Categories</a>
+
+						</li>
+
+						
+
+						
+
+						<li>
+
+							<a href="#" target="_blank">Admin</a>
+
+						</li>
+
+					</ul>--->
+
+				</div>
+
+
+
+				<ul class="nav header-navbar-rht">
+
+
+
+					<li class="nav-item desc-list">
+
+						<a href="add-service.html" class="nav-link header-login">
+
+							<i class="fas fa-plus-circle mr-1"></i> <span>Post Image</span>
+
+						</a>
+
+					</li>
+
+
+
+					<!-- Notifications -->
+
+					<li class="nav-item dropdown logged-item">
+
+						<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+
+							<i class="fas fa-bell"></i> <span class="badge badge-pill bg-yellow">1</span>
+
+						</a>
+
+						<div class="dropdown-menu notify-blk dropdown-menu-right notifications">
+
+							<div class="topnav-dropdown-header">
+
+								<span class="notification-title">Notifications</span>
+
+								<a href="javascript:void(0)" class="clear-noti">Clear All  </a>
+
+							</div>
+
+							<div class="noti-content">
+
+								<ul class="notification-list">
+
+									<li class="notification-message">
+
+										<a href="notifications.html">
+
+											<div class="media">
+
+												<span class="avatar avatar-sm">
+
+												<!----	<img class="avatar-img rounded-circle" alt="User Image" src="https://professionaler.com/beauty_advisor/public/assets/img/customer/user-01.jpg">
+
+												</span>
+
+												<div class="media-body">
+
+													<p class="noti-details"> <span class="noti-title">Jeffrey Akridge has folloing you</span></p>
+
+													<p class="noti-time"><span class="notification-time">Today 10:04 PM</span></p>
+
+												</div>---->
+
+											</div>
+
+										</a>
+
+									</li>
+
+									<li class="notification-message">
+
+										<a href="notifications.html">
+
+											<div class="media">
+
+												<span class="avatar avatar-sm">
+
+													<img class="avatar-img rounded-circle" alt="User Image" src="{{url('public/assets/provider/img/customer/user-02.jpg')}}">
+
+												</span>
+
+												<div class="media-body">
+
+													<p class="noti-details"> <span class="noti-title">Nancy Olson has follow your profile</span></p>
+
+													<p class="noti-time"><span class="notification-time">Today 9:45 PM</span></p>
+
+												</div>
+
+											</div>
+
+										</a>
+
+									</li>
+
+									<li class="notification-message">
+
+										<a href="notifications.html">
+
+											<div class="media">
+
+												<span class="avatar avatar-sm">
+
+													<img class="avatar-img rounded-circle" alt="User Image" src="{{url('public/assets/provider/img/customer/user-03.jpg')}}">
+
+												</span>
+
+												<div class="media-body">
+
+													<p class="noti-details"> <span class="noti-title">Ramona Kingsley like your image</span></p>
+
+													<p class="noti-time"><span class="notification-time">Yesterday 8:17 AM</span></p>
+
+												</div>
+
+											</div>
+
+										</a>
+
+									</li>
+
+									<li class="notification-message">
+
+										<a href="notifications.html">
+
+											<div class="media">
+
+												<span class="avatar avatar-sm">
+
+													<img class="avatar-img rounded-circle" alt="User Image" src="{{url('public/assets/provider/img/customer/user-04.jpg')}}">
+
+												</span>
+
+												<div class="media-body">
+
+													<p class="noti-details"> <span class="noti-title">Ricardo Lung has follow your profile</span></p>
+
+													<p class="noti-time"><span class="notification-time">Yesterday 6:20 AM</span></p>
+
+												</div>
+
+											</div>
+
+										</a>
+
+									</li>
+
+									<li class="notification-message">
+
+										<a href="notifications.html">
+
+											<div class="media">
+
+												<span class="avatar avatar-sm">
+
+													<img class="avatar-img rounded-circle" alt="User Image" src="{{url('public/assets/provider/img/customer/user-05.jpg')}}">
+
+												</span>
+
+												<div class="media-body">
+
+													<p class="noti-details"> <span class="noti-title">Annette Silva has like your image</span></p>
+
+													<p class="noti-time"><span class="notification-time">17 Sep 2020 10:04 PM</span></p>
+
+												</div>
+
+											</div>
+
+										</a>
+
+									</li>
+
+								</ul>
+
+							</div>
+
+							<div class="topnav-dropdown-footer">
+
+								<a href="notifications.html">View all Notifications</a>
+
+							</div>
+
+						</div>
+
+					</li>
+
+					<!-- /Notifications -->
+
+
+
+					<!-- chat 
+
+					<li class="nav-item logged-item">
+
+						<a href="chat.html" class="nav-link">
+
+							<i class="fa fa-comments" aria-hidden="true"></i>
+
+						</a>
+
+					</li>---->
+
+					<!-- /chat -->
+
+					
+
+					<!-- User Menu -->
+
+					<li class="nav-item dropdown has-arrow logged-item">
+
+						<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+
+							<span class="user-img">
+
+								<img class="rounded-circle" src="{{url('public/assets/provider/img/provider/provider-01.jpg')}}" alt="" width="31">
+
+							</span>
+
+						</a>
+
+						<div class="dropdown-menu dropdown-menu-right">
+
+							<div class="user-header">
+
+								<div class="avatar avatar-sm">
+
+									<img class="avatar-img rounded-circle" src="{{url('public/assets/provider/img/provider/provider-01.jpg')}}" alt="">
+
+								</div>
+
+								<div class="user-text">
+
+									<h6 class="text-truncate">Thomas</h6>
+
+									<p class="text-muted mb-0">Provider</p>
+
+								</div>
+
+							</div>
+
+							<a class="dropdown-item" href="#">Dashboard</a>
+
+							<a class="dropdown-item" href="#">Logout</a>
+
+						</div>
+
+					</li>
+
+					<!-- /User Menu -->
+
+
+
+				</ul>
+
+
+
+			</nav>
+
+		</header>
+		
+		<div class="content">
+			<div class="container">
+				<div class="row">
+					<div class="col-xl-3 col-md-4 theiaStickySidebar">
+
+						<div class="mb-4">
+
+							<div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
+
+								<img alt="profile image" src="{{url('public/assets/provider/img/provider/provider-01.jpg')}}" class="avatar-lg rounded-circle">
+
+								<div class="ml-sm-3 ml-md-0 ml-lg-3 mt-2 mt-sm-0 mt-md-2 mt-lg-0">
+
+									<h6 class="mb-0">Thomas Herzberg</h6>
+
+									<p class="text-muted mb-0">Member Since Apr 2020</p>
+
+								</div>
+
+							</div>
+
+						</div>
+
+						<div class="widget settings-menu">
+
+							<ul>
+
+								<li class="nav-item">
+
+									<a href="{{url('advisor-dashboard')}}" class="nav-link">
+
+										<i class="fas fa-chart-line"></i> <span>Dashboard</span>
+
+									</a>
+
+								</li>
+
+								<li class="nav-item">
+
+									<a href="{{url('advisor-images')}}" class="nav-link active">
+
+										<i class="far fa-calendar-check"></i> <span>Images List</span>
+
+									</a>
+
+								</li>
+
+								<!-- <li class="nav-item">
+
+									<a href="{{url('advisor-setting')}}" class="nav-link">
+
+										<i class="far fa-user"></i> <span>Profile Settings</span>
+
+									</a>
+
+								</li> -->
+
+								<li class="nav-item">
+
+									<a href="{{url('subscription')}}" class="nav-link">
+
+										<i class="far fa-calendar-alt"></i> <span>Subscription</span>
+
+									</a>
+
+								</li>
+
+							</ul>
+
+						</div>
+
+					</div>
+					<div class="col-xl-9 col-md-8">
+						<div class="row pricing-box">
+							<div class="col-xl-4 col-md-6 ">
+								<div class="card">
+									<div class="card-body">
+										<div class="pricing-header">
+											<h2>Basic</h2>
+											<p>Monthly Price</p>
+										</div>
+										<div class="pricing-card-price">
+											<h3 class="heading2 price">$0.00</h3>
+											<p>Duration: <span>3 Months</span></p>
+										</div>
+										<ul class="pricing-options">
+											<li><i class="far fa-check-circle"></i> One listing submission</li>
+											<li><i class="far fa-check-circle"></i> 90 days expiration</li>
+										</ul>
+										<a href="javascript:void(0);" class="btn btn-primary btn-block">Select Plan</a>
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-4 col-md-6 ">
+								<div class="card">
+									<div class="card-body">
+										<div class="pricing-header">
+											<h2>Standard</h2>
+											<p>Monthly Price</p>
+										</div>
+										<div class="pricing-card-price">
+											<h3 class="heading2 price">$50.00</h3>
+											<p>Duration: <span>6 Months</span></p>
+										</div>
+										<ul class="pricing-options">
+											<li><i class="far fa-check-circle"></i> One listing submission</li>
+											<li><i class="far fa-check-circle"></i> 180 days expiration</li>
+										</ul>
+										<a href="javascript:void(0);" class="btn btn-primary btn-block">Select Plan</a>
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-4 col-md-6 pricing-selected">
+								<div class="card">
+									<div class="card-body">
+										<div class="pricing-header">
+											<h2>Enterprice</h2>
+											<p>Monthly Price</p>
+										</div>
+										<div class="pricing-card-price">
+											<h3 class="heading2 price">$1200.00</h3>
+											<p>Duration: <span>12 Months</span></p>
+										</div>
+										<ul class="pricing-options">
+											<li><i class="far fa-check-circle"></i> One listing submission</li>
+											<li><i class="far fa-check-circle"></i> 360 days expiration</li>
+										</ul>
+										<a href="javascript:void(0);" class="btn btn-primary btn-block">Subscribed</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card">
+							<div class="card-body">
+								<div class="plan-det">
+									<h6 class="title">Plan Details</h6>
+									<ul class="row">
+										<li class="col-sm-4">
+											<p><span class="text-muted">Started On</span> 15 Jul 2020</p>
+										</li>
+										<li class="col-sm-4">
+											<p><span class="text-muted">Price</span> $1502.00</p>
+										</li>
+										<li class="col-sm-4">
+											<p><span class="text-muted">Expired On</span> 15 Jul 2021</p>
+										</li>
+									</ul>
+									<h6 class="title">Last Payment</h6>
+									<ul class="row">
+										<li class="col-sm-4">
+											<p>Paid at 15 Jul 2020</p>
+										</li>
+										<li class="col-sm-4">
+											<p><span class="amount">$1502.00 </span>  <span class="badge bg-success-light">Paid</span></p>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<h5 class="mb-4">Subscribed Details</h5>	
+						<div class="card transaction-table mb-0">
+							<div class="card-body">
+								<div class="table-responsive">
+									<table class="table table-center mb-0 no-footer">
+										<thead>
+											<tr>
+												<th>Plan</th>
+												<th>Start Date</th>
+												<th>End Date</th>
+												<th>Amount</th>
+												<th>Status</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>Basic</td>
+												<td>03-04-2020</td>
+												<td>02-07-2020</td>
+												<td>0.00</td>
+												<td><span class="badge bg-success-light">Paid</span></td>
+											</tr>
+											<tr>
+												<td>Standard</td>
+												<td>04-04-2020</td>
+												<td>01-10-2020</td>
+												<td>50.00</td>
+												<td><span class="badge bg-success-light">Paid</span></td>
+											</tr>
+											<tr>
+												<td>Enterprice</td>
+												<td>28-05-2020</td>
+												<td>28-05-2021</td>
+												<td>1200.00</td>
+												<td><span class="badge bg-success-light">Paid</span></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>﻿
+		
+		<!-- Footer -->
+		<footer class="footer">
+		
+			<!-- Footer Top -->
+			<div class="footer-top">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-3 col-md-6">
+							<!-- Footer Widget -->
+							<div class="footer-widget footer-menu">
+								<h2 class="footer-title">Quick Links  </h2>
+								<ul>
+									<li>
+										<a href="{{url('about-us')}}">About Us</a>
+									</li>
+									<li>
+										<a href="{{url('contact-us')}}">Contact Us</a>
+									</li>
+									<li>
+										<a href="#">Faq</a>
+									</li>
+									<li>
+										<a href="#">Help</a>
+									</li>
+								</ul>
+							</div>
+							<!-- /Footer Widget -->
+						</div>
+						<div class="col-lg-3 col-md-6">
+							<!-- Footer Widget -->
+							<div class="footer-widget footer-menu">
+								<h2 class="footer-title">Categories</h2>
+								<ul>
+									<li><a href="#">Make Up Artist</a></li>
+
+									<li><a href="#">Nail Artist</a></li>
+
+									<li><a href="#">Hair Artist</a></li>
+								</ul>
+							</div>
+							<!-- /Footer Widget -->
+						</div>
+						<div class="col-lg-3 col-md-6">
+							<!-- Footer Widget -->
+							<div class="footer-widget footer-contact">
+								<h2 class="footer-title">Contact Us</h2>
+								<div class="footer-contact-info">
+									<div class="footer-address">
+										<span><i class="far fa-building"></i></span>
+										<p>367 Hillcrest Lane, Irvine, California, United States</p>
+									</div>
+									<p><i class="fas fa-headphones"></i> 321 546 8764</p>
+									<p class="mb-0"><i class="fas fa-envelope"></i> truelysell@example.com</p>
+								</div>
+							</div>
+							<!-- /Footer Widget -->
+						</div>
+						<div class="col-lg-3 col-md-6">
+							<!-- Footer Widget -->
+							<div class="footer-widget">
+								<h2 class="footer-title">Follow Us</h2>
+								<div class="social-icon">
+									<ul>
+										<li>
+											<a href="#" target="_blank"><i class="fab fa-facebook-f"></i> </a>
+										</li>
+										<li>
+											<a href="#" target="_blank"><i class="fab fa-twitter"></i> </a>
+										</li>
+										<li>
+											<a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+										</li>
+										<li>
+											<a href="#" target="_blank"><i class="fab fa-google"></i></a>
+										</li>
+									</ul>
+								</div>
+								<div class="subscribe-form">
+                                    <input type="email" class="form-control" placeholder="Enter your email">
+                                    <button type="submit" class="btn footer-btn">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+							</div>
+							<!-- /Footer Widget -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /Footer Top -->
+			
+			<!-- Footer Bottom -->
+			<div class="footer-bottom">
+				<div class="container">
+					<!-- Copyright -->
+					<div class="copyright">
+						<div class="row">
+							<div class="col-md-6 col-lg-6">
+								<div class="copyright-text">
+									<p class="mb-0">&copy; 2020 <a href="#">Beauty Advisor</a>. All rights reserved.</p>
+								</div>
+							</div>
+							<div class="col-md-6 col-lg-6">
+								<!-- Copyright Menu -->
+								<div class="copyright-menu">
+									<ul class="policy-menu">
+										<li>
+											<a href="term-condition.html">Terms and Conditions</a>
+										</li>
+										<li>
+											<a href="privacy-policy.html">Privacy</a>
+										</li>
+									</ul>
+								</div>
+								<!-- /Copyright Menu -->
+							</div>
+						</div>
+					</div>
+					<!-- /Copyright -->
+				</div>
+			</div>
+			<!-- /Footer Bottom -->
+		</footer>
+		<!-- /Footer -->
+	</div>
+		<!-- jQuery -->
+	<script src="{{url('public/assets/provider/js/jquery-3.5.0.min.js')}}"></script>
+	<!-- Bootstrap Core JS -->
+	<script src="{{url('public/assets/provider/js/popper.min.js')}}"></script>
+	<script src="{{url('public/assets/provider/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
+	<!-- Sticky Sidebar JS -->
+	<script src="{{url('public/assets/provider/plugins/theia-sticky-sidebar/ResizeSensor.js')}}"></script>
+	<script src="{{url('public/assets/provider/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js')}}"></script>
+	<!-- Custom JS -->
+	<script src="{{url('public/assets/provider/js/script.js')}}"></script>
+</body>
+
+
+</html>

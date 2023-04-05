@@ -1,0 +1,3 @@
+category_id,name,sku,brand,tags,unit,image,estimate_time,shipping_charges,mrp_price,discount_type,discount,stock,short_description,description,policy,video_url,seo_title,seo_tags,seo_description,gst,hsn,comission
+10,test csv,23123,36,"Cello, Super, Lunch, Box, Set, 2 Containers, Tiffin, & Lunch, Carriers",pc,,1 day,10,150,percentage,5,5,sada,dsada,dsada,,,,,5,3232,10
+10,test csv2,23143423,36,"Cello, Super, Lunch, Box, Set, 2 Containers, Tiffin, & Lunch, Carriers",pc,,1 day,10,200,flat,5,5,sada,dsada,dsada,,,,,5,3232,10

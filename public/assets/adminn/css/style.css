@@ -1,0 +1,35 @@
+.side-nav .side-nav-inner .side-nav-menu>li.active {
+    background: rgba(63, 135, 245, 0.15);
+    border-left: solid 5px #3f87f5;
+}
+.side-nav .side-nav-inner .side-nav-menu>li.active a {
+    color: #3f87f5;
+}
+.home-accordion-section>.card {
+    margin-bottom: 20px;
+}
+.accordion.home-accordion-section>.card:first-of-type {
+    border-radius: .25rem;
+}
+.accordion.home-accordion-section>.card>.card-header>.card-title>a {
+    background: #fff;
+    font-weight: bold;
+}
+.accordion.home-accordion-section>.card>.card-header>.card-title>a:after {
+    float: right;
+    margin-right: 0;
+}
+.accordion.home-accordion-section>.card>.card-header>.card-title>a:before {
+    content: "\e082";
+    font-family: "anticon";
+    float: left;
+    margin-right: 10px;
+}
+img.image_ {
+    width: 100px;
+    height: 100px;
+    border: 1px solid;
+    padding: 10px;
+    margin: 8px;
+    cursor: pointer;
+}

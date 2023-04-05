@@ -1,0 +1,152 @@
+@charset "UTF-8";
+@font-face {
+    font-family: "amricons";
+    src: url("../fonts/amricons.eot");
+    src: url("../fonts/amricons.eot?#iefix") format("embedded-opentype"), url("../fonts/amricons.woff") format("woff"), url("../fonts/amricons.ttf") format("truetype"), url("../fonts/amricons.svg#amricons") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+[data-icon]:before {
+    font-family: "amricons" !important;
+    content: attr(data-icon);
+    font-style: normal !important;
+    font-weight: bold !important;
+    font-variant: normal !important;
+    text-transform: none !important;
+    speak: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+[class^="amr-"]:before, [class*=" amr-"]:before {
+    font-family: "amricons" !important;
+    font-style: normal !important;
+    font-variant: normal !important;
+    text-transform: none !important;
+    speak: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.icon {
+    display: inline-block;
+    font: normal normal normal 16px/1 amricons;
+    font-size: inherit;
+    text-rendering: auto;
+    vertical-align: middle;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.amr-accesories:before {
+    content: "\4a";
+}
+.amr-smartphone:before {
+    content: "\4b";
+}
+.amr-shopping-bag:before {
+    content: "\61";
+}
+.amr-grid:before {
+    content: "\62";
+}
+.amr-best-brands:before {
+    content: "\63";
+}
+.amr-arrow-up:before {
+    content: "\64";
+}
+.amr-arrow-right:before {
+    content: "\65";
+}
+.amr-arrow-left-products-header:before {
+    content: "\66";
+}
+.amr-arrow-left:before {
+    content: "\67";
+}
+.amr-arrow-down:before {
+    content: "\68";
+}
+.amr-digital-camera:before {
+    content: "\69";
+}
+.amr-dollar:before {
+    content: "\6a";
+}
+.amr-favorites:before {
+    content: "\6b";
+}
+.amr-feedback:before {
+    content: "\6c";
+}
+.amr-free-delivery:before {
+    content: "\6d";
+}
+.amr-arrow-right-products-header:before {
+    content: "\6e";
+}
+.amr-free-return:before {
+    content: "\6f";
+}
+.amr-safe-payments:before {
+    content: "\70";
+}
+.amr-order-tracking:before {
+    content: "\71";
+}
+.amr-newsletter:before {
+    content: "\72";
+}
+.amr-map-marker:before {
+    content: "\73";
+}
+.amr-long-arrow-right:before {
+    content: "\74";
+}
+.amr-long-arrow-left:before {
+    content: "\75";
+}
+.amr-login-register:before {
+    content: "\76";
+}
+.amr-desktop-pc:before {
+    content: "\77";
+}
+.amr-grid-small:before {
+    content: "\78";
+}
+.amr-breadcrumbs-arrow-right:before {
+    content: "\79";
+}
+.amr-breadcrumbs-arrow-left:before {
+    content: "\79";
+    -moz-transform: scale(-1, 1);
+    -webkit-transform: scale(-1, 1);
+    -o-transform: scale(-1, 1);
+    -ms-transform: scale(-1, 1);
+    transform: scale(-1, 1);
+}
+.amr-call-us-footer:before {
+    content: "\7a";
+}
+.amr-laptop:before {
+    content: "\41";
+}
+.amr-listing:before {
+    content: "\42";
+}
+.amr-close:before {
+    content: "\43";
+}
+.amr-compare:before {
+    content: "\44";
+}
+.amr-listing-large:before {
+    content: "\45";
+}
+.amr-listing-small:before {
+    content: "\46";
+}
+.amr-departments-thin:before {
+    content: "\47";
+}
