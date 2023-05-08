@@ -944,6 +944,149 @@ input[type="checkbox"] {
 									</div>
 
 								  </div>
+                                  
+                                 <!------------------ ebay start here--------------->
+                                  <div class="row" id="cat_row">
+
+								  <div class="col-md-12">
+
+									<div class="form-group row">
+
+									  <label class="col-sm-3 col-form-label">Category<span>*</span></label>
+
+									  <div class="col-sm-9">
+
+										<select class="form-control" required="" name="ebay_category_id">
+
+										  <option value="">Select eBay Category</option>
+
+										  @if(count($ebay_category)) @foreach($ebay_category as $key)
+
+										  <option value="{{$key->category_id}}" {{ ($product->ebay_category_id == $key->category_id) ? 'selected' : '' }}>{{$key->name}}</option>
+
+										  @endforeach @endif
+
+										</select>
+
+									  </div>
+
+									</div>
+
+								  </div>
+
+								</div>
+                                
+                                <div class="row">
+                                        <div class="form-group col-lg-4 col-md-6">
+                                            <label class="form-label">eBay Payment Policy <span class="text-danger">*</span></label>
+                                            <select name="payment_policy_id" id="edit_payment_policy_id" class="form-control">
+                                                @foreach($ebay_payment_policies as $policy)
+                                                    <option value="{{ $policy->id }}" {{ ($product->payment_policy_id == $policy->id) ? 'selected' : '' }}>{{ $policy->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-lg-4 col-md-6">
+                                            <label class="form-label">eBay Shipping Policy <span class="text-danger">*</span></label>
+                                            <select name="shipping_policy_id" id="edit_shipping_policy_id" class="form-control">
+                                                @foreach($ebay_shipping_policies as $policy)
+                                                    <option value="{{ $policy->id }}" {{ ($product->shipping_policy_id == $policy->id) ? 'selected' : '' }}>{{ $policy->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-lg-4 col-md-6">
+                                            <label class="form-label">Return Policy <span class="text-danger">*</span></label>
+                                            <select name="return_policy_id" id="edit_return_policy_id" class="form-control">
+                                                @foreach($ebay_return_policies as $policy)
+                                                    <option value="{{ $policy->id }}" {{ ($product->return_policy_id == $policy->id) ? 'selected' : '' }}>{{ $policy->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                
+                                <div class="row">
+                                        <div class="form-group col-lg-4 col-md-6">
+                                            <label class="form-label">Package Type <span class="text-danger">*</span></label>
+                                            <select name="package_type" id="edit_package_type" class="form-control">
+                                                <option value="BulkyGoods">Bulky goods</option>
+                                                <option value="Caravan">Caravan</option>
+                                                <option value="Cars">Cars</option>
+                                                <option value="CustomCode">Reserved for internal or future use.</option>
+                                                <option value="Europallet">Europallet</option>
+                                                <option value="ExpandableToughBags">Expandable Tough Bags</option>
+                                                <option value="ExtraLargePack">Extra Large Package/Oversize 3</option>
+                                                <option value="Furniture">Furniture</option>
+                                                <option value="IndustryVehicles">Industry vehicles</option>
+                                                <option value="LargeCanadaPostBox">Large Canada Post Box</option>
+                                                <option value="LargeCanadaPostBubbleMailer">Large Canada Post Bubble Mailer</option>
+                                                <option value="LargeEnvelope">LargeEnvelope</option>
+                                                <option value="Letter" selected>Letter</option>
+                                                <option value="MailingBoxes">Mailing Boxes</option>
+                                                <option value="MediumCanadaPostBox">Medium Canada Post Box</option>
+                                                <option value="MediumCanadaPostBubbleMailer">Medium Canada Post Bubble Mailer</option>
+                                                <option value="Motorbikes">Motorbikes</option>
+                                                <option value="None">None</option>
+                                                <option value="OneWayPallet">Onewaypallet</option>
+                                                <option value="PackageThickEnvelope">Package/thick envelope</option>
+                                                <option value="PaddedBags">Padded Bags</option>
+                                                <option value="ParcelOrPaddedEnvelope">Parcel or padded Envelope</option>
+                                                <option value="Roll">Roll</option>
+                                                <option value="SmallCanadaPostBox">Small Canada Post Box</option>
+                                                <option value="SmallCanadaPostBubbleMailer">Small Canada Post Bubble Mailer</option>
+                                                <option value="ToughBags">Tough Bags</option>
+                                                <option value="UPSLetter">UPS Letter</option>
+                                                <option value="USPSFlatRateEnvelope">USPS Flat Rate Envelope</option>
+                                                <option value="USPSLargePack">USPS Large Package/Oversize 1</option>
+                                                <option value="VeryLargePack">Very Large Package/Oversize 2</option>
+                                                <option value="Winepak">Winepak</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-lg-4 col-md-6">
+                                            <label class="form-label">Package Weight (lbs)<span class="text-danger">*</span></label>
+                                            <input type="number" class="form-control text-center" id="edit_package_weight" value="{{ $product->package_weight }}" name="package_weight" maxlength="190" min="0" step=".01" autocomplete="off"/>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-4 col-md-6">
+                                            <label class="form-label">Dimension Length <span class="text-danger">*</span></label>
+                                            <input type="number" class="form-control text-center" id="edit_package_dimensions_length" value="{{ $product->package_dimensions_length }}" name="package_dimensions_length" maxlength="190" min="0" step=".01" autocomplete="off"/>
+                                        </div>
+                                        <div class="form-group col-lg-4 col-md-6">
+                                            <label class="form-label">Dimension Width <span class="text-danger">*</span></label>
+                                            <input type="number" class="form-control text-center" id="edit_package_dimensions_width" value="{{ $product->package_dimensions_width }}" name="package_dimensions_width" maxlength="190" min="0" step=".01" autocomplete="off"/>
+                                        </div>
+                                        <div class="form-group col-lg-4 col-md-6">
+                                            <label class="form-label">Dimension Height <span class="text-danger">*</span></label>
+                                            <input type="number" class="form-control text-center" id="edit_package_dimensions_height" value="{{ $product->package_dimensions_height }}" name="package_dimensions_height" maxlength="190" min="0" step=".01" autocomplete="off"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-4 col-md-6">
+                                            <label class="form-label">Country <span class="text-danger">*</span></label>
+                                            <select name="country" id="edit_country" class="form-control">
+                                                <option value="US" selected="selected">United States</option>
+                                               
+                                                <option {{ ($product->country =='CA') ? 'selected' : '' }} value="CA">Canada</option>
+                                                <option {{ ($product->country =='UK') ? 'selected' : '' }} value="UK">United Kingdom</option>
+                                                 <option {{ ($product->country =='US') ? 'selected' : '' }} value="UK">United States</option>
+                                                 <option {{ ($product->country =='IT') ? 'selected' : '' }} value="UK">Italy</option>
+                                               
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-lg-4 col-md-6">
+                                            <label class="form-label">City, State <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="edit_city_or_state" value="{{ $product->city_or_state }}" name="city_or_state" placeholder="City, State" autocomplete="off"/>
+                                        </div>
+                                        <div class="form-group col-lg-4 col-md-6">
+                                            <label class="form-label">Zip Code <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="edit_zip_code" value="{{ $product->zip_code }}" name="zip_code" autocomplete="off"/>
+                                        </div>
+                                    </div>
+                                
+                              <!--  ebay end here-->
+                                  
+                                  
+                                  
 								  <div class="row col-md-12">
 									
 									<button class="btn btn-primary" id="back_to_gallery" type="button">Back</button>

@@ -202,6 +202,25 @@ Route::group(['middleware' => 'auth'], function(){
 
 		
 		Route::get('ajax_get_orders','OrderController@ajax_get_orders')->name('ajax_get_orders');
+		//eBay
+		
+		
+		Route::get('market-setting','SettingController@market_settings')->name('market_settings');
+		 Route::group(['name' => 'Ebay OAuth Login'], function () {
+        // Todo: start Ebay Api Login
+        // Route::get('/show-ebay-login', 'ProductController@showEbayLogin')->name('showEbayLogin');
+       
+		Route::get('show-ebay-login','EbayOauthController@showEbayLogin')->name('showEbayLogin');
+        Route::get('ebay-auth','EbayOauthController@loginEbay')->name('loginEbay'); // redirect-uri
+        Route::get('ebay-auth-declined', 'EbayOauthController@loginFailEbay')->name('loginFailEbay'); // redirect-uri
+        // Todo: End Ebay Api Login
+        Route::get('ebay-auth-sand-box','EbayOauthController@loginEbaySandBox')->name('loginEbaySandBox'); // redirect-uri
+    });
+	
+		// Route::post('ebay-credentials', 'ProductController@ebayCredentialsStore')->name('ebay_credentials'); //
+        
+        Route::delete('ebay-credentials-remove','EbayController@ebayCredentialsRemove')->name('ebay_credentials_remove');
+		 Route::post('settings/update-paypal','EbayController@updatePaypal')->name('settings.update.paypal');
 		// vendor
 
 		Route::get('my-profile','HomeController@my_profile')->name('my_profile');

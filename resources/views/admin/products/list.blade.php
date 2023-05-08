@@ -27,6 +27,7 @@
             <th data-orderable="false">Discount</th>
             <th data-orderable="false">Status</th>
             <th data-orderable="false">DOC</th>
+            <th data-orderable="false">Ebay</th>
             <th data-orderable="false">Action</th>
           </tr>
         </thead>

@@ -9,6 +9,13 @@ use Hash;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\admin\Input;
+use App\Http\Controllers\Admin\EbayCronController;
+use App\Helpers\Ebay\EbayHelper;
+use App\Models\Product;
+use App\Models\EbayPaymentPolicy;
+use App\Models\EbayReturnPolicy;
+use App\Models\EbayShippingPolicy;
+
 class ProductController extends Controller{
 
     use AuthenticatesUsers;
@@ -34,7 +41,8 @@ class ProductController extends Controller{
 	//show admin page
 
 	public function products(){
-
+		//$helper=new EbayHelper();
+		//$helper->getBusinessPolicies(1);
         return view('admin.products.list');
 
 	}
@@ -156,6 +164,8 @@ class ProductController extends Controller{
                             $status,
 
                             date('M d, Y',strtotime($row->created_at)),
+							
+							 ' <a href="'.$row->ebay_product_url.'" target="_blank" class="btn btn-outline-primary btn-sm"> '.$row->ebay_product_id.' </a>',
 
                             '<div class="btn-group" role="group" aria-label="Basic example">
 
@@ -195,9 +205,16 @@ class ProductController extends Controller{
 
     public function product_add(){
 
+		$user=Auth::user();
         $data['category'] = DB::table('categories')->where('isactive','active')->get()->toarray();
 
         $data['brand'] = DB::table('brand')->where('status','yes')->get()->toarray();
+		
+		$data['ebay_category'] = DB::table('ebay_categories')->where('status','1')->get()->toarray();
+		
+		 $data['ebay_payment_policies']=EbayPaymentPolicy::where('user_id', '=', $user->id)->get();
+		 $data['ebay_shipping_policies']=EbayShippingPolicy::where('user_id', '=', $user->id)->get();
+		 $data['ebay_return_policies']=EbayReturnPolicy::where('user_id', '=', $user->id)->get();
 
         return view('admin.products.add',$data);
 
@@ -250,7 +267,7 @@ class ProductController extends Controller{
             }
         }
         $taxable_price = $request->mrp_pric-$request->gst_price;
-        $insertid = DB::table('products')->insertGetId(['vendor_id'=>auth::user()->id,'category_id'=>$request->category,'sub_category_id'=>$request->sub_category,'child_category_id'=>$child_category,'name'=>$request->name,'slug'=>$request->slug,'sku'=>$request->sku,'brand'=>$request->brand,'tags'=>$request->tags,'unit'=>$request->unit,'short_description'=>$request->short_description,'image'=>$image,'seo_title'=>$request->seo_title,'seo_description'=>$request->seo_description,'seo_tags'=>$request->seo_tags,'shipping_time'=>$shipping_time,'estimate_time'=>$estimate_time,'mrp_price'=>$request->mrp_price,'product_price'=>$taxable_price,'sale_price'=>$request->product_price,'discount_type'=>$request->discount_type,'discount'=>$request->discount,'gst_amount'=>$request->gst_price,'stock'=>$stock,'description'=>$request->description,'policy'=>$request->buy_rent_policy,'video_url'=>$request->video_url,'gst'=>$request->gst,'hsn'=>$request->hsn,'status'=>$status,'comission'=>$request->commission,'shipping_charges'=>$request->shipping_charges,'product_type'=>$request->product_type]);
+        $insertid = DB::table('products')->insertGetId(['vendor_id'=>auth::user()->id,'category_id'=>$request->category,'sub_category_id'=>$request->sub_category,'child_category_id'=>$child_category,'name'=>$request->name,'slug'=>$request->slug,'sku'=>$request->sku,'brand'=>$request->brand,'tags'=>$request->tags,'unit'=>$request->unit,'short_description'=>$request->short_description,'image'=>$image,'seo_title'=>$request->seo_title,'seo_description'=>$request->seo_description,'seo_tags'=>$request->seo_tags,'shipping_time'=>$shipping_time,'estimate_time'=>$estimate_time,'mrp_price'=>$request->mrp_price,'product_price'=>$taxable_price,'sale_price'=>$request->product_price,'discount_type'=>$request->discount_type,'discount'=>$request->discount,'gst_amount'=>$request->gst_price,'stock'=>$stock,'description'=>$request->description,'policy'=>$request->buy_rent_policy,'video_url'=>$request->video_url,'gst'=>$request->gst,'hsn'=>$request->hsn,'status'=>$status,'comission'=>$request->commission,'shipping_charges'=>$request->shipping_charges,'product_type'=>$request->product_type, 'ebay_category_id'=>$request->ebay_category_id,'return_policy_id'=>$request->return_policy_id,'payment_policy_id'=>$request->payment_policy_id,'shipping_policy_id'=>$request->shipping_policy_id,'package_type'=>$request->package_type,'package_weight'=>$request->package_weight,'package_dimensions_length'=>$request->package_dimensions_length,'package_dimensions_width'=>$request->package_dimensions_width,'package_dimensions_height'=>$request->package_dimensions_height,'country'=>$request->country,'city_or_state'=>$request->city_or_state,'zip_code'=>$request->zip_code]);
         if ($insertid) {
             // upload gallery
             $imgarr = array();
@@ -278,6 +295,14 @@ class ProductController extends Controller{
                   DB::table('product_colors')->insert(['product_id'=>$insertid,'color_code'=>$request->prod_color[$x]]);
               }
           }
+		  
+		  //ebay upload
+		 
+		   $EbayCronAddProduct = new EbayCronController();
+           $data = $EbayCronAddProduct->addProduct($insertid);
+		  
+		  
+		  
           return redirect(url('admin/products'))->with('success','Product is added successfully!');
         }else{
           return redirect(url('admin/products'))->with('danger','Something went wrong. Please try after some time.');
@@ -337,6 +362,17 @@ class ProductController extends Controller{
         $data['product_size'] = DB::table('product_size')->where('product_id',$id)->get()->toarray();
 
 		$data['brand'] = DB::table('brand')->where('status','yes')->get()->toarray();
+		//eBay
+		
+		 $user = Auth::user();  
+		$data['ebay_category'] = DB::table('ebay_categories')->where('status','1')->get()->toarray();
+		
+		 $data['ebay_payment_policies']=EbayPaymentPolicy::where('user_id', '=', $user->id)->get();
+		 $data['ebay_shipping_policies']=EbayShippingPolicy::where('user_id', '=', $user->id)->get();
+		 $data['ebay_return_policies']=EbayReturnPolicy::where('user_id', '=', $user->id)->get();
+		 
+               
+          
 
         //dd($data['product']);
 
@@ -500,9 +536,22 @@ class ProductController extends Controller{
 
 		   'hsn'=>$request->hsn,
 
-           'comission'=>$request->commission,
-           'shipping_charges'=>$request->shipping_charges,
-           'product_type'=>$request->product_type
+			'comission'=>$request->commission,
+			'shipping_charges'=>$request->shipping_charges,
+			'product_type'=>$request->product_type,
+			'ebay_category_id'=>$request->ebay_category_id,
+			'return_policy_id'=>$request->return_policy_id,
+			'payment_policy_id'=>$request->payment_policy_id,
+			'shipping_policy_id'=>$request->shipping_policy_id,
+			'package_type'=>$request->package_type,
+			'package_weight'=>$request->package_weight,
+			'package_dimensions_length'=>$request->package_dimensions_length,
+			'package_dimensions_width'=>$request->package_dimensions_width,
+			'package_dimensions_height'=>$request->package_dimensions_height,
+			
+			'country'=>$request->country,
+			'city_or_state'=>$request->city_or_state,
+			'zip_code'=>$request->zip_code,
 
 		 ]);
 
@@ -574,7 +623,15 @@ class ProductController extends Controller{
 
 		} }
 
-			
+		$model_product = Product::where('id', $request->id)->first();
+		if($model_product)
+		{
+			$EbayCronAddProduct = new EbayCronController();
+			if($model_product->ebay_product_id)
+				$data = $EbayCronAddProduct->updateProduct($request->id);
+			else
+				$data = $EbayCronAddProduct->addProduct($request->id);
+		}
 
           return redirect(url('admin/products'))->with('success','Product   Updated successfully!');
 
@@ -909,6 +966,19 @@ class ProductController extends Controller{
     public function delete_product(Request $request){
 
         DB::table('products')->where('id',$request->id)->update(['is_delete'=>$request->value]);
+		
+		$user = Auth::user();
+        $product = Product::where('id', $request->id)->where('vendor_id', $user->id)->first();
+
+        if ($product) {
+            if ($product->ebay_product_id) {
+                try {
+                    $ebay_api = new EbayCronController();
+                    $ebay_api->deleteProduct($product);
+                } catch (\Exception $e) {
+                }
+            }
+		}
 
         echo 1;
 

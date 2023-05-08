@@ -253,6 +253,26 @@
                 </li>
               </ul>
             </li>
+            
+            <li class="nav-item dropdown {{(in_array(Route::getCurrentRoute()->getName(),[ 'admin_orders','sale']))? 'open':'' }}">
+              <a href="javascript:void(0);  " class="dropdown-toggle">
+                <span class="icon-holder"><i class="anticon anticon-inbox"></i></span>
+                <span class="title">Market</span>
+                <span class="arrow">
+                  <i class="arrow-icon"></i>
+                </span>
+              </a>
+              <ul class="dropdown-menu">
+                <li class="nav-item {{(in_array(Route::getCurrentRoute()->getName(),[ 'market_settings',]))? 'active':'' }}">
+                  <a href="{{route('market_settings')}}">
+                    <span class="title">setting</span>
+                  </a>
+                </li>
+
+                
+              </ul>
+            </li>
+            
             <li class="nav-item dropdown {{(in_array(Route::getCurrentRoute()->getName(),[ 'customer', 'admin_staff']))? 'open':'' }}">
               <a href="javascript:void(0);  " class="dropdown-toggle">
                 <span class="icon-holder"><i class="anticon anticon-team"></i></span>
