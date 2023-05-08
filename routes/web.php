@@ -221,6 +221,9 @@ Route::group(['middleware' => 'auth'], function(){
         
         Route::delete('ebay-credentials-remove','EbayController@ebayCredentialsRemove')->name('ebay_credentials_remove');
 		 Route::post('settings/update-paypal','EbayController@updatePaypal')->name('settings.update.paypal');
+		 
+		  Route::post('settings/update-paypal','EbayController@fetch')->name('settings.update.paypal');
+		   Route::get('fetch-ebay-product','EbayController@fetchEbayProduct')->name('fetchEbayProduct');
 		// vendor
 
 		Route::get('my-profile','HomeController@my_profile')->name('my_profile');

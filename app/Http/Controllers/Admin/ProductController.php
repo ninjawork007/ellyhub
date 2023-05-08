@@ -41,8 +41,8 @@ class ProductController extends Controller{
 	//show admin page
 
 	public function products(){
-		//$helper=new EbayHelper();
-		//$helper->getBusinessPolicies(1);
+		//$helper=new EbayCronController();
+		//$helper->fetchProduct();
         return view('admin.products.list');
 
 	}

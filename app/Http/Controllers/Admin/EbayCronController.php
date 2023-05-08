@@ -122,6 +122,7 @@ class EbayCronController extends Controller
         $dataProducts = array();
         $t = 0;
         $pageno = 1;
+		
         if (!empty($userToken)) {
             if (!empty($id)) {
                 $query = '?q=' . $id . '&limit=100&offset=0';
@@ -130,6 +131,7 @@ class EbayCronController extends Controller
 			   else
 			    $url = 'https://api.ebay.com/sell/inventory/v1/inventory_item?listingId=' . $query;
                 //https://www.ebay.com/sh/lst/active?catType=ebayCategories&q_field1=listingId&q_op1=EQUAL&q_value1=373911892051&action=search
+				
             } else {
                 $requestXmlBody = '<?xml version="1.0" encoding="utf-8"?>';
                 $requestXmlBody .= '<GetSellerListRequest xmlns="urn:ebay:apis:eBLBaseComponents">
@@ -192,7 +194,7 @@ class EbayCronController extends Controller
 
             $productStoreInfoArraySuccess = [];
             $productStoreInfoArrayError = [];
-
+			
          
 
             //return $dataProducts;
@@ -253,7 +255,7 @@ class EbayCronController extends Controller
                                     $quantity = $product['Quantity'] ?? 0;
                                     $price = $product['SellingStatus']['CurrentPrice'] ?? 0;
 
-                                    //$brand = $product['ProductListingDetails']['BrandMPN']['Brand'] ?? null;
+                                    $brand = $product['ProductListingDetails']['BrandMPN']['Brand'] ?? null;
                                     //$MPN = $product['ProductListingDetails']['BrandMPN']['MPN'] ?? null;
 
                                     $item_specific = '';
@@ -301,7 +303,7 @@ class EbayCronController extends Controller
                                     $PaymentProfileID = $product['SellerProfiles']['SellerPaymentProfile']['PaymentProfileID'] ?? '';
 
                                     if ($ShippingProfileID) {
-                                        $ShippingPolicy = ShippingPolicy::where('policy_id', '=', $ShippingProfileID)->first();
+                                        $ShippingPolicy = EbayShippingPolicy::where('policy_id', '=', $ShippingProfileID)->first();
                                         if (!$ShippingPolicy) {
                                             $ShippingPolicy = new ShippingPolicy();
                                             $ShippingPolicy->policy_id = $ShippingProfileID;
@@ -312,7 +314,7 @@ class EbayCronController extends Controller
                                     }
 
                                     if ($ReturnProfileID) {
-                                        $ReturnPolicy = ReturnPolicy::where('policy_id', '=', $ReturnProfileID)->first();
+                                        $ReturnPolicy = EbayReturnPolicy::where('policy_id', '=', $ReturnProfileID)->first();
                                         if (!$ReturnPolicy) {
                                             $ReturnPolicy = new EbayReturnPolicy();
                                             $ReturnPolicy->policy_id = $ReturnProfileID;
@@ -323,7 +325,7 @@ class EbayCronController extends Controller
                                     }
 
                                     if ($PaymentProfileID) {
-                                        $PaymentPolicy = PaymentPolicy::where('policy_id', '=', $PaymentProfileID)->first();
+                                        $PaymentPolicy = EbayPaymentPolicy::where('policy_id', '=', $PaymentProfileID)->first();
                                         if (!$PaymentPolicy) {
                                             $PaymentPolicy = new EbayPaymentPolicy();
                                             $PaymentPolicy->policy_id = $PaymentProfileID;
@@ -350,70 +352,34 @@ class EbayCronController extends Controller
                                     $city_or_state = $product['Location'] ?? '';
 
                                     $user = Auth::user();
+									
 
-                                    $productStore = Product::where('user', $user->id)->where('ebay_product_id', $item_id)->first();
+                                    $productStore = Product::where('vendor_id', $user->id)->where('ebay_product_id', $item_id)->first();
                                     if (!$productStore) {
                                         $productStore = new Product();
                                     }
 
-                                    $productStore->user = $user->id;
+                                    $productStore->vendor_id = $user->id;
                                     $productStore->ebay_category_id = $categoryId;
 
                                    // $productStore->item_tag ='https://www.ebay.com/itm/'. $item_id;
-                                    $productStore->title = $title;
-                                    // $productStore->sku = $sku;
+                                    $productStore->name = $title;
+                                     $productStore->sku = $sku;
 
                                     $productStore->description = $description;
+									$productStore->sale_price=$productStore->mrp_price=$productStore->product_price = $price;
 
-                                   /* if($quantity) {
-                                      $productStore->supplierStock = 'In stock';
-                                    } else {
-                                      $productStore->supplierStock = 'Out of stock';
-                                    }*/
+                                 
 
-									$productStore->supplierStock = 'Out of stock';
-                                    $productStore->inventory = $quantity;
+									//$productStore->supplierStock = 'Out of stock';
+                                    $productStore->stock = $quantity;
 
-                                    // RECALCULATE IF TARGET PRICE IS NOT THE SAME PRICE
-                                    if($productStore->target_price) {
-                                      if($productStore->target_price != $price) {
-                                        $supplierPrice = $price;
-                                        $current_profit = $price - $supplierPrice - ($price * 0.05);
-                                        $target_price = $supplierPrice * $user->default_markup;
-                                        $estimated_facebook_fees = $target_price * 0.05;
-                                        $target_profit = $target_price - $estimated_facebook_fees - $supplierPrice;
-    
-                                        $productStore->price = $price;
-                                        $productStore->supplierPrice = $supplierPrice;
-                                        $productStore->current_profit = $current_profit;
-                                        $productStore->target_price = $target_price;
-                                        $productStore->estimated_facebook_fees = $estimated_facebook_fees;
-                                        $productStore->target_profit = $target_profit;
-                                        $productStore->markup = $user->default_markup;
-                                        $productStore->margin = $user->default_margin;
-                                      } 
-                                    } 
-                                    else {
-                                     // $supplierPrice = $price;
-                                      //$current_profit = $price - $supplierPrice - ($price * 0.05);
-                                     // $target_price = $supplierPrice * $user->default_markup;
-                                     // $estimated_facebook_fees = $target_price * 0.05;
-                                      //$target_profit = $target_price - $estimated_facebook_fees - $supplierPrice;
-  
-                                     // $productStore->price = $price;
-                                      //$productStore->supplierPrice = $supplierPrice;
-                                      //$productStore->current_profit = $current_profit;
-                                      $productStore->target_price =$price;// $target_price;
-                                      //$productStore->estimated_facebook_fees = $estimated_facebook_fees;
-                                     // $productStore->target_profit = $target_profit;
-                                      $productStore->markup = $user->default_markup;
-                                      $productStore->margin = $user->default_margin;
-                                    }
+                                   
 
-                                    //$productStore->brand = $brand;
+                                    $productStore->brand = $brand;
                                     //$productStore->MPN = $MPN;
-                                    $productStore->UPC = $UPC;
-                                    $productStore->item_specifics = $item_specific;
+                                   // $productStore->UPC = $UPC;
+                                    //$productStore->item_specifics = $item_specific;
 
                                     $productStore->return_policy_id = $return_policy_id;
                                     $productStore->payment_policy_id = $payment_policy_id;
@@ -423,56 +389,29 @@ class EbayCronController extends Controller
                                     $productStore->package_dimensions_length = $package_dimensions_length;
                                     $productStore->package_dimensions_width = $package_dimensions_width;
                                     $productStore->package_dimensions_height = $package_dimensions_height;
-                                    $productStore->irregular_package = $irregular_package == 'true' ? 1 : 0;
+                                   // $productStore->irregular_package = $irregular_package == 'true' ? 1 : 0;
                                     $productStore->package_weight = (float)$package_weight;
 
                                     $productStore->country = $country;
                                     $productStore->zip_code = $zip_code;
                                     $productStore->city_or_state = $city_or_state;
 
-                                    $productStore->img1 = $picture_url;
+                                    $productStore->image = $picture_url;
 
                                     // $productStore->status = 1;
 
                                     $productStore->ebay_product_id = $item_id;
-                                    $productStore->ebay_enabled = 1;
-                                    $productStore->ebay_uploaded = 1;
-                                    $productStore->ebayId = $item_id;
-                                    //$productStore->item_tag ='https://www.ebay.com/itm/'. $item_id;
+                                   if($this->environment=='sandbox')
+                                   	 $productStore->ebay_product_url ='https://www.sandbox.ebay.com/itm/'. $item_id;
+									else
+										$productStore->ebay_product_url ='https://www.ebay.com/itm/'. $item_id;
+										 
                                     $productStore->save();
 
                                     array_push($activeProductStore, [$product, $productStore]);
 									
 
-                                    if ($productStore) {
-                                        if (isset($product['PictureDetails']['PictureURL'])) {
-                                            if (gettype($product['PictureDetails']['PictureURL']) == 'array') {
-                                                $i = 2;
-                                                if (count($product['PictureDetails']['PictureURL']) > 0) {
-                                                    foreach ($product['PictureDetails']['PictureURL'] as $image) {
-                                                      if($i == 2) {
-                                                        $productStore->img2 = $image;
-                                                      } else if($i == 3) {
-                                                        $productStore->img3 = $image;
-                                                      } else if($i == 4) {
-                                                        $productStore->img4 = $image;
-                                                      } else if($i == 5) {
-                                                        $productStore->img5 = $image;
-                                                      } else if($i == 6) {
-                                                        $productStore->img6 = $image;
-                                                      } else if($i == 7) {
-                                                        $productStore->img7 = $image;
-                                                      } else if($i == 8) {
-                                                        $productStore->img8 = $image;
-                                                      } else if($i == 9) {
-                                                        $productStore->img9 = $image;
-                                                      }
-                                                      $i++;
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
+                                 
                                     array_push($productStoreInfoArraySuccess, $productStore);
                                 } else {
                                     array_push($productStoreInfoArrayError, '$item_id null');
@@ -484,11 +423,6 @@ class EbayCronController extends Controller
                     }
                 }
 
-              /*  $file_name_generate = date("d-m-Y H_i_s", time()) . '_log_file_2.json';
-                $log_file_path = '/app/public/ebay_product/' . $file_name_generate; // /app/public/amazon-api/log_file/50006018750_log_file.txt
-                $myfile = fopen(storage_path($log_file_path), "w");
-                fwrite($myfile, json_encode($activeProductStore));
-                fclose($myfile);*/
 
                 return [
                     'success' => true,

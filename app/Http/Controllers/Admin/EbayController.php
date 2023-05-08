@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use Illuminate\Http\Request;
 use App\Models\EbayCredential;
 use Auth;
+use App\Http\Controllers\Admin\EbayCronController;
 use App\Http\Controllers\Controller;
 class EbayController extends Controller
 {
@@ -70,6 +71,14 @@ class EbayController extends Controller
 
 
         return redirect()->back()->with('success', 'Your paypal has been successfully updated.');
+    }
+	
+	 public function fetchEbayProduct()
+    {
+        $ebay=new EbayCronController();
+		$ebay->fetchProduct();
+
+        return redirect()->back()->with('success', 'eBay Product has been successfully fetched.');
     }
 
 }
