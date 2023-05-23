@@ -75,8 +75,10 @@ foreach($reviews as $key){
                                                 @if($product->is_uploaded)
                                                 <?php
                                                 $image_array = explode(',',$product->image);
+												if(is_array($image_array)){
+													
                                                 ?>
-                                                @for($i=0;$i < 2;$i++)
+                                                @for($i=0;$i <count($image_array);$i++)
                                                 
                                                 <div data-thumb="{{$image_array[$i]}}" class="amrcart-product-gallery__image else">
                                                     <a href="{{$image_array[$i]}}" tabindex="0" data-fancybox="product-image">
@@ -85,6 +87,7 @@ foreach($reviews as $key){
                                                     </a>
                                                 </div>
                                                 @endfor
+                                                <?php } ?>
                                                 @endif
                                             @endif
                                         </figure>
@@ -101,7 +104,7 @@ foreach($reviews as $key){
                                         <?php
                                             $image_array = explode(',',$product->image);
                                         ?>
-                                        @for($j=0;$j < 2;$j++)
+                                        @for($j=0;$j <count($image_array);$j++)
                                         <figure data-thumb="{{$image_array[$j]}}" class="amr-wc-product-gallery__image">
                                             <img width="180" height="180" src="{{$image_array[$j]}}"
                                                 class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt="">

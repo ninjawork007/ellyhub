@@ -60,6 +60,13 @@
        url: "{{route('check_login')}}"
    });
 </script>
+
+<style type="text/css">
+    .CatActive{
+        background: #f6596f !important;
+        color: #ffff !important;
+    }
+</style>
 <div class="siteurl" data-url="{{url('/')}}"></div>
 <header class="header-area">
     <div class="top-bar d-none">
@@ -183,29 +190,28 @@
         <div class="container">
             <div id="menu-navbar-primary" class="row nav yamm d-flex">
                 @if(count($top_cat))
-                <?php
-                $count = 1;
-                ?>
-                @foreach($top_cat as $key)
-               
-                <?php
-                if ($count%4 == 1){  
-                    echo "<div class='col-md-3'><div class='header-category'>";
-                }
-                echo '<a class="nav-link active" href="'.route('category_details',[$key->id]).'">'.$key->name.'</a>';
-                if ($count%4 == 0){
-                    echo "</div></div>";
-                }
-                
-                $count++;
-                ?>
-                @endforeach
-                <?php
-                if ($count%4 != 1) echo "</div>";
-                ?>
+                    @php
+                        $count = 1;
+                    @endphp
+
+                    @foreach($top_cat as $key)
+                        @if($count%4 == 1)
+                            <div class='col-md-3'><div class='header-category'>
+                        @endif
+                        
+                        <a class="nav-link @if(isset($MainCatID) && $MainCatID == $key->id) CatActive @endif" href="{{ route('category_details',[$key->id]) }}">{{ $key->name }}</a>
+                        @if($count%4 == 0)
+                        </div></div>
+                        @endif
+                        
+                        @php
+                        $count++;
+                        @endphp
+                    @endforeach
+                    @if ($count%4 != 1)
+                        </div>
+                    @endif
                 @endif
-                <?php
-                ?>
                 <a class="see-more-category" href="javascript:;">More</a>
             </div>
 

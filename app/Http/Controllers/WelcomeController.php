@@ -552,24 +552,28 @@ class WelcomeController extends Controller
                                  ->groupBy('products.id')  
                                  ->paginate(8);
             $data['cat_array']=array();
+            $data['MainCatID'] = $id;
+
           return view('category_details',$data);
     }
      public function sub_categorydetails($cat,$sub){
           
            $id = explode("-",$sub);
            $id = end($id); 
-           $data['name'] =   DB::table('sub_categories')->where('id',$id)->first()->title;
+           $SubCatData = DB::table('sub_categories')->where('id',$id)->first();
+           $data['name'] = $SubCatData->title;
            $data['categories'] =DB::table('categories')->where('isactive','active')->get()->toarray(); 
            $data['product'] = DB::table('products')
                                  ->join('users','products.vendor_id','=','users.id')
                                  ->join('categories','products.category_id','=','categories.id') 
-                                 ->join('product_gallery','products.id','=','product_gallery.product_id') 
-                                 ->select('products.id','products.name','products.image','product_gallery.images','products.mrp_price','products.sale_price','products.discount','products.discount_type','categories.name as category_name','categories.id as category_id','users.name as vendor_name')
+                                 //->join('product_gallery','products.id','=','product_gallery.product_id') 
+                                 ->select('products.id','products.name','products.image','products.mrp_price','products.sale_price','products.discount','products.discount_type','categories.name as category_name','categories.id as category_id','users.name as vendor_name')
                                   ->where([['products.sub_category_id','=',$id],['products.is_delete','=','0'],['products.status','=','approved']])
                                  ->orderby('products.id','desc')
                                  ->groupBy('products.id')  
                                  ->paginate(8)->appends(request()->query());
         $data['cat_array']=array();
+        $data['MainCatID'] = $SubCatData->category_id;
           return view('category_details',$data);
 
      }
@@ -577,18 +581,20 @@ class WelcomeController extends Controller
      public function child_categorydetails($cat,$sub,$child){
            $id = explode("-",$child);
            $id = end($id); 
-           $data['name'] =   DB::table('child_categories')->where('id',$id)->first()->name;
+           $ChidlDt = DB::table('child_categories')->where('id',$id)->first();
+           $data['name'] = $ChidlDt->name;
            $data['categories'] =DB::table('categories')->where('isactive','active')->get()->toarray();
            $data['cat_array']=array();
            $data['product'] = DB::table('products')
                                  ->join('users','products.vendor_id','=','users.id')
                                  ->join('categories','products.category_id','=','categories.id') 
-                                 ->join('product_gallery','products.id','=','product_gallery.product_id') 
-                                 ->select('products.id','products.name','products.image','product_gallery.images','products.mrp_price','products.sale_price','products.discount','products.discount_type','categories.name as category_name','categories.id as category_id','users.name as vendor_name')
+                                 //->join('product_gallery','products.id','=','product_gallery.product_id') 
+                                 ->select('products.id','products.name','products.image','products.mrp_price','products.sale_price','products.discount','products.discount_type','categories.name as category_name','categories.id as category_id','users.name as vendor_name')
                                   ->where([['products.child_category_id','=',$id],['products.is_delete','=','0'],['products.status','=','approved']])
                                  ->orderby('products.id','desc')
                                  ->groupBy('products.id')  
                                  ->paginate(8)->appends(request()->query());
+        $data['MainCatID'] = $ChidlDt->category_id;
           return view('category_details',$data);
      }
 

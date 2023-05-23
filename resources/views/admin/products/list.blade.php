@@ -5,6 +5,11 @@
     <div class="align-items-center">
       <h2 class="header-title">Products</h2>
     </div>
+    <?php /*?><div class="align-items-left">
+      <div class="d-md-flex align-items-center justify-content-between">
+        <a href="{{route('fetchEbayProduct')}}" class="btn btn-secondary "><i class="fa fa-download"></i> Fetch eBay Product</a>
+      </div>
+    </div><?php */?>
     <div class="align-items-center">
       <div class="d-md-flex align-items-center justify-content-between">
         <a href="{{route('add_product')}}" class="btn btn-secondary "><i class="fa fa-plus"></i> Add New Product</a>
@@ -27,6 +32,7 @@
             <th data-orderable="false">Discount</th>
             <th data-orderable="false">Status</th>
             <th data-orderable="false">DOC</th>
+            <th data-orderable="false">Ebay</th>
             <th data-orderable="false">Action</th>
           </tr>
         </thead>

@@ -4,17 +4,30 @@ namespace Illuminate\Session;
 
 use Illuminate\Support\Manager;
 
+/**
+ * @mixin \Illuminate\Session\Store
+ */
 class SessionManager extends Manager
 {
     /**
      * Call a custom driver creator.
      *
      * @param  string  $driver
-     * @return mixed
+     * @return \Illuminate\Session\Store
      */
     protected function callCustomCreator($driver)
     {
         return $this->buildSession(parent::callCustomCreator($driver));
+    }
+
+    /**
+     * Create an instance of the "null" session driver.
+     *
+     * @return \Illuminate\Session\Store
+     */
+    protected function createNullDriver()
+    {
+        return $this->buildSession(new NullSessionHandler);
     }
 
     /**
@@ -24,7 +37,9 @@ class SessionManager extends Manager
      */
     protected function createArrayDriver()
     {
-        return $this->buildSession(new NullSessionHandler);
+        return $this->buildSession(new ArraySessionHandler(
+            $this->config->get('session.lifetime')
+        ));
     }
 
     /**
@@ -174,7 +189,12 @@ class SessionManager extends Manager
     {
         return $this->config->get('session.encrypt')
                 ? $this->buildEncryptedSession($handler)
-                : new Store($this->config->get('session.cookie'), $handler);
+                : new Store(
+                    $this->config->get('session.cookie'),
+                    $handler,
+                    $id = null,
+                    $this->config->get('session.serialization', 'php')
+                );
     }
 
     /**
@@ -186,8 +206,32 @@ class SessionManager extends Manager
     protected function buildEncryptedSession($handler)
     {
         return new EncryptedStore(
-            $this->config->get('session.cookie'), $handler, $this->container['encrypter']
+            $this->config->get('session.cookie'),
+            $handler,
+            $this->container['encrypter'],
+            $id = null,
+            $this->config->get('session.serialization', 'php'),
         );
+    }
+
+    /**
+     * Determine if requests for the same session should wait for each to finish before executing.
+     *
+     * @return bool
+     */
+    public function shouldBlock()
+    {
+        return $this->config->get('session.block', false);
+    }
+
+    /**
+     * Get the name of the cache store / driver that should be used to acquire session locks.
+     *
+     * @return string|null
+     */
+    public function blockDriver()
+    {
+        return $this->config->get('session.block_store');
     }
 
     /**

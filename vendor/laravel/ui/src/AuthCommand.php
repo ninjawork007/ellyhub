@@ -58,14 +58,13 @@ class AuthCommand extends Command
         }
 
         $this->ensureDirectoriesExist();
-
         $this->exportViews();
 
         if (! $this->option('views')) {
             $this->exportBackend();
         }
 
-        $this->info('Authentication scaffolding generated successfully.');
+        $this->components->info('Authentication scaffolding generated successfully.');
     }
 
     /**
@@ -93,7 +92,7 @@ class AuthCommand extends Command
     {
         foreach ($this->views as $key => $value) {
             if (file_exists($view = $this->getViewPath($value)) && ! $this->option('force')) {
-                if (! $this->confirm("The [{$value}] view already exists. Do you want to replace it?")) {
+                if (! $this->components->confirm("The [$value] view already exists. Do you want to replace it?")) {
                     continue;
                 }
             }
@@ -112,15 +111,27 @@ class AuthCommand extends Command
      */
     protected function exportBackend()
     {
-        file_put_contents(
-            app_path('Http/Controllers/HomeController.php'),
-            $this->compileControllerStub()
-        );
+        $this->callSilent('ui:controllers');
+
+        $controller = app_path('Http/Controllers/HomeController.php');
+
+        if (file_exists($controller) && ! $this->option('force')) {
+            if ($this->components->confirm("The [HomeController.php] file already exists. Do you want to replace it?")) {
+                file_put_contents($controller, $this->compileControllerStub());
+            }
+        } else {
+            file_put_contents($controller, $this->compileControllerStub());
+        }
 
         file_put_contents(
             base_path('routes/web.php'),
             file_get_contents(__DIR__.'/Auth/stubs/routes.stub'),
             FILE_APPEND
+        );
+
+        copy(
+            __DIR__.'/../stubs/migrations/2014_10_12_100000_create_password_resets_table.php',
+            base_path('database/migrations/2014_10_12_100000_create_password_resets_table.php')
         );
     }
 

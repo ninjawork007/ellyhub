@@ -10,6 +10,7 @@ use DB;
 use Hash;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use App\Models\EbayCredential;
 class SettingController extends Controller{
     use AuthenticatesUsers;
     public function __construct() {
@@ -132,4 +133,10 @@ class SettingController extends Controller{
 	public function home_page_setting(){
 		return view('admin/frontpage.home');
 	}
+	 public function market_settings(Request $request)
+    {
+        $user = Auth::user();       
+        $ebay_auth = EbayCredential::where('user_id', '=', $user->id)->first();      
+        return view('admin/settings.index', compact('ebay_auth'));
+    }
 }

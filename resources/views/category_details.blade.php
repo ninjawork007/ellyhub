@@ -143,14 +143,7 @@
                         </span>
                         @endif
                         <div class="amr-product-img">
-                            @if($key->is_uploaded)
-                            <?php
-                            $image_array = explode(',', $key->image);
-                            ?>
-                            <img src="{{$image_array[0]}}" alt="{{$key->name}}">
-                            @else
-                            <img src="{{url('public/'.$key->image)}}" alt="{{$key->name}}">
-                            @endif
+                            <img src="{{$key->image}}" alt="{{$key->name}}">
                         </div>
                         <div class="pro-info">
                         <h2 class="amr-loop-product-title">{{$key->name}}</h2>

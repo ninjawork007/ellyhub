@@ -227,5 +227,13 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
+	 'ebay_site_id' => env('EBAY_SITE_ID', '0'),
+    'ebay_global_id' => env('EBAY_GLOBAL_ID', 'EBAY-USD'),
+
+    'ebay_prod_app_id' => env('EBAY_PROD_APP_ID', ''),
+    'ebay_prod_dev_id' => env('EBAY_PROD_DEV_ID', ''),
+    'ebay_prod_cert_id' => env('EBAY_PROD_CERT_ID', ''),
+    'ebay_prod_runame' => env('EBAY_PROD_RUNAME', ''),
+	'ebay_app_environment' => env('EBAY_APP_ENVIRONMENT', ''),
 
 ];
