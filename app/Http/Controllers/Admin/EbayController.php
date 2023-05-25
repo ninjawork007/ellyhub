@@ -88,8 +88,9 @@ class EbayController extends Controller
 				if ($ebay_credentials) 
 				{
 					foreach($ebay_credentials as $cre)
-						$ebay->fetchProductNew('',false,$cre->user_id);
+						$ebay->fetchProduct('',false,$cre->user_id);
 				}
+                logger("Cron Job Running");
 		 }
           catch (\Exception $exception) {
 			  Storage::disk('local')->put(date("Y-m-d H:i:s").'_'.'error.txt', $exception->getMessage());

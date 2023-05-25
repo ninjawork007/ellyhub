@@ -130,6 +130,8 @@ class EbayCronController extends Controller
         //SubCategory::truncate();
         //ChildCategory::truncate();
 
+        $EbayFetchProductIds = array();
+
 		if($isAuth) {
             $user = Auth::user();  
         } else {
@@ -212,8 +214,7 @@ class EbayCronController extends Controller
                     foreach ($dataProduct['Item'] as $product) {
                         $item_id = $product['ItemID'] ?? '';
 
-                        $ChekPrd = Product::where("ebay_product_id", $item_id)->count();
-                        if ($item_id && $ChekPrd == 0) {
+                        if ($item_id) {
                             $requestXmlBody = '<?xml version="1.0" encoding="utf-8"?>';
                             $requestXmlBody .= '<GetItemRequest xmlns="urn:ebay:apis:eBLBaseComponents">';
                             $requestXmlBody .= '<RequesterCredentials>';
@@ -225,6 +226,8 @@ class EbayCronController extends Controller
                             $requestXmlBody .= '<IncludeItemSpecifics>true</IncludeItemSpecifics>';
                             $requestXmlBody .= '<ItemID>' . $item_id . '</ItemID>';
                             $requestXmlBody .= '</GetItemRequest>';
+
+                            $EbayFetchProductIds[] = $item_id;
 
                             $callname = 'GetItem';
                             $responseXml = $this->sendHttpRequest($requestXmlBody, $userToken, $callname);
@@ -472,6 +475,8 @@ class EbayCronController extends Controller
                         }
                     }
                 }
+
+                Product::where(["ebay_product_id" => $EbayFetchProductIds])->delete();
                 
                 return [
                     'success' => true,
