@@ -458,7 +458,8 @@ class EbayCronController extends Controller
                             $productStore->save();
 
                             if(isset($product["PictureDetails"]["PictureURL"]) && is_array($product["PictureDetails"]["PictureURL"])){
-                                if(count($product["PictureDetails"]["PictureURL"]) > 0){
+                                $CheckGallery = ProductGallery::where("product_id", $productStore->id)->count();
+                                if(count($product["PictureDetails"]["PictureURL"]) > 0 && $CheckGallery == 0){
                                     foreach($product["PictureDetails"]["PictureURL"] as $PicURL){
                                         $GalleryObj = new ProductGallery();
                                         $GalleryObj->product_id = $productStore->id;
