@@ -12,6 +12,7 @@ use App\Http\Controllers\admin\Input;
 use App\Http\Controllers\Admin\EbayCronController;
 use App\Helpers\Ebay\EbayHelper;
 use App\Models\Product;
+use App\Models\ProductGallery;
 use App\Models\EbayPaymentPolicy;
 use App\Models\EbayReturnPolicy;
 use App\Models\EbayShippingPolicy;

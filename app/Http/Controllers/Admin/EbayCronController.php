@@ -21,6 +21,7 @@ use App\Models\Marketplace;
 use App\Models\Category;
 use App\Models\SubCategory;
 use App\Models\ChildCategory;
+use App\Models\ProductGallery;
 
 use App\Http\Controllers\Controller;
 
@@ -452,6 +453,18 @@ class EbayCronController extends Controller
 								$productStore->ebay_product_url ='https://www.ebay.com/itm/'. $item_id;
 								 
                             $productStore->save();
+
+                            if(isset($product["PictureDetails"]["PictureURL"]) && is_array($product["PictureDetails"]["PictureURL"])){
+                                if(count($product["PictureDetails"]["PictureURL"]) > 0){
+                                    foreach($product["PictureDetails"]["PictureURL"] as $PicURL){
+                                        $GalleryObj = new ProductGallery();
+                                        $GalleryObj->product_id = $productStore->id;
+                                        $GalleryObj->images = $PicURL;
+                                        $GalleryObj->save();
+                                    }
+                                }
+                            }
+
                             array_push($activeProductStore, [$product, $productStore]);
                             array_push($productStoreInfoArraySuccess, $productStore);
                         } else {
