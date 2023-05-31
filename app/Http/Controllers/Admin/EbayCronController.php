@@ -138,7 +138,7 @@ class EbayCronController extends Controller
             $user = User::find($user_id);
         }
 		
-        $userToken = $this->getToken($isAuth,$user_id);
+        $userToken = $this->getToken($isAuth,$user_id);    
 		
         $startDate = date('Y-m-d', strtotime('-60 days')) . 'T' . date('H:i:s') . '.420Z'; //2022-01-25T08:39:40.420Z
         $endDate = date('Y-m-d') . 'T' . date('H:i:s') . '.420Z'; //2022-02-01T08:39:50.420Z
@@ -239,6 +239,45 @@ class EbayCronController extends Controller
 
                             $ebayCategoryId = $product['PrimaryCategory']['CategoryID'] ?? '';
                             $ebayCategoryName = $product['PrimaryCategory']['CategoryName'] ?? '';
+
+                            $item_specific = '';
+                            $ItemSpecificationKeys = array();
+
+                            if (isset($product['ItemSpecifics']['NameValueList'])) {
+                                $ItemSpecifics = json_decode(json_encode($product['ItemSpecifics']));
+                                if (gettype($ItemSpecifics->NameValueList) == 'object') {
+                                    if (isset($ItemSpecifics->NameValueList->Name)) {
+                                        $ItemSpecificationKeys[] = $ItemSpecifics->NameValueList->Name;
+                                        $key = $ItemSpecifics->NameValueList->Name;
+                                        $value = $ItemSpecifics->NameValueList->Value;
+                                        $item_specific_array = [];
+                                        $item_specific_array[$key] = $value;
+                                        $item_specific = json_encode($item_specific_array);
+                                    }
+                                } else if (gettype($ItemSpecifics->NameValueList) == 'array') {
+                                    $item_specific_array = [];
+                                    foreach ($ItemSpecifics->NameValueList as $itemSpecific) {
+                                        $ItemSpecificationKeys[] = $itemSpecific->Name;
+                                        $key = $itemSpecific->Name;
+                                        $value = $itemSpecific->Value;
+                                        $item_specific_array[$key] = $value;
+                                    }
+                                    $item_specific = json_encode($item_specific_array);
+                                }
+                            }
+
+                            if ($ebayCategoryId) {
+                                $checkCategory = EbayCategory::where('category_id', $ebayCategoryId)->first();
+                                if (!$checkCategory) {
+                                    $checkCategory = new EbayCategory();
+                                    $checkCategory->category_id = $ebayCategoryId;
+                                    $checkCategory->name = $ebayCategoryName != '' ? str_replace(':', ' > ', $ebayCategoryName) : '';
+                                    $checkCategory->status = 1;
+                                    $checkCategory->custom_fields = json_encode($ItemSpecificationKeys);
+                                    $checkCategory->save();
+                                }
+                            }
+
                             $ExpCatName = explode(":", $ebayCategoryName);
                             $MainCatID = 0;
                             $SubCatID = 0;
@@ -301,28 +340,6 @@ class EbayCronController extends Controller
 
                             $brand = $product['ProductListingDetails']['BrandMPN']['Brand'] ?? null;
                             //$MPN = $product['ProductListingDetails']['BrandMPN']['MPN'] ?? null;
-
-                            $item_specific = '';
-                            if (isset($product['ItemSpecifics']['NameValueList'])) {
-                                $ItemSpecifics = json_decode(json_encode($product['ItemSpecifics']));
-                                if (gettype($ItemSpecifics->NameValueList) == 'object') {
-                                    if (isset($ItemSpecifics->NameValueList->Name)) {
-                                        $key = $ItemSpecifics->NameValueList->Name;
-                                        $value = $ItemSpecifics->NameValueList->Value;
-                                        $item_specific_array = [];
-                                        $item_specific_array[$key] = $value;
-                                        $item_specific = json_encode($item_specific_array);
-                                    }
-                                } else if (gettype($ItemSpecifics->NameValueList) == 'array') {
-                                    $item_specific_array = [];
-                                    foreach ($ItemSpecifics->NameValueList as $itemSpecific) {
-                                        $key = $itemSpecific->Name;
-                                        $value = $itemSpecific->Value;
-                                        $item_specific_array[$key] = $value;
-                                    }
-                                    $item_specific = json_encode($item_specific_array);
-                                }
-                            }
 
                             //return [$item_specific, $product];
 
@@ -553,7 +570,7 @@ class EbayCronController extends Controller
 
                     if ($totalAmount < '250000') {
 						
-						$ebay_category_id=1334;
+						$ebay_category_id = $products->ebay_category_id;
                         
 
                         $title = !empty($products['name']) ? substr($products['name'], 0, 75) : '';
@@ -629,9 +646,13 @@ class EbayCronController extends Controller
 						     $requestXmlBody .= "<Value><![CDATA[" . $products->brand . "]]></Value>";
 							$requestXmlBody .= '</NameValueList>';
 								*/
-                        if ($products->item_specifics != null) {
-                            $item_specifics = json_decode($products->item_specifics);
-                            foreach ($item_specifics as $key => $item_specific) {
+
+
+                        $Specs = json_decode($products->ItemSpecification, true);
+
+                        if (count($Specs) > 0) {
+                            //$item_specifics = json_decode($products->item_specifics);
+                            foreach ($Specs as $key => $item_specific) {
                                 $requestXmlBody .= '<NameValueList>';
                                 $requestXmlBody .= "<Name><![CDATA[" . $key . "]]></Name>";
                                 $requestXmlBody .= "<Value><![CDATA[" . $item_specific . "]]></Value>";
@@ -651,10 +672,10 @@ class EbayCronController extends Controller
                             $requestXmlBody .= '</BrandMPN>';
                         }*/
 
-						$products->UPC=null;
-                        if ($products->UPC != null) {
-                            $requestXmlBody .= '<UPC>' . $products->UPC . '</UPC>';
-                        }
+						//$products->UPC=null;
+                        //if ($products->UPC != null) {
+                            $requestXmlBody .= '<UPC>Does Not Apply</UPC>';
+                        //}
 
                         $requestXmlBody .= '<IncludeeBayProductDetails>true</IncludeeBayProductDetails>';
                         $requestXmlBody .= '<IncludeStockPhotoURL>true</IncludeStockPhotoURL>';
@@ -745,7 +766,28 @@ class EbayCronController extends Controller
                         //send the request and get response
                         $callname = 'AddItem';
                         $responseXml = $this->sendHttpRequest($requestXmlBody, $userToken, $callname);
-                        $response = $this->xmlToArray($responseXml);	
+                        $response = $this->xmlToArray($responseXml);
+                        logger($response);
+
+
+                        $requestXmlBody = '<?xml version="1.0" encoding="utf-8"?>';
+                        $requestXmlBody .= '<GetItemRequest xmlns="urn:ebay:apis:eBLBaseComponents">';
+                        $requestXmlBody .= '<RequesterCredentials>';
+                        $requestXmlBody .= '<eBayAuthToken>' . $userToken . '</eBayAuthToken>';
+                        $requestXmlBody .= '</RequesterCredentials>';
+                        $requestXmlBody .= '<ErrorLanguage>en_US</ErrorLanguage>';
+                        $requestXmlBody .= '<WarningLevel>High</WarningLevel>';
+                        $requestXmlBody .= '<DetailLevel>ReturnAll</DetailLevel>';
+                        $requestXmlBody .= '<IncludeItemSpecifics>true</IncludeItemSpecifics>';
+                        $requestXmlBody .= '<ItemID>' . $response["ItemID"] . '</ItemID>';
+                        $requestXmlBody .= '</GetItemRequest>';
+
+                        $callname = 'GetItem';
+                        $responseXml = $this->sendHttpRequest($requestXmlBody, $userToken, $callname);
+                        $productData = $this->xmlToArray($responseXml);
+
+                        logger($productData);
+
 						
 						$environment = config('app.ebay_app_environment');					
 						if ($response['Ack'] != 'Failure') {
@@ -1092,9 +1134,9 @@ class EbayCronController extends Controller
                             $requestXmlBody .= '</BrandMPN>';
                         }*/
 
-                        if ($product->UPC != null) {
-                            $requestXmlBody .= '<UPC>' . $product->UPC . '</UPC>';
-                        }
+                        //if ($product->UPC != null) {
+                            $requestXmlBody .= '<UPC>Does Not Apply</UPC>';
+                        //}
 						
 						/*if($make_out_of_stock==1)
 							$inventory=0;
@@ -2321,7 +2363,7 @@ class EbayCronController extends Controller
                                     //return [$product];
                                     $ebayCategoryId = $product['PrimaryCategory']['CategoryID'] ?? '';
                                     $ebayCategoryName = $product['PrimaryCategory']['CategoryName'] ?? '';
-                                    /*if ($ebayCategoryId) {
+                                    if ($ebayCategoryId) {
                                         $checkCategory = EbayCategory::where('category_id', $ebayCategoryId)->first();
                                         if (!$checkCategory) {
                                             $checkCategory = new EbayCategory();
@@ -2330,7 +2372,7 @@ class EbayCronController extends Controller
                                             $checkCategory->status = 1;
                                             $checkCategory->save();
                                         }
-                                    }*/
+                                    }
 
                                     $ExpCatName = explode(":", $ebayCategoryName);
                                     $MainCatID = 0;

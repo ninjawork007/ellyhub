@@ -25,6 +25,7 @@
       <table class="table table-hover" id="myTable">
         <thead>
           <tr>
+            <th>Sr. No.</th>
             <th data-orderable="false">Product</th>
             <th data-orderable="false">Vendor</th>
             <th data-orderable="false">Category</th>

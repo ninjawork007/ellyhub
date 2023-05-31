@@ -17,6 +17,10 @@ use App\Models\EbayPaymentPolicy;
 use App\Models\EbayReturnPolicy;
 use App\Models\EbayShippingPolicy;
 
+use App\Models\Category;
+use App\Models\SubCategory;
+use App\Models\ChildCategory;
+
 class ProductController extends Controller{
 
     use AuthenticatesUsers;
@@ -139,25 +143,13 @@ class ProductController extends Controller{
                 $status.='<option value="disapproved">Disapproved</option>';
 
             }
-            if ($row->is_uploaded) {
-                $image_array = explode(',',$row->image);
-                $product_image = '<img data-fancybox="gallery" src="'.$image_array[0].'"  alt= "" class="product_img">'.$row->name;
-            }else
-			{
-				
-					/*if (str_contains($row->image, 'http')) { 
-					 $product_image = '<img data-fancybox="gallery" src="'.$row->image.'"  alt= "" class="product_img">'.$row->name;
-  
-				}
-				else*/
-              	  $product_image = '<img data-fancybox="gallery" src="'.url('public/'.$row->image).'"  alt= "" class="product_img">'.$row->name;
-            }
+           $product_image = '<img data-fancybox="gallery" src="'.$row->image.'"  alt= "" class="product_img">'.$row->name;
 
             $status.='</select>';
 
             $final[] = array(
 
-                            "DT_RowId" => $row->id,
+                            $row->id,
 
                             $product_image,
 
@@ -222,7 +214,7 @@ class ProductController extends Controller{
 		
 		 $data['ebay_payment_policies']=EbayPaymentPolicy::where('user_id', '=', $user->id)->get();
 		 $data['ebay_shipping_policies']=EbayShippingPolicy::where('user_id', '=', $user->id)->get();
-		 $data['ebay_return_policies']=EbayReturnPolicy::where('user_id', '=', $user->id)->get();
+		 $data['ebay_return_policies'] = EbayReturnPolicy::where('user_id', '=', $user->id)->get();
 
         return view('admin.products.add',$data);
 
@@ -269,13 +261,13 @@ class ProductController extends Controller{
 
             $image_name = time() . '.' . $extension;
             if ($file->move($destinationPath, $image_name)) {
-                $image = 'uploads/' . $image_name;
+                $image = URL('public').'/uploads/'.$image_name;
             } else {
                 $image = null;
             }
         }
         $taxable_price = $request->mrp_pric-$request->gst_price;
-        $insertid = DB::table('products')->insertGetId(['vendor_id'=>auth::user()->id,'category_id'=>$request->category,'sub_category_id'=>$request->sub_category,'child_category_id'=>$child_category,'name'=>$request->name,'slug'=>$request->slug,'sku'=>$request->sku,'brand'=>$request->brand,'tags'=>$request->tags,'unit'=>$request->unit,'short_description'=>$request->short_description,'image'=>$image,'seo_title'=>$request->seo_title,'seo_description'=>$request->seo_description,'seo_tags'=>$request->seo_tags,'shipping_time'=>$shipping_time,'estimate_time'=>$estimate_time,'mrp_price'=>$request->mrp_price,'product_price'=>$taxable_price,'sale_price'=>$request->product_price,'discount_type'=>$request->discount_type,'discount'=>$request->discount,'gst_amount'=>$request->gst_price,'stock'=>$stock,'description'=>$request->description,'policy'=>$request->buy_rent_policy,'video_url'=>$request->video_url,'gst'=>$request->gst,'hsn'=>$request->hsn,'status'=>$status,'comission'=>$request->commission,'shipping_charges'=>$request->shipping_charges,'product_type'=>$request->product_type, 'ebay_category_id'=>$request->ebay_category_id,'return_policy_id'=>$request->return_policy_id,'payment_policy_id'=>$request->payment_policy_id,'shipping_policy_id'=>$request->shipping_policy_id,'package_type'=>$request->package_type,'package_weight'=>$request->package_weight,'package_dimensions_length'=>$request->package_dimensions_length,'package_dimensions_width'=>$request->package_dimensions_width,'package_dimensions_height'=>$request->package_dimensions_height,'country'=>$request->country,'city_or_state'=>$request->city_or_state,'zip_code'=>$request->zip_code]);
+        $insertid = DB::table('products')->insertGetId(['vendor_id'=>auth::user()->id,'category_id'=>$request->category,'sub_category_id'=>$request->sub_category,'child_category_id'=>$child_category,'name'=>$request->name,'slug'=>$request->slug,'sku'=>$request->sku,'brand'=>$request->brand,'tags'=>$request->tags,'unit'=>$request->unit,'short_description'=>$request->short_description,'image'=>$image,'seo_title'=>$request->seo_title,'seo_description'=>$request->seo_description,'seo_tags'=>$request->seo_tags,'shipping_time'=>$shipping_time,'estimate_time'=>$estimate_time,'mrp_price'=>$request->mrp_price,'product_price'=>$taxable_price,'sale_price'=>$request->product_price,'discount_type'=>$request->discount_type,'discount'=>$request->discount,'gst_amount'=>$request->gst_price,'stock'=>$stock,'description'=>$request->description,'policy'=>$request->buy_rent_policy,'video_url'=>$request->video_url,'gst'=>$request->gst,'hsn'=>$request->hsn,'status'=>$status,'comission'=>$request->commission,'shipping_charges'=>$request->shipping_charges,'product_type'=>$request->product_type, 'ebay_category_id'=>$request->ebay_category_id,'return_policy_id'=>$request->return_policy_id,'payment_policy_id'=>$request->payment_policy_id,'shipping_policy_id'=>$request->shipping_policy_id,'package_type'=>$request->package_type,'package_weight'=>$request->package_weight,'package_dimensions_length'=>$request->package_dimensions_length,'package_dimensions_width'=>$request->package_dimensions_width,'package_dimensions_height'=>$request->package_dimensions_height,'country'=> $request->country,'city_or_state'=>$request->city_or_state,'zip_code'=>$request->zip_code, "ItemSpecification" => @json_encode($request->custom)]);
         if ($insertid) {
             // upload gallery
             $imgarr = array();
@@ -308,9 +300,6 @@ class ProductController extends Controller{
 		 
 		   $EbayCronAddProduct = new EbayCronController();
            $data = $EbayCronAddProduct->addProduct($insertid);
-		  
-		  
-		  
           return redirect(url('admin/products'))->with('success','Product is added successfully!');
         }else{
           return redirect(url('admin/products'))->with('danger','Something went wrong. Please try after some time.');

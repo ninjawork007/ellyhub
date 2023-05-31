@@ -303,13 +303,13 @@
 
 									  <div class="col-sm-9">
 
-										<select class="form-control" required="" name="ebay_category_id">
+										<select class="form-control" required="" name="ebay_category_id" onchange="GetCustomFields(this)">
 
 										  <option value="">Select eBay Category</option>
 
 										  @if(count($ebay_category)) @foreach($ebay_category as $key)
 
-										  <option value="{{$key->category_id}}">{{$key->name}}</option>
+										  <option data-custom="{{$key->custom_fields}}" value="{{$key->category_id}}">{{$key->name}}</option>
 
 										  @endforeach @endif
 
@@ -321,6 +321,9 @@
 
 								  </div>
 
+								</div>
+
+								<div class="row" id="LoadCustomFields">
 								</div>
                                 
                                 <div class="row">
@@ -888,5 +891,23 @@
 			scrollTop: 0
 		}, "slow");
 	});
+
+	function GetCustomFields(obj){
+		var custom = $(obj).find(':selected').attr('data-custom')
+		var json = JSON.parse(custom);
+		console.log(json);
+
+		$("#LoadCustomFields").html("");
+		var HTML = "";
+
+		for(i = 0; i < json.length; i++){
+			HTML += '<div class="form-group col-lg-4 col-md-6">';
+			HTML += '<label class="form-label">'+json[i]+'<span class="text-danger">*</span></label>';
+			HTML += '<input class="form-control text-center" name="custom['+json[i]+']" required autocomplete="off">';
+			HTML += '</div>'
+		}
+
+		$("#LoadCustomFields").html(HTML);
+	}
 </script>
 @endsection
