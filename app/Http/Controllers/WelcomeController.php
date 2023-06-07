@@ -256,7 +256,7 @@ class WelcomeController extends Controller
 
             $data['message'] = 'Email verification completed.';
 
-            $data['image'] = url('public/assets/email-images/email-success.png');
+            $data['image'] = url('assets/email-images/email-success.png');
 
             return view('email_verify',$data);
 
@@ -266,7 +266,7 @@ class WelcomeController extends Controller
 
             $data['message'] = 'Sorry!!! user verification fail.';
 
-            $data['image'] = url('public/assets/email-images/email-error.png');
+            $data['image'] = url('assets/email-images/email-error.png');
 
             return view('email_verify',$data);
 
@@ -563,8 +563,8 @@ class WelcomeController extends Controller
            $data['product'] = DB::table('products')
                                  ->join('users','products.vendor_id','=','users.id')
                                  ->join('categories','products.category_id','=','categories.id') 
-                                 ->join('product_gallery','products.id','=','product_gallery.product_id') 
-                                 ->select('products.id','products.name','products.image','product_gallery.images','products.mrp_price','products.sale_price','products.discount','products.discount_type','categories.name as category_name','categories.id as category_id','users.name as vendor_name')
+                                 //->join('product_gallery','products.id','=','product_gallery.product_id') 
+                                 ->select('products.id','products.name','products.image','products.mrp_price','products.sale_price','products.discount','products.discount_type','categories.name as category_name','categories.id as category_id','users.name as vendor_name')
                                   ->where([['products.sub_category_id','=',$id],['products.is_delete','=','0'],['products.status','=','approved']])
                                  ->orderby('products.id','desc')
                                  ->groupBy('products.id')  
@@ -583,8 +583,8 @@ class WelcomeController extends Controller
            $data['product'] = DB::table('products')
                                  ->join('users','products.vendor_id','=','users.id')
                                  ->join('categories','products.category_id','=','categories.id') 
-                                 ->join('product_gallery','products.id','=','product_gallery.product_id') 
-                                 ->select('products.id','products.name','products.image','product_gallery.images','products.mrp_price','products.sale_price','products.discount','products.discount_type','categories.name as category_name','categories.id as category_id','users.name as vendor_name')
+                                 //->join('product_gallery','products.id','=','product_gallery.product_id') 
+                                 ->select('products.id','products.name','products.image','products.mrp_price','products.sale_price','products.discount','products.discount_type','categories.name as category_name','categories.id as category_id','users.name as vendor_name')
                                   ->where([['products.child_category_id','=',$id],['products.is_delete','=','0'],['products.status','=','approved']])
                                  ->orderby('products.id','desc')
                                  ->groupBy('products.id')  
@@ -837,7 +837,7 @@ class WelcomeController extends Controller
 
             $data['message'] = 'Email verification completed.';
 
-            $data['image'] = url('public/assets/email-images/email-success.png');
+            $data['image'] = url('assets/email-images/email-success.png');
 
             return view('email_verify',$data);
 
@@ -847,7 +847,7 @@ class WelcomeController extends Controller
 
             $data['message'] = 'Sorry!!! user verification fail.';
 
-            $data['image'] = url('public/assets/email-images/email-error.png');
+            $data['image'] = url('assets/email-images/email-error.png');
 
             return view('email_verify',$data);
 
@@ -1640,7 +1640,7 @@ class WelcomeController extends Controller
                                     $image_array = explode(',',$value->image);
                                     echo "<img src=".$image_array[0]." class='img-search'>";
                                 }else{
-                                    echo "<img src=".url('public/'.$value->image)." class='img-search'>";
+                                    echo "<img src=".url(''.$value->image)." class='img-search'>";
                                 }
                         
                         echo "</div><div><div class='search-pro-name'>". $name ."</div><div class='serch-pro-price'> <del>". $currency.$value->mrp_price ." </del>  <strong> ". $currency.$value->sale_price ." </strong> </div></div></a> 

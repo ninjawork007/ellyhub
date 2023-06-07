@@ -7,6 +7,10 @@ use App\Models\EbayCredential;
 use Auth;
 use App\Http\Controllers\Admin\EbayCronController;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
+use App\Helpers\Ebay\EbayHelper;
+use Illuminate\Support\Facades\DB;
+
 class EbayController extends Controller
 {
     public function ebayCredentialsStore(Request $request)
@@ -61,24 +65,51 @@ class EbayController extends Controller
 	 public function updatePaypal(Request $request)
     {
         $user = Auth::user();
+		
 
         $ebay = EbayCredential::where('user_id', $user->id)->firstOrFail();
         $ebay->paypal_email = $request->paypal;
         $ebay->save();
 
-		//$helper=new EbayHelper();
-		//$helper->getBusinessPolicies($user->id);
+		$helper=new EbayHelper();
+		$helper->getBusinessPolicies($user->id);
 
 
         return redirect()->back()->with('success', 'Your paypal has been successfully updated.');
     }
+	 public function fetchEbayProductCron()
+    {
+		
+		 try {
+			 // Storage::disk('local')->put(date("Y-m-d H:i:s").'_'.'ebay.txt', 'content');
+				$ebay=new EbayCronController();
+				  
+				$ebay_credentials = EbayCredential::get(); 
+				if ($ebay_credentials) 
+				{
+					foreach($ebay_credentials as $cre)
+						$ebay->fetchProduct('',false,$cre->user_id);
+				}
+                logger("Cron Job Running");
+		 }
+          catch (\Exception $exception) {
+			  Storage::disk('local')->put(date("Y-m-d H:i:s").'_'.'error.txt', $exception->getMessage());
+          
+          }
+       
+		return true;
+
+       
+    }
+
 	
 	 public function fetchEbayProduct()
     {
-        $ebay=new EbayCronController();
-		$ebay->fetchProduct();
+				
+       $ebay=new EbayCronController();
+		$ebay->fetchProductNew();
 
-        return redirect()->back()->with('success', 'eBay Product has been successfully fetched.');
+       return redirect()->back()->with('success', 'eBay Product has been successfully fetched.');
     }
 
 }

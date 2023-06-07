@@ -6,19 +6,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Dashboard || {{$setting[0]->site_title}}</title>
-  <link rel="apple-touch-icon" sizes="180x180" href="{{url('public/assets/web/images/favicon/apple-touch-icon.png')}}">
-  <link rel="icon" type="image/png" sizes="32x32" href="{{url('public/assets/web/images/favicon/favicon-32x32.png')}}">
-  <link rel="icon" type="image/png" sizes="16x16" href="{{url('public/assets/web/images/favicon/favicon-16x16.png')}}">
-  <link rel="manifest" href="{{url('public/assets/web/images/favicon/site.webmanifest')}}">
-  <link rel="mask-icon" href="{{url('public/assets/web/images/favicon/safari-pinned-tab.svg')}}" color="#5bbad5">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{url('assets/web/images/favicon/apple-touch-icon.png')}}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{url('assets/web/images/favicon/favicon-32x32.png')}}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{url('assets/web/images/favicon/favicon-16x16.png')}}">
+  <link rel="manifest" href="{{url('assets/web/images/favicon/site.webmanifest')}}">
+  <link rel="mask-icon" href="{{url('assets/web/images/favicon/safari-pinned-tab.svg')}}" color="#5bbad5">
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="theme-color" content="#ffffff">
-  <link rel="stylesheet" href="{{url('public/assets/parsley/parsley.css')}}">
-  <link rel="stylesheet" href="{{url('public/assets/adminn/vendors/datatables/dataTables.bootstrap.min.css')}}">
-  <link rel="stylesheet" href="{{url('public/assets/web/fancybox/jquery.fancybox.min.css')}}" media="all" />
-  <link rel="stylesheet" href="{{url('public/assets/adminn/css/app.min.css')}}">
-  <link rel="stylesheet" href="{{url('public/assets/adminn/css/style.css')}}">
-  <script src="{{url('public/assets/adminn/js/jquery.min.js')}}"></script>
+  <link rel="stylesheet" href="{{url('assets/parsley/parsley.css')}}">
+  <link rel="stylesheet" href="{{url('assets/adminn/vendors/datatables/dataTables.bootstrap.min.css')}}">
+  <link rel="stylesheet" href="{{url('assets/web/fancybox/jquery.fancybox.min.css')}}" media="all" />
+  <link rel="stylesheet" href="{{url('assets/adminn/css/app.min.css')}}">
+  <link rel="stylesheet" href="{{url('assets/adminn/css/style.css')}}">
+  <script src="{{url('assets/adminn/js/jquery.min.js')}}"></script>
   <style>
     .inner-menu {
       list-style: none;
@@ -32,8 +32,8 @@
       <div class="header">
         <div class="logo">
           <a class="navbar-brand brand-logo " href="{{url('admin/dashboard')}}">
-            <img src="{{url('public/'.$setting[0]->logo)}}" alt="logo" />
-            <img class="logo-fold" src="{{url('public/'.$setting[0]->icon)}}" alt="Logo">
+            <img src="{{url(''.$setting[0]->logo)}}" alt="logo" />
+            <img class="logo-fold" src="{{url(''.$setting[0]->icon)}}" alt="Logo">
           </a>
         </div>
         <div class="nav-wrap">
@@ -53,14 +53,14 @@
             <li class="dropdown dropdown-animated scale-left">
               <div class="pointer" data-toggle="dropdown">
                 <div class="avatar avatar-image  m-h-10 m-r-15">
-                  <img src="{{url('public/assets/web/images/favicon/apple-touch-icon.png')}}" alt="">
+                  <img src="{{url('assets/web/images/favicon/apple-touch-icon.png')}}" alt="">
                 </div>
               </div>
               <div class="p-b-15 p-t-20 dropdown-menu pop-profile">
                 <div class="p-h-20 p-b-15 m-b-10 border-bottom">
                   <div class="d-flex m-r-50">
                     <div class="avatar avatar-lg avatar-image">
-                      <img src="{{url('public/assets/web/images/favicon/apple-touch-icon.png')}}" alt="">
+                      <img src="{{url('assets/web/images/favicon/apple-touch-icon.png')}}" alt="">
                     </div>
                     <div class="m-l-10">
                       <p class="m-b-0 text-dark font-weight-semibold">{{Auth::user()->name}}</p>
@@ -466,14 +466,14 @@
       </div>
     </div>
   </div>
-  <script src="{{url('public/assets/adminn/js/vendors.min.js')}}"></script>
-  <script src="{{url('public/assets/parsley/parsley.js')}}"></script>
+  <script src="{{url('assets/adminn/js/vendors.min.js')}}"></script>
+  <script src="{{url('assets/parsley/parsley.js')}}"></script>
   <script type="text/javascript" src="//unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <script type="text/javascript" src="{{url('public/assets/adminn/vendors/datatables/jquery.dataTables.min.js')}}"></script>
-  <script src="{{url('public/assets/adminn/vendors/datatables/dataTables.bootstrap.min.js')}}"></script>
-  <script type="text/javascript" src="{{url('public/assets/web/fancybox/jquery.fancybox.min.js')}}"></script>
-  <script src="{{url('public/assets/adminn/js/pages/datatables.js')}}"></script>
-  <script src="{{url('public/assets/adminn/js/app.min.js')}}"></script>
+  <script type="text/javascript" src="{{url('assets/adminn/vendors/datatables/jquery.dataTables.min.js')}}"></script>
+  <script src="{{url('assets/adminn/vendors/datatables/dataTables.bootstrap.min.js')}}"></script>
+  <script type="text/javascript" src="{{url('assets/web/fancybox/jquery.fancybox.min.js')}}"></script>
+  <script src="{{url('assets/adminn/js/pages/datatables.js')}}"></script>
+  <script src="{{url('assets/adminn/js/app.min.js')}}"></script>
 
   <script type="text/javascript">
     function readURL(input) {

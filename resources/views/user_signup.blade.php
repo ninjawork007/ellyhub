@@ -68,7 +68,7 @@
 
 										<div class="login-logo w-100">									
 
-											<a href="{{url('/')}}"><img src="{{url('public/assets/images/logo.PNG')}}" alt="" class="w-50"></a>
+											<a href="{{url('/')}}"><img src="{{url('assets/images/logo.PNG')}}" alt="" class="w-50"></a>
 
 										</div>
 

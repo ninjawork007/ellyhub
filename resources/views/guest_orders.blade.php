@@ -51,7 +51,7 @@ full-width white-bg @endsection
                             </table>
                             @else
                             <div class="text-center">
-                                <img src="{{url('/public/not-found.jpg')}}">
+                                <img src="{{url('/not-found.jpg')}}">
                                 <p>No Order Found.</p>
                             </div>
                             @endif
@@ -97,7 +97,7 @@ full-width white-bg @endsection
                             </table>
                             @else
                             <div class="text-center">
-                                <img src="{{url('/public/not-found.jpg')}}">
+                                <img src="{{url('/not-found.jpg')}}">
                                 <p>No Order Found.</p>
                             </div>
                             @endif

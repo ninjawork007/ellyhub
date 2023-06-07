@@ -42,7 +42,7 @@ full-width @endsection
                                 ?>
                                 <img src="{{$image_array[0]}}" alt="">
                             @else
-                                <img src="{{url('public/'.$key->image)}}" alt="{{$key->name}}">
+                                <img src="{{url($key->image)}}" alt="{{$key->name}}">
                             @endif
                         </div>
                         <div class="pro-info">

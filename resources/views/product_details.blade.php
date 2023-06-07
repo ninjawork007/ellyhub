@@ -62,31 +62,28 @@ foreach($reviews as $key){
                                 <div class="amr-single-product-gallery-images" data-ride="amr-slick-carousel" data-wrap=".amrcart-product-gallery__wrapper" data-slick="{&quot;infinite&quot;:false,&quot;slidesToShow&quot;:1,&quot;slidesToScroll&quot;:1,&quot;dots&quot;:false,&quot;arrows&quot;:false,&quot;asNavFor&quot;:&quot;#amr-single-product-gallery .amr-single-product-gallery-thumbnails__wrapper&quot;}">
                                     <div class="amrcart-product-gallery amrcart-product-gallery--with-images amrcart-product-gallery--columns-4 images" data-columns="4">
                                         <figure class="amrcart-product-gallery__wrapper ">
-                                            @if(count($product_gallery))
-                                                @foreach($product_gallery as $key)
-                                                <div data-thumb="{{url('public/')}}/{{ $key->images}}')}}" class="amrcart-product-gallery__image if">
-                                                    <a href="{{url('public/')}}/{{ $key->images}}" tabindex="0" data-fancybox="product-image">
+                                            @php
+                                            $image_array = explode(',',$product->image);    
+                                            @endphp
+                                            
+                                            @for($i=0; $i < count($image_array); $i++)
+                                            
+                                            <div data-thumb="{{$image_array[$i]}}" class="amrcart-product-gallery__image else">
+                                                <a href="{{$image_array[$i]}}" tabindex="0" data-fancybox="product-image">
 
-                                                        <img width="600" height="600" src="{{url('public/')}}/{{ $key->images}}" class="attachment-shop_single size-shop_single wp-post-image" alt="">
-                                                    </a>
-                                                </div>
-                                                @endforeach
-                                            @else
-                                                @if($product->is_uploaded)
-                                                <?php
-                                                $image_array = explode(',',$product->image);
-                                                ?>
-                                                @for($i=0;$i < 2;$i++)
-                                                
-                                                <div data-thumb="{{$image_array[$i]}}" class="amrcart-product-gallery__image else">
-                                                    <a href="{{$image_array[$i]}}" tabindex="0" data-fancybox="product-image">
+                                                    <img width="600" height="600" src="{{$image_array[$i]}}" class="attachment-shop_single size-shop_single wp-post-image" alt="">
+                                                </a>
+                                            </div>
+                                            @endfor
 
-                                                        <img width="600" height="600" src="{{$image_array[$i]}}" class="attachment-shop_single size-shop_single wp-post-image" alt="">
-                                                    </a>
-                                                </div>
-                                                @endfor
-                                                @endif
-                                            @endif
+
+                                            @foreach($product_gallery as $key)
+                                            <div data-thumb="{{ $key->images}}')}}" class="amrcart-product-gallery__image if">
+                                                <a href="{{ $key->images}}" tabindex="0" data-fancybox="product-image">
+                                                    <img width="600" height="600" src="{{ $key->images}}" class="attachment-shop_single size-shop_single wp-post-image" alt="">
+                                                </a>
+                                            </div>
+                                            @endforeach
                                         </figure>
                                     </div>
                                     <!-- .amrcart-product-gallery -->
@@ -97,27 +94,25 @@ foreach($reviews as $key){
                                     data-wrap=".amr-single-product-gallery-thumbnails__wrapper"
                                     data-slick="{&quot;infinite&quot;:false,&quot;slidesToShow&quot;:4,&quot;slidesToScroll&quot;:1,&quot;dots&quot;:false,&quot;arrows&quot;:true,&quot;vertical&quot;:true,&quot;verticalSwiping&quot;:true,&quot;focusOnSelect&quot;:true,&quot;touchMove&quot;:true,&quot;prevArrow&quot;:&quot;&lt;a href=\&quot;#\&quot;&gt;&lt;i class=\&quot;icon amr-arrow-up\&quot;&gt;&lt;\/i&gt;&lt;\/a&gt;&quot;,&quot;nextArrow&quot;:&quot;&lt;a href=\&quot;#\&quot;&gt;&lt;i class=\&quot;icon amr-arrow-down\&quot;&gt;&lt;\/i&gt;&lt;\/a&gt;&quot;,&quot;asNavFor&quot;:&quot;#amr-single-product-gallery .amrcart-product-gallery__wrapper&quot;,&quot;responsive&quot;:[{&quot;breakpoint&quot;:765,&quot;settings&quot;:{&quot;vertical&quot;:false,&quot;horizontal&quot;:true,&quot;verticalSwiping&quot;:false,&quot;slidesToShow&quot;:4}}]}">
                                     <figure class="amr-single-product-gallery-thumbnails__wrapper">
-                                    @if($product->is_uploaded)
+                                    
                                         <?php
                                             $image_array = explode(',',$product->image);
                                         ?>
-                                        @for($j=0;$j < 2;$j++)
+                                        @for($j=0; $j < count($image_array); $j++)
                                         <figure data-thumb="{{$image_array[$j]}}" class="amr-wc-product-gallery__image">
                                             <img width="180" height="180" src="{{$image_array[$j]}}"
                                                 class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt="">
                                         </figure>
                                         @endfor
-                                    @else
+                                    
                                         @if(count($product_gallery))
                                         @foreach($product_gallery as $key)
-                                        <figure data-thumb="{{url('public/')}}/{{ $key->images}}"
-                                            class="amr-wc-product-gallery__image">
-                                            <img width="180" height="180" src="{{url('public/')}}/{{ $key->images}}"
+                                        <figure data-thumb="{{ $key->images}}" class="amr-wc-product-gallery__image">
+                                            <img width="180" height="180" src="{{ $key->images}}"
                                                 class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt="">
                                         </figure>
                                         @endforeach
                                         @endif
-                                    @endif
                                     </figure>
                                     <!-- .amr-single-product-gallery-thumbnails__wrapper -->
                                 </div>

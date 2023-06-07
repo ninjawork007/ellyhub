@@ -212,7 +212,7 @@ input[type="checkbox"] {
 									  <label class="col-sm-3 col-form-label">Product image<span>*</span></label>
 									  <div class="col-sm-9">
 										 @if(!empty($product->image))
-											<img src="{{url('public/'.$product->image)}}" id="product_img" alt="image" class="edit_img " />
+											<img src="{{$product->image}}" id="product_img" alt="image" class="edit_img " />
 									  	 @else
 										    <img src="" id="product_img"  class="edit_img " />
 										@endif
@@ -228,7 +228,7 @@ input[type="checkbox"] {
 										   @if($product_gallery)
 												@foreach($product_gallery as $key)
 													<label id="gall_{{$key->id}}">
-														<img src="{{url('public/'.$key->images)}}" class="edit_img" /> 
+														<img src="{{$key->images}}" class="edit_img" /> 
 													</label>
 												@endforeach
 										  @endif

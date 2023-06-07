@@ -12,8 +12,8 @@ homepage-template
                     @if(count($home_banner))
                     @foreach($home_banner as $key)
                     <div class="amr-banner">
-                        <img class="mobile-only" src="{{url('public/')}}/{{ $key->m_banner}}" alt="alt" />
-                        <img class="desktop-only" src="{{url('public/')}}/{{ $key->banner}}" alt="alt" />
+                        <img class="mobile-only" src="{{ $key->m_banner}}" alt="alt" />
+                        <img class="desktop-only" src="{{ $key->banner}}" alt="alt" />
                     </div>
                     @endforeach
                     @endif
@@ -28,7 +28,7 @@ homepage-template
                 @foreach($home_top_banner as $key)
                 <div class="banner banner-short">
                     <a href="{{ $key->url}}">
-                        <img src="{{url('public/')}}/{{ $key->banner}}" alt="alt" />
+                        <img src="{{ $key->banner}}" alt="alt" />
                     </a>
                 </div>
                 @endforeach
@@ -99,11 +99,11 @@ homepage-template
                                     @if($key->is_uploaded)
                                     <?php
                                     $image_array = explode(',',$key->image);
-
+//var_dump( $image_array);
                                     ?>
                                     <img src="{{$image_array[0]}}" alt="">
                                     @else
-                                    <img src="{{url('public/'.$key->image)}}" alt="{{$key->name}}">
+                                    <img src="{{$key->image}}" alt="{{$key->name}}">
                                     @endif
                                     
                                 </div>
@@ -254,7 +254,7 @@ homepage-template
                 @foreach($home_bottom_banner as $key)
                 <div class="banner banner-short">
                     <a href="{{ $key->url}}">
-                        <img src="{{url('public/')}}/{{ $key->banner}}" alt="alt" />
+                        <img src="{{ $key->banner}}" alt="alt" />
                     </a>
                 </div>
                 @endforeach
@@ -279,7 +279,7 @@ homepage-template
                                 </div>
                                 <!-- /.info -->
                             </figcaption>
-                            <img width="145" height="50" class="img-responsive desaturate" alt="{{ $key->title}}" src="{{url('public/')}}/{{ $key->banner}}">
+                            <img width="145" height="50" class="img-responsive desaturate" alt="{{ $key->title}}" src="{{ $key->banner}}">
                         </figure>
                     </div>
                     @endforeach

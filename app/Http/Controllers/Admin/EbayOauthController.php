@@ -11,16 +11,7 @@ use App\Helpers\Ebay\EbayHelper;
 
 class EbayOauthController extends Controller
 {
-    /*//Todo: Production
-    public $appID = "DanishSi-itemRepr-PRD-fec73a437-96145cfe";
-    public $devID = "8c0ba6b0-6069-4efa-8065-7c864dab8bf2";
-    public $certID = "PRD-ec73a4370b1b-1e0b-42b0-9663-8999";
-    public $ruName = 'Waqar_Siddiqui-DanishSi-itemRe-ulmjpy';//ruName == redirectURI
-
-    $this->appID = env('EBAY_PROD_APP_ID');
-    $this->devID = env('EBAY_PROD_DEV_ID');
-    $this->certID = env('EBAY_PROD_CERT_ID');
-    $this->redirectURI = env('EBAY_PROD_RUNAME');*/
+   
 
     //Todo: Production
     public $appID;
@@ -104,8 +95,8 @@ class EbayOauthController extends Controller
 
                 if ($ebay_credentials) {
 					
-					//$helper=new EbayHelper();
-					//$helper->getBusinessPolicies($user->id);
+					$helper=new EbayHelper();
+					$helper->getBusinessPolicies($user->id);
 		
                     return redirect()->route('market_settings')->with('success', 'You have successfully connected your eBay');
                 } else {

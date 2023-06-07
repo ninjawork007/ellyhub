@@ -68,7 +68,7 @@
 
                             <div class="text-center">
 
-                                <img src="{{url('/public/not-found.jpg')}}">
+                                <img src="{{url('/not-found.jpg')}}">
 
                                 <p>No Address Found.</p>
 

@@ -18,41 +18,41 @@
    <title>{{$setting[0]->site_title}}</title>
    @endif
    
-   <link rel="apple-touch-icon" sizes="57x57" href="{{url('public/'.$setting[0]->icon)}}">
-   <link rel="apple-touch-icon" sizes="60x60" href="{{url('public/'.$setting[0]->icon)}}">
-   <link rel="apple-touch-icon" sizes="72x72" href="{{url('public/'.$setting[0]->icon)}}">
-   <link rel="apple-touch-icon" sizes="76x76" href="{{url('public/'.$setting[0]->icon)}}">
-   <link rel="apple-touch-icon" sizes="114x114" href="{{url('public/'.$setting[0]->icon)}}">
-   <link rel="apple-touch-icon" sizes="120x120" href="{{url('public/'.$setting[0]->icon)}}">
-   <link rel="apple-touch-icon" sizes="144x144" href="{{url('public/'.$setting[0]->icon)}}">
-   <link rel="apple-touch-icon" sizes="152x152" href="{{url('public/'.$setting[0]->icon)}}">
-   <link rel="apple-touch-icon" sizes="180x180" href="{{url('public/'.$setting[0]->icon)}}">
-   <link rel="icon" type="image/png" sizes="192x192"  href="{{url('public/'.$setting[0]->icon)}}">
-   <link rel="icon" type="image/png" sizes="32x32" href="{{url('public/'.$setting[0]->icon)}}">
-   <link rel="icon" type="image/png" sizes="96x96" href="{{url('public/'.$setting[0]->icon)}}">
-   <link rel="icon" type="image/png" sizes="16x16" href="{{url('public/'.$setting[0]->icon)}}">
-   <link rel="manifest" href="{{url('public/assets/web/images/favicon/manifest.json')}}">
+   <link rel="apple-touch-icon" sizes="57x57" href="{{url(''.$setting[0]->icon)}}">
+   <link rel="apple-touch-icon" sizes="60x60" href="{{url(''.$setting[0]->icon)}}">
+   <link rel="apple-touch-icon" sizes="72x72" href="{{url(''.$setting[0]->icon)}}">
+   <link rel="apple-touch-icon" sizes="76x76" href="{{url(''.$setting[0]->icon)}}">
+   <link rel="apple-touch-icon" sizes="114x114" href="{{url(''.$setting[0]->icon)}}">
+   <link rel="apple-touch-icon" sizes="120x120" href="{{url(''.$setting[0]->icon)}}">
+   <link rel="apple-touch-icon" sizes="144x144" href="{{url(''.$setting[0]->icon)}}">
+   <link rel="apple-touch-icon" sizes="152x152" href="{{url(''.$setting[0]->icon)}}">
+   <link rel="apple-touch-icon" sizes="180x180" href="{{url(''.$setting[0]->icon)}}">
+   <link rel="icon" type="image/png" sizes="192x192"  href="{{url(''.$setting[0]->icon)}}">
+   <link rel="icon" type="image/png" sizes="32x32" href="{{url(''.$setting[0]->icon)}}">
+   <link rel="icon" type="image/png" sizes="96x96" href="{{url(''.$setting[0]->icon)}}">
+   <link rel="icon" type="image/png" sizes="16x16" href="{{url(''.$setting[0]->icon)}}">
+   <link rel="manifest" href="{{url('assets/web/images/favicon/manifest.json')}}">
    <meta name="msapplication-TileColor" content="#ffffff">
    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png')}}">
    <meta name="theme-color" content="#ffffff">
    <link rel="" href= "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100;200,300,400,500,600,700,900">
-   <link rel="stylesheet" href="{{url('public/assets/web/bootstrap/css/bootstrap.min.css')}}" media="all" />
-   <link rel="stylesheet" href="{{url('public/assets/web/font-awesome/css/font-awesome.css')}}" media="all" />
-   <link rel="stylesheet" href="{{url('public/assets/web/bootstrap/css/bootstrap-grid.min.css')}}" media="all" />
-   <link rel="stylesheet" href="{{url('public/assets/web/bootstrap/css/bootstrap-reboot.min.css')}}" media="all" />
-   <link rel="stylesheet" href="{{url('public/assets/web/fancybox/jquery.fancybox.min.css')}}" media="all" />
-   <link rel="stylesheet" href="{{url('public/assets/web/amricons/css/amricons.css')}}" media="all" />
-   <link rel="stylesheet" href="{{url('public/assets/web/pe-icon/css/pe-icon-7-stroke.css')}}" media="all" />
-   <link rel="stylesheet" href="{{url('public/assets/web/slick/slick.css')}}" media="all" />
-   <!-- <link rel="stylesheet" href="{{url('public/assets/web/slick/slick-theme.css')}}" media="all" /> -->
-   <link rel="stylesheet" href="{{url('public/assets/web/slick/slick-style.css')}}" media="all" />
-   <link rel="stylesheet" href="{{url('public/assets/web/css/animate.min.css')}}" media="all" />
-   <link rel="stylesheet" href="{{url('public/assets/parsley/parsley.css')}}" />
-   <link rel="stylesheet" href="{{url('public/assets/web/css/style.css')}}" media="all" />
-   <link rel="stylesheet" href="{{url('public/assets/web/css/amr-style.css')}}" media="all" />
-   <link rel="stylesheet" href="{{url('public/assets/web/css/website-colors.css')}}" media="all" />
-   <script type="text/javascript" src="{{url('public/assets/web/js/jquery.min.js')}}"></script>
+   <link rel="stylesheet" href="{{url('assets/web/bootstrap/css/bootstrap.min.css')}}" media="all" />
+   <link rel="stylesheet" href="{{url('assets/web/font-awesome/css/font-awesome.css')}}" media="all" />
+   <link rel="stylesheet" href="{{url('assets/web/bootstrap/css/bootstrap-grid.min.css')}}" media="all" />
+   <link rel="stylesheet" href="{{url('assets/web/bootstrap/css/bootstrap-reboot.min.css')}}" media="all" />
+   <link rel="stylesheet" href="{{url('assets/web/fancybox/jquery.fancybox.min.css')}}" media="all" />
+   <link rel="stylesheet" href="{{url('assets/web/amricons/css/amricons.css')}}" media="all" />
+   <link rel="stylesheet" href="{{url('assets/web/pe-icon/css/pe-icon-7-stroke.css')}}" media="all" />
+   <link rel="stylesheet" href="{{url('assets/web/slick/slick.css')}}" media="all" />
+   <!-- <link rel="stylesheet" href="{{url('assets/web/slick/slick-theme.css')}}" media="all" /> -->
+   <link rel="stylesheet" href="{{url('assets/web/slick/slick-style.css')}}" media="all" />
+   <link rel="stylesheet" href="{{url('assets/web/css/animate.min.css')}}" media="all" />
+   <link rel="stylesheet" href="{{url('assets/parsley/parsley.css')}}" />
+   <link rel="stylesheet" href="{{url('assets/web/css/style.css')}}" media="all" />
+   <link rel="stylesheet" href="{{url('assets/web/css/amr-style.css')}}" media="all" />
+   <link rel="stylesheet" href="{{url('assets/web/css/website-colors.css')}}" media="all" />
+   <script type="text/javascript" src="{{url('assets/web/js/jquery.min.js')}}"></script>
 </head>
 <body class="@yield('pagebodyclass')">
    <script type="text/javascript">
@@ -86,8 +86,8 @@
                     <div class="col-lg-2 col-md-3 col-4">
                         <div class="logo site-branding">
                             <a href="{{url('/')}}" class="custom-logo-link" rel="home">
-                                <img class="main-logo" src="{{url('public/'.$setting[0]->logo)}}" alt="">
-                                <!-- <img class="sticky-logo"src="{{url('public/'.$setting[0]->logo)}}"> -->
+                                <img class="main-logo" src="{{url(''.$setting[0]->logo)}}" alt="">
+                                <!-- <img class="sticky-logo"src="{{url(''.$setting[0]->logo)}}"> -->
                             </a>
                         </div>
                     </div>
@@ -95,7 +95,7 @@
                         <ul class="nav header-customer-area justify-content-end">
                         @guest
                         <li class="menu-item become-vendor-link"><a title="My Account" href="{{url('vendor/register')}}">Become A Vendor</a></li>
-                        <li class="menu-item my-profile-menu"><a title="My Account" href="{{url('user/login')}}"><span>Sign in </span><img src="{{url('public/assets/web/images/user-icon-dark.png')}}" alt="My Profile"></a></li>
+                        <li class="menu-item my-profile-menu"><a title="My Account" href="{{url('user/login')}}"><span>Sign in </span><img src="{{url('assets/web/images/user-icon-dark.png')}}" alt="My Profile"></a></li>
                         <!-- <li class="menu-item"><a title="My Account" href="{{url('user/register')}}"><i class="icon amr-login-register"></i>User Register</a></li> -->
                         @else
                         <li class="icon-menu user-hover"> <a href="{{route('user_account')}}"><i class="pe-7s-user"></i></a>
@@ -103,9 +103,9 @@
                                 <li class="user-info">
                                     <div class="user-img">
                                         @if(Auth::user()->image)
-                                        <img src="{{url('public/'.Auth::user()->image)}}" class="rounded">
+                                        <img src="{{url(''.Auth::user()->image)}}" class="rounded">
                                         @else
-                                        <img src="{{url('public/no-image.png')}}" class="rounded">
+                                        <img src="{{url('no-image.png')}}" class="rounded">
                                         @endif
                                     </div>
                                     <h3 class="user-name">{{Auth::user()->name}}</h3>
@@ -128,12 +128,12 @@
                         </li>
                         @endguest
                         <li class="icon-menu">
-                            <a href="{{url('/wishlist')}}"> <img src="{{url('public/assets/web/images/heart-icon.png')}}" alt="My Wishlist">
+                            <a href="{{url('/wishlist')}}"> <img src="{{url('assets/web/images/heart-icon.png')}}" alt="My Wishlist">
                                 <div class="notification" id="top-cart-wishlist-count">0</div>
                             </a>
                         </li>
                         <li class="icon-menu">
-                            <a href="javascript:;" class="minicart-btn"> <img src="{{url('public/assets/web/images/cart-icon.png')}}" alt="My Cart">
+                            <a href="javascript:;" class="minicart-btn"> <img src="{{url('assets/web/images/cart-icon.png')}}" alt="My Cart">
                                 <div class="notification count">0</div>
                             </a>
                         </li>
@@ -145,7 +145,7 @@
                 <div class="container">
                     <div class="navbar-search">
                         <label class="search-input-label" for="search">
-                            <img class="search-icon " src="{{url('public/assets/web/images/search-icon.png')}}">
+                            <img class="search-icon " src="{{url('assets/web/images/search-icon.png')}}">
                             <div class="search-text">What product can we help you find?</div>
                         </label>
                         <div class="search-popup">
@@ -158,8 +158,8 @@
                                         <label class="custom-checkbox"><input type="checkbox" value="parts"> <span>Parts & Repair</span></label>
                                     </div>
                                     <div>
-                                        <a href="javascript:;" class="search-close"><img class="search-icon " src="{{url('public/assets/web/images/close-icon.svg')}}"></a>
-                                        <button type="submit" class="search-btn"><img class="search-icon " src="{{url('public/assets/web/images/search-icon-mian-color.svg')}}"></button>
+                                        <a href="javascript:;" class="search-close"><img class="search-icon " src="{{url('assets/web/images/close-icon.svg')}}"></a>
+                                        <button type="submit" class="search-btn"><img class="search-icon " src="{{url('assets/web/images/search-icon-mian-color.svg')}}"></button>
                                     </div>
                                 </div>
                             </form>
@@ -222,14 +222,14 @@
         @guest
         <a class="mb-customer-profile-link" title="My Account" href="{{route('user_login')}}">
             <div class="mb-customer-profile">
-                <img src="{{url('public/assets/web/images/user-icon.svg')}}" alt="My Profile">
+                <img src="{{url('assets/web/images/user-icon.svg')}}" alt="My Profile">
                 <span>Sign in </span>
             </div>
         </a>
         @else
         <a class="mb-customer-profile-link" title="My Account" href="{{route('user_account')}}">
             <div class="mb-customer-profile">
-                <img src="{{url('public/assets/web/images/user-check-solid-white.svg')}}" alt="My Profile">
+                <img src="{{url('assets/web/images/user-check-solid-white.svg')}}" alt="My Profile">
                 <span>{{Auth::user()->name}}</span>
             </div>
         </a>
@@ -280,7 +280,7 @@
                 @if(count($all_main_categories))
                 @foreach($all_main_categories as $key)
                 <div class="sub-categories-div mobile-menu-translateX-right" id="Mcategory{{$key->id}}">
-                    <a class="back-menu-link"><img src="{{url('public/assets/web/images/back-arrow.svg')}}" alt=""> <span class="heading">Main Menu</span></a>
+                    <a class="back-menu-link"><img src="{{url('assets/web/images/back-arrow.svg')}}" alt=""> <span class="heading">Main Menu</span></a>
                     <ul>
                         <li class="sub-categories-div-heading">
                             <div class="heading">{{ App\Http\Controllers\CommonController::getCategoryName($key->id) }}</div>
@@ -392,7 +392,7 @@
                 <div class="col-md-4">
                     <div class="footer-contact">
                         <div class="footer-logo">
-                                <img src="{{url('public/'.$setting[0]->footer_logo)}}">
+                                <img src="{{url(''.$setting[0]->footer_logo)}}">
                         </div>
                         <div class="contact-payment-wrap">
                             <div class="footer-contact-info">
@@ -422,16 +422,16 @@
                                         <div class="footer-payment-icons">
                                             <ul class="list-payment-icons nav">
                                                 <li class="nav-item">
-                                                    <img class="payment-icon-image" src="{{url('public/assets/web/images/mastercard.svg')}}" alt="mastercard" />
+                                                    <img class="payment-icon-image" src="{{url('assets/web/images/mastercard.svg')}}" alt="mastercard" />
                                                 </li>
                                                 <li class="nav-item">
-                                                    <img class="payment-icon-image" src="{{url('public/assets/web/images/visa.svg')}}" alt="visa" />
+                                                    <img class="payment-icon-image" src="{{url('assets/web/images/visa.svg')}}" alt="visa" />
                                                 </li>
                                                 <li class="nav-item">
-                                                    <img class="payment-icon-image" src="{{url('public/assets/web/images/paypal.svg')}}" alt="paypal" />
+                                                    <img class="payment-icon-image" src="{{url('assets/web/images/paypal.svg')}}" alt="paypal" />
                                                 </li>
                                                 <li class="nav-item">
-                                                    <img class="payment-icon-image" src="{{url('public/assets/web/images/maestro.svg')}}" alt="maestro" />
+                                                    <img class="payment-icon-image" src="{{url('assets/web/images/maestro.svg')}}" alt="maestro" />
                                                 </li>
                                             </ul>
                                         </div>
@@ -439,10 +439,10 @@
                                             <h6 class="footer-secured-by-title">Secured by:</h6>
                                             <ul class="footer-secured-by-icons">
                                                 <li class="nav-item">
-                                                    <img class="secure-icons-image" src="{{url('public/assets/web/images/norton.svg')}}" alt="norton" />
+                                                    <img class="secure-icons-image" src="{{url('assets/web/images/norton.svg')}}" alt="norton" />
                                                 </li>
                                                 <li class="nav-item">
-                                                    <img class="secure-icons-image" src="{{url('public/assets/web/images/mcafee.svg')}}" alt="mcafee" />
+                                                    <img class="secure-icons-image" src="{{url('assets/web/images/mcafee.svg')}}" alt="mcafee" />
                                                 </li>
                                             </ul>
                                         </div>
@@ -594,25 +594,25 @@ $.ajax({
 });
 });
 </script>
-<script type="text/javascript" src="{{url('public/assets/web/bootstrap/js/tether.min.js')}}"></script>
-<script type="text/javascript" src="{{url('public/assets/web/bootstrap/js/bootstrap.min.js')}}"></script>
-<script type="text/javascript" src="{{url('public/assets/web/js/jquery-migrate.min.js')}}"></script>
-<script type="text/javascript" src="{{url('public/assets/web/js/hidemaxlistitem.min.js')}}"></script>
-<script type="text/javascript" src="{{url('public/assets/web/js/jquery-ui.min.js')}}"></script>
-<script type="text/javascript" src="{{url('public/assets/web/js/hidemaxlistitem.min.js')}}"></script>
-<script type="text/javascript" src="{{url('public/assets/web/js/jquery.easing.min.js')}}"></script>
-<script type="text/javascript" src="{{url('public/assets/web/fancybox/jquery.fancybox.min.js')}}"></script>
-<script type="text/javascript" src="{{url('public/assets/web/js/scrollup.min.js')}}"></script>
-<script type="text/javascript" src="{{url('public/assets/web/js/jquery.waypoints.min.js')}}"></script>
-<script type="text/javascript" src="{{url('public/assets/web/js/waypoints-sticky.min.js')}}"></script>
-<script type="text/javascript" src="{{url('public/assets/web/js/pace.min.js')}}"></script>
-<script type="text/javascript" src="{{url('public/assets/web/slick/slick.min.js')}}"></script>
-<script src="{{url('public/assets/parsley/parsley.js')}}"></script>
+<script type="text/javascript" src="{{url('assets/web/bootstrap/js/tether.min.js')}}"></script>
+<script type="text/javascript" src="{{url('assets/web/bootstrap/js/bootstrap.min.js')}}"></script>
+<script type="text/javascript" src="{{url('assets/web/js/jquery-migrate.min.js')}}"></script>
+<script type="text/javascript" src="{{url('assets/web/js/hidemaxlistitem.min.js')}}"></script>
+<script type="text/javascript" src="{{url('assets/web/js/jquery-ui.min.js')}}"></script>
+<script type="text/javascript" src="{{url('assets/web/js/hidemaxlistitem.min.js')}}"></script>
+<script type="text/javascript" src="{{url('assets/web/js/jquery.easing.min.js')}}"></script>
+<script type="text/javascript" src="{{url('assets/web/fancybox/jquery.fancybox.min.js')}}"></script>
+<script type="text/javascript" src="{{url('assets/web/js/scrollup.min.js')}}"></script>
+<script type="text/javascript" src="{{url('assets/web/js/jquery.waypoints.min.js')}}"></script>
+<script type="text/javascript" src="{{url('assets/web/js/waypoints-sticky.min.js')}}"></script>
+<script type="text/javascript" src="{{url('assets/web/js/pace.min.js')}}"></script>
+<script type="text/javascript" src="{{url('assets/web/slick/slick.min.js')}}"></script>
+<script src="{{url('assets/parsley/parsley.js')}}"></script>
 <script type="text/javascript" src="//unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!-- custom code-->
-<script type="text/javascript" src="{{url('public/assets/web/js/scripts.js')}}"></script>
+<script type="text/javascript" src="{{url('assets/web/js/scripts.js')}}"></script>
 @if(Route::currentRouteName()!='product_details' && Route::currentRouteName()!='cart')
-<script type="text/javascript" src="{{url('public/assets/web/js/custom-script.js')}}"></script>
+<script type="text/javascript" src="{{url('assets/web/js/custom-script.js')}}"></script>
 <script type="text/javascript">
   jQuery(window).ready(function() {
 

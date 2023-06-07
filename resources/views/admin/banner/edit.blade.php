@@ -80,7 +80,7 @@
                             <small> only JPG, JPEG , PNG images are allowed</small>
                           </div>
 						  <div class="col-sm-3">
-                             <?php if($banner->banner){?><img src="{{url('public/'.$banner->banner)}}"  id="product_img" class="edit_img" /><?php }?>
+                             <?php if($banner->banner){?><img src="{{url(''.$banner->banner)}}"  id="product_img" class="edit_img" /><?php }?>
                           </div>
 						  
 						  
@@ -95,7 +95,7 @@
                             <small> only JPG, JPEG , PNG images are allowed</small>
 						  </div>
 						  <div class="col-sm-3">
-                           <?php if($banner->m_banner){?><img src="{{url('public/'.$banner->m_banner)}}"  id="banner_img" class="edit_img" /><?php }?>
+                           <?php if($banner->m_banner){?><img src="{{url(''.$banner->m_banner)}}"  id="banner_img" class="edit_img" /><?php }?>
                           </div>
                         </div>
                       </div>

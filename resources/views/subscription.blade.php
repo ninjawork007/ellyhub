@@ -17,21 +17,21 @@
 
 	<!-- Bootstrap CSS -->
 
-	<link rel="stylesheet" href="{{url('public/assets/provider/plugins/bootstrap/css/bootstrap.min.css')}}">
+	<link rel="stylesheet" href="{{url('assets/provider/plugins/bootstrap/css/bootstrap.min.css')}}">
 
 
 
 	<!-- Fontawesome CSS -->
 
-	<link rel="stylesheet" href="{{url('public/assets/provider/plugins/fontawesome/css/fontawesome.min.css')}}">
+	<link rel="stylesheet" href="{{url('assets/provider/plugins/fontawesome/css/fontawesome.min.css')}}">
 
-	<link rel="stylesheet" href="{{url('public/assets/provider/plugins/fontawesome/css/all.min.css')}}">
+	<link rel="stylesheet" href="{{url('assets/provider/plugins/fontawesome/css/all.min.css')}}">
 
 
 
 	<!-- Main CSS -->
 
-	<link rel="stylesheet" href="{{url('public/assets/provider/css/style.css')}}">
+	<link rel="stylesheet" href="{{url('assets/provider/css/style.css')}}">
 
 </head>
 
@@ -61,13 +61,13 @@
 
 					<a href="index.html" class="navbar-brand logo">
 
-						<img src="https://professionaler.com/beauty_advisor/public/assets/images/logo.PNG" class="img-fluid" alt="Logo">
+						<img src="https://professionaler.com/beauty_advisor/assets/images/logo.PNG" class="img-fluid" alt="Logo">
 
 					</a>
 
 					<a href="index.html" class="navbar-brand logo-small">
 
-						<img src="https://professionaler.com/beauty_advisor/public/assets/images/logo.PNG" class="img-fluid" alt="Logo">
+						<img src="https://professionaler.com/beauty_advisor/assets/images/logo.PNG" class="img-fluid" alt="Logo">
 
 					</a>
 
@@ -79,7 +79,7 @@
 
 						<a href="#" class="menu-logo">
 
-							<img src="https://professionaler.com/beauty_advisor/public/assets/images/logo.PNG" class="img-fluid" alt="Logo">
+							<img src="https://professionaler.com/beauty_advisor/assets/images/logo.PNG" class="img-fluid" alt="Logo">
 
 						</a>
 
@@ -165,7 +165,7 @@
 
 												<span class="avatar avatar-sm">
 
-												<!----	<img class="avatar-img rounded-circle" alt="User Image" src="https://professionaler.com/beauty_advisor/public/assets/img/customer/user-01.jpg">
+												<!----	<img class="avatar-img rounded-circle" alt="User Image" src="https://professionaler.com/beauty_advisor/assets/img/customer/user-01.jpg">
 
 												</span>
 
@@ -191,7 +191,7 @@
 
 												<span class="avatar avatar-sm">
 
-													<img class="avatar-img rounded-circle" alt="User Image" src="{{url('public/assets/provider/img/customer/user-02.jpg')}}">
+													<img class="avatar-img rounded-circle" alt="User Image" src="{{url('assets/provider/img/customer/user-02.jpg')}}">
 
 												</span>
 
@@ -217,7 +217,7 @@
 
 												<span class="avatar avatar-sm">
 
-													<img class="avatar-img rounded-circle" alt="User Image" src="{{url('public/assets/provider/img/customer/user-03.jpg')}}">
+													<img class="avatar-img rounded-circle" alt="User Image" src="{{url('assets/provider/img/customer/user-03.jpg')}}">
 
 												</span>
 
@@ -243,7 +243,7 @@
 
 												<span class="avatar avatar-sm">
 
-													<img class="avatar-img rounded-circle" alt="User Image" src="{{url('public/assets/provider/img/customer/user-04.jpg')}}">
+													<img class="avatar-img rounded-circle" alt="User Image" src="{{url('assets/provider/img/customer/user-04.jpg')}}">
 
 												</span>
 
@@ -269,7 +269,7 @@
 
 												<span class="avatar avatar-sm">
 
-													<img class="avatar-img rounded-circle" alt="User Image" src="{{url('public/assets/provider/img/customer/user-05.jpg')}}">
+													<img class="avatar-img rounded-circle" alt="User Image" src="{{url('assets/provider/img/customer/user-05.jpg')}}">
 
 												</span>
 
@@ -329,7 +329,7 @@
 
 							<span class="user-img">
 
-								<img class="rounded-circle" src="{{url('public/assets/provider/img/provider/provider-01.jpg')}}" alt="" width="31">
+								<img class="rounded-circle" src="{{url('assets/provider/img/provider/provider-01.jpg')}}" alt="" width="31">
 
 							</span>
 
@@ -341,7 +341,7 @@
 
 								<div class="avatar avatar-sm">
 
-									<img class="avatar-img rounded-circle" src="{{url('public/assets/provider/img/provider/provider-01.jpg')}}" alt="">
+									<img class="avatar-img rounded-circle" src="{{url('assets/provider/img/provider/provider-01.jpg')}}" alt="">
 
 								</div>
 
@@ -384,7 +384,7 @@
 
 							<div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
 
-								<img alt="profile image" src="{{url('public/assets/provider/img/provider/provider-01.jpg')}}" class="avatar-lg rounded-circle">
+								<img alt="profile image" src="{{url('assets/provider/img/provider/provider-01.jpg')}}" class="avatar-lg rounded-circle">
 
 								<div class="ml-sm-3 ml-md-0 ml-lg-3 mt-2 mt-sm-0 mt-md-2 mt-lg-0">
 
@@ -706,15 +706,15 @@
 		<!-- /Footer -->
 	</div>
 		<!-- jQuery -->
-	<script src="{{url('public/assets/provider/js/jquery-3.5.0.min.js')}}"></script>
+	<script src="{{url('assets/provider/js/jquery-3.5.0.min.js')}}"></script>
 	<!-- Bootstrap Core JS -->
-	<script src="{{url('public/assets/provider/js/popper.min.js')}}"></script>
-	<script src="{{url('public/assets/provider/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
+	<script src="{{url('assets/provider/js/popper.min.js')}}"></script>
+	<script src="{{url('assets/provider/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
 	<!-- Sticky Sidebar JS -->
-	<script src="{{url('public/assets/provider/plugins/theia-sticky-sidebar/ResizeSensor.js')}}"></script>
-	<script src="{{url('public/assets/provider/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js')}}"></script>
+	<script src="{{url('assets/provider/plugins/theia-sticky-sidebar/ResizeSensor.js')}}"></script>
+	<script src="{{url('assets/provider/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js')}}"></script>
 	<!-- Custom JS -->
-	<script src="{{url('public/assets/provider/js/script.js')}}"></script>
+	<script src="{{url('assets/provider/js/script.js')}}"></script>
 </body>
 
 

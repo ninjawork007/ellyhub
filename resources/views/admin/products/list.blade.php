@@ -7,7 +7,7 @@
     </div>
     <div class="align-items-left">
       <div class="d-md-flex align-items-center justify-content-between">
-        <a href="{{route('fetchEbayProduct')}}" class="btn btn-secondary "><i class="fa fa-download"></i> Fetch eBay Product</a>
+        <a href="{{ URL('GetCategory') }}" target="_blank" class="btn btn-secondary "><i class="fa fa-download"></i> Fetch eBay Product</a>
       </div>
     </div>
     <div class="align-items-center">
@@ -25,6 +25,7 @@
       <table class="table table-hover" id="myTable">
         <thead>
           <tr>
+            <th>Sr. No.</th>
             <th data-orderable="false">Product</th>
             <th data-orderable="false">Vendor</th>
             <th data-orderable="false">Category</th>
@@ -69,7 +70,7 @@
         cache: false,
 
         "data": function(data) {
-
+		
           data.status = $('#status').val();
 
         },
@@ -86,7 +87,7 @@
 
         complete: function(data) {
 
-
+		console.log(data);
         }
 
       },

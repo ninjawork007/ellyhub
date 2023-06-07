@@ -7,6 +7,9 @@ Route::get('/cache', function(){
 	Artisan::call('view:clear');
 	return  'Cache is cleared.';
 });
+
+Route::get('GetCategory','Admin\EbayCronController@fetchProduct');
+
 Route::get('track','WelcomeController@track_order')->name('track');
 Route::get('find','CommonController@find_product')->name('find_product');
 Route::get('pages/{page}', 'CommonController@page_s');
@@ -222,7 +225,7 @@ Route::group(['middleware' => 'auth'], function(){
         Route::delete('ebay-credentials-remove','EbayController@ebayCredentialsRemove')->name('ebay_credentials_remove');
 		 Route::post('settings/update-paypal','EbayController@updatePaypal')->name('settings.update.paypal');
 		 
-		  Route::post('settings/update-paypal','EbayController@fetch')->name('settings.update.paypal');
+		
 		   Route::get('fetch-ebay-product','EbayController@fetchEbayProduct')->name('fetchEbayProduct');
 		// vendor
 

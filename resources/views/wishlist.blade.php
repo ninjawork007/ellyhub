@@ -56,7 +56,7 @@
 
                                             <a href="{{url('/product/'.$key->product_id)}}">
 
-                                                <img src="{{url('public/'.$key->image)}}" style="max-width: 100px;">
+                                                <img src="{{url($key->image)}}" style="max-width: 100px;">
 
                                                 {{$key->name}}
 
@@ -83,7 +83,7 @@
 
                             <div class="text-center">
 
-                                <img src="{{url('/public/not-found.jpg')}}">
+                                <img src="{{url('/not-found.jpg')}}">
 
                                 <p>No Wishlist Found.</p>
 
