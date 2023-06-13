@@ -126,8 +126,21 @@ Route::group(['middleware' => 'auth'], function(){
 		// product routes
 		Route::get('products','ProductController@products')->name('products');
 		Route::get('products_ajax','ProductController@product_list')->name('ajax_get_products');
+		/**
+		 * get draft list
+		 * 2023-06-09
+		 * Author - Ilia
+		 */
+		Route::get('products_draft_ajax','ProductController@product_draft_list')->name('ajax_get_draft_products');
 		Route::get('products-add','ProductController@product_add')->name('add_product');
 		Route::post('products-save','ProductController@product_save')->name('save_product');
+		/**
+		 * draft product
+		 * 2023-06-10
+		 * Author - Ilia
+		 */
+		Route::post('products-draft','ProductController@product_draft')->name('draft_product');
+		
 		Route::get('product/{id}','ProductController@product_detail')->name('product_detail_admin');
 		Route::get('product/edit/{id}','ProductController@product_edit')->name('product_edit_admin');
 		Route::get('update_product_status','ProductController@update_product_status')->name('update_product_status');

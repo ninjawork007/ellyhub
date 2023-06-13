@@ -21,32 +21,69 @@
   @include('alerts')
   <div class="error"></div>
   <div class="card-body">
-    <div class="table-responsive">
-      <table class="table table-hover" id="myTable">
-        <thead>
-          <tr>
-            <th>Sr. No.</th>
-            <th data-orderable="false">Product</th>
-            <th data-orderable="false">Vendor</th>
-            <th data-orderable="false">Category</th>
-            <th data-orderable="false">Price</th>
-            <th data-orderable="false">Discount</th>
-            <th data-orderable="false">Status</th>
-            <th data-orderable="false">DOC</th>
-            <th data-orderable="false">Ebay</th>
-            <th data-orderable="false">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#list">Products</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#draft_list">Drafts</a>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="list" class="tab-pane fade in active">
+        <h3 class="mt-3 mb-3 text-primary">Products List</h3>
+        <div class="table-responsive">
+          <table class="table table-hover" id="myTable">
+            <thead>
+              <tr>
+                <th>Sr. No.</th>
+                <th data-orderable="false">Product</th>
+                <th data-orderable="false">Vendor</th>
+                <th data-orderable="false">Category</th>
+                <th data-orderable="false">Price</th>
+                <th data-orderable="false">Discount</th>
+                <th data-orderable="false">Status</th>
+                <th data-orderable="false">DOC</th>
+                <th data-orderable="false">Ebay</th>
+                <th data-orderable="false">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div id="draft_list" class="tab-pane fade">
+        <h3 class="mt-3 mb-3 text-primary">Draft List</h3>
+        <div class="table-responsive">
+          <table class="table table-hover" id="draftTable">
+            <thead>
+              <tr>
+                <th>Sr. No.</th>
+                <th data-orderable="false">Product</th>
+                <th data-orderable="false">Vendor</th>
+                <th data-orderable="false">Category</th>
+                <th data-orderable="false">Price</th>
+                <th data-orderable="false">Discount</th>
+                <th data-orderable="false">DOC</th>
+                <th data-orderable="false">Ebay</th>
+                <th data-orderable="false">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
+
   </div>
 </div>
 <script>
   $(document).ready(function() {
 
-
+    // product list table
     var table = $("#myTable").DataTable({
 
       language: {
@@ -61,6 +98,10 @@
 
       stateSave: true,
 
+      bDestroy: true,
+
+      bPaginate : true,
+
       ajax: {
 
         url: "{{route('ajax_get_products')}}", // json datasource
@@ -70,7 +111,7 @@
         cache: false,
 
         "data": function(data) {
-		
+
           data.status = $('#status').val();
 
         },
@@ -87,14 +128,12 @@
 
         complete: function(data) {
 
-		console.log(data);
+          console.log(data);
         }
 
       },
 
     });
-
-
 
     // search
 
@@ -114,7 +153,113 @@
 
   });
 
+  /**
+   * added draft list of products
+   * 2023-06-08
+   * Author : Ilia
+   */
 
+  // click tab event
+  $('.nav-tabs a[href="#list"]').click(function() {
+    var table = $("#myTable").DataTable({
+
+      language: {
+        "processing": "Please wait..."
+      },
+
+      dom: "frtip",
+
+      serverSide: true,
+
+      processing: true,
+
+      stateSave: true,
+
+      bDestroy: true,
+
+      ajax: {
+
+        url: "{{route('ajax_get_products')}}", // json datasource
+
+        type: "get", // method  , by default get
+
+        cache: false,
+
+        "data": function(data) {
+
+          data.status = $('#status').val();
+
+        },
+
+        error: function(data) { // error handling
+
+          $(".table-grid-error").html("");
+
+          $("#table-grid").append('<tbody class="table-grid-error"><tr><th colspan="6">No data found!</th></tr></tbody>');
+
+          $("#table-grid_processing").css("display", "none");
+
+        },
+
+        complete: function(data) {
+
+          console.log(data);
+        }
+
+      },
+
+    });
+  })
+  $('.nav-tabs a[href="#draft_list"]').click(function() {
+    $("#draftTable").DataTable({
+
+      language: {
+        "processing": "Please wait..."
+      },
+
+      dom: "frtip",
+
+      serverSide: true,
+
+      processing: true,
+
+      stateSave: true,
+
+      bDestroy: true,
+
+      ajax: {
+
+        url: "{{route('ajax_get_draft_products')}}", // json datasource
+
+        type: "get", // method  , by default get
+
+        cache: false,
+
+        "data": function(data) {
+
+          // data.status = $('#status').val();
+
+        },
+
+        error: function(data) { // error handling
+
+          $(".table-grid-error").html("");
+
+          $("#table-grid").append('<tbody class="table-grid-error"><tr><th colspan="6">No data found!</th></tr></tbody>');
+
+          $("#table-grid_processing").css("display", "none");
+
+        },
+
+        complete: function(data) {
+
+          console.log(data);
+        }
+
+      },
+
+    });
+  })
 
   $('body').on('change', 'select', function() {
 

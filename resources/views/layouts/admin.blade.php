@@ -470,11 +470,9 @@
   <script src="{{url('assets/parsley/parsley.js')}}"></script>
   <script type="text/javascript" src="//unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script type="text/javascript" src="{{url('assets/adminn/vendors/datatables/jquery.dataTables.min.js')}}"></script>
-  <script src="{{url('assets/adminn/vendors/datatables/dataTables.bootstrap.min.js')}}"></script>
   <script type="text/javascript" src="{{url('assets/web/fancybox/jquery.fancybox.min.js')}}"></script>
   <script src="{{url('assets/adminn/js/pages/datatables.js')}}"></script>
   <script src="{{url('assets/adminn/js/app.min.js')}}"></script>
-
   <script type="text/javascript">
     function readURL(input) {
       if (input.files && input.files[0]) {
@@ -487,6 +485,7 @@
         reader.readAsDataURL(input.files[0]);
       }
     }
+    console.log(1)
   </script>
 
   <script type="text/javascript">

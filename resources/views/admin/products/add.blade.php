@@ -9,7 +9,9 @@
 	});
 </script>
 <style type="text/css">
-.radio-input label {padding: 4px 24px;}
+	.radio-input label {
+		padding: 4px 24px;
+	}
 </style>
 <div class="page-header no-gutters">
 	<div class="d-md-flex m-b-15 align-items-center justify-content-between">
@@ -23,7 +25,7 @@
 		</div>
 	</div>
 </div>
-<form class="form-sample" method="post" action="{{route('save_product')}}" data-parsley-validate="" enctype="multipart/form-data">
+<form class="form-sample" id="form" method="post" action="{{route('save_product')}}" data-parsley-validate="" enctype="multipart/form-data">
 	@csrf
 	<ul class="nav nav-tabs nav-justified" id="addProductTab" role="tablist">
 		<li class="nav-item">
@@ -137,8 +139,9 @@
 								<input type="text" name="seo_tags" value="" class="form-control" placeholder="Paste Seo Tags here">
 							</div>
 						</div>
-						<div class="d-flex next">
+						<div class="d-flex justify-content-between">
 							<button class="btn btn-primary" id="home_next_btn" type="button">Next</button>
+							<button class="btn btn-danger Save for later-btn" type="button">Save for later</button>
 						</div>
 					</div>
 					<div class="tab-pane fade" id="add-product-gallery" role="tabpanel" aria-labelledby="add-product-gallery-tab">
@@ -168,9 +171,10 @@
 										</div>
 									</div>
 								</div>
-								<div class="row col-md-12">
+								<div class="d-flex">
 									<button class="btn btn-primary" id="back_to_price" type="button">Back</button>
 									<button class="btn btn-primary" id="next_to_attribute" type="button">Next</button>
+									<button class="btn ml-auto btn-danger Save for later-btn" type="button">Save for later</button>
 								</div>
 							</div>
 						</div>
@@ -197,9 +201,10 @@
 								</div>
 								<div class="row" id="child_category">
 								</div>
-								<div class="row col-md-12">
+								<div class="d-flex">
 									<button class="btn btn-primary" id="back_to_home" type="button">Back</button>
 									<button class="btn btn-primary" id="next_to_pricenext" type="button">Next</button>
+									<button class="btn btn-danger ml-auto Save for later-btn" type="button">Save for later</button>
 								</div>
 							</div>
 						</div>
@@ -213,8 +218,8 @@
 											<label class="col-sm-3 col-form-label">Product Type</label>
 											<div class="col-sm-9 radio-input d-flex">
 												<label for="new"><input id="new" type="radio" class="form-check-input" name="product_type" value="new" checked>New</label>
-												<label for="used"><input id="used" type="radio" class="form-check-input" name="product_type" value="used" >Used</label>
-												<label for="parts"><input id="parts" type="radio" class="form-check-input" name="product_type" value="parts" >Parts & Repair</label>
+												<label for="used"><input id="used" type="radio" class="form-check-input" name="product_type" value="used">Used</label>
+												<label for="parts"><input id="parts" type="radio" class="form-check-input" name="product_type" value="parts">Parts & Repair</label>
 											</div>
 										</div>
 									</div>
@@ -291,153 +296,154 @@
 										</div>
 									</div>
 								</div>
-                                
-                                   <!------------------ ebay start here--------------->
-                                  <div class="row" id="cat_row">
 
-								  <div class="col-md-12">
+								<!------------------ ebay start here--------------->
+								<div class="row" id="cat_row">
 
-									<div class="form-group row">
+									<div class="col-md-12">
 
-									  <label class="col-sm-3 col-form-label">Category<span>*</span></label>
+										<div class="form-group row">
 
-									  <div class="col-sm-9">
+											<label class="col-sm-3 col-form-label">Category<span>*</span></label>
 
-										<select class="form-control" required="" name="ebay_category_id" onchange="GetCustomFields(this)">
+											<div class="col-sm-9">
 
-										  <option value="">Select eBay Category</option>
+												<select class="form-control" required="" name="ebay_category_id" onchange="GetCustomFields(this)">
 
-										  @if(count($ebay_category)) @foreach($ebay_category as $key)
+													<option value="">Select eBay Category</option>
 
-										  <option data-custom="{{$key->custom_fields}}" value="{{$key->category_id}}">{{$key->name}}</option>
+													@if(count($ebay_category)) @foreach($ebay_category as $key)
 
-										  @endforeach @endif
+													<option data-custom="{{$key->custom_fields}}" value="{{$key->category_id}}">{{$key->name}}</option>
 
-										</select>
+													@endforeach @endif
 
-									  </div>
+												</select>
+
+											</div>
+
+										</div>
 
 									</div>
-
-								  </div>
 
 								</div>
 
 								<div class="row" id="LoadCustomFields">
 								</div>
-                                
-                                <div class="row">
-                                        <div class="form-group col-lg-4 col-md-6">
-                                            <label class="form-label">eBay Payment Policy <span class="text-danger">*</span></label>
-                                            <select name="payment_policy_id" id="edit_payment_policy_id" class="form-control">
-                                                @foreach($ebay_payment_policies as $policy)
-                                                    <option value="{{ $policy->id }}">{{ $policy->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-lg-4 col-md-6">
-                                            <label class="form-label">eBay Shipping Policy <span class="text-danger">*</span></label>
-                                            <select name="shipping_policy_id" id="edit_shipping_policy_id" class="form-control">
-                                                @foreach($ebay_shipping_policies as $policy)
-                                                    <option value="{{ $policy->id }}" >{{ $policy->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-lg-4 col-md-6">
-                                            <label class="form-label">Return Policy <span class="text-danger">*</span></label>
-                                            <select name="return_policy_id" id="edit_return_policy_id" class="form-control">
-                                                @foreach($ebay_return_policies as $policy)
-                                                    <option value="{{ $policy->id }}">{{ $policy->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                
-                                <div class="row">
-                                        <div class="form-group col-lg-4 col-md-6">
-                                            <label class="form-label">Package Type <span class="text-danger">*</span></label>
-                                            <select name="package_type" id="edit_package_type" class="form-control">
-                                                <option value="BulkyGoods">Bulky goods</option>
-                                                <option value="Caravan">Caravan</option>
-                                                <option value="Cars">Cars</option>
-                                                <option value="CustomCode">Reserved for internal or future use.</option>
-                                                <option value="Europallet">Europallet</option>
-                                                <option value="ExpandableToughBags">Expandable Tough Bags</option>
-                                                <option value="ExtraLargePack">Extra Large Package/Oversize 3</option>
-                                                <option value="Furniture">Furniture</option>
-                                                <option value="IndustryVehicles">Industry vehicles</option>
-                                                <option value="LargeCanadaPostBox">Large Canada Post Box</option>
-                                                <option value="LargeCanadaPostBubbleMailer">Large Canada Post Bubble Mailer</option>
-                                                <option value="LargeEnvelope">LargeEnvelope</option>
-                                                <option value="Letter" selected>Letter</option>
-                                                <option value="MailingBoxes">Mailing Boxes</option>
-                                                <option value="MediumCanadaPostBox">Medium Canada Post Box</option>
-                                                <option value="MediumCanadaPostBubbleMailer">Medium Canada Post Bubble Mailer</option>
-                                                <option value="Motorbikes">Motorbikes</option>
-                                                <option value="None">None</option>
-                                                <option value="OneWayPallet">Onewaypallet</option>
-                                                <option value="PackageThickEnvelope">Package/thick envelope</option>
-                                                <option value="PaddedBags">Padded Bags</option>
-                                                <option value="ParcelOrPaddedEnvelope">Parcel or padded Envelope</option>
-                                                <option value="Roll">Roll</option>
-                                                <option value="SmallCanadaPostBox">Small Canada Post Box</option>
-                                                <option value="SmallCanadaPostBubbleMailer">Small Canada Post Bubble Mailer</option>
-                                                <option value="ToughBags">Tough Bags</option>
-                                                <option value="UPSLetter">UPS Letter</option>
-                                                <option value="USPSFlatRateEnvelope">USPS Flat Rate Envelope</option>
-                                                <option value="USPSLargePack">USPS Large Package/Oversize 1</option>
-                                                <option value="VeryLargePack">Very Large Package/Oversize 2</option>
-                                                <option value="Winepak">Winepak</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-lg-4 col-md-6">
-                                            <label class="form-label">Package Weight (lbs)<span class="text-danger">*</span></label>
-                                            <input type="number" class="form-control text-center" id="edit_package_weight" name="package_weight" maxlength="190" min="0" step=".01" autocomplete="off"/>
-                                        </div>
-                                        
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-lg-4 col-md-6">
-                                            <label class="form-label">Dimension Length <span class="text-danger">*</span></label>
-                                            <input type="number" class="form-control text-center" id="edit_package_dimensions_length" name="package_dimensions_length" maxlength="190" min="0" step=".01" autocomplete="off"/>
 
-                                        </div>
-                                        <div class="form-group col-lg-4 col-md-6">
-                                            <label class="form-label">Dimension Width <span class="text-danger">*</span></label>
-                                            <input type="number" class="form-control text-center" id="edit_package_dimensions_width" name="package_dimensions_width" maxlength="190" min="0" step=".01" autocomplete="off"/>
-                                        </div>
-                                        <div class="form-group col-lg-4 col-md-6">
-                                            <label class="form-label">Dimension Height <span class="text-danger">*</span></label>
-                                            <input type="number" class="form-control text-center" id="edit_package_dimensions_height" name="package_dimensions_height" maxlength="190" min="0" step=".01" autocomplete="off"/>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-lg-4 col-md-6">
-                                            <label class="form-label">Country <span class="text-danger">*</span></label>
-                                            <select name="country" id="edit_country" class="form-control">
-                                                <option value="US" selected="selected">United States</option>
-                                               
-                                                <option value="CA">Canada</option>
-                                                <option value="UK">United Kingdom</option>
-                                               
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-lg-4 col-md-6">
-                                            <label class="form-label">City, State <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="edit_city_or_state" name="city_or_state" placeholder="City, State" autocomplete="off"/>
-                                        </div>
-                                        <div class="form-group col-lg-4 col-md-6">
-                                            <label class="form-label">Zip Code <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="edit_zip_code" name="zip_code" autocomplete="off"/>
-                                        </div>
-                                    </div>
-                                
-                              <!--  ebay end here-->
-                                
-                                
-								<div class="row col-md-12">
-									<button class="btn btn-primary" id="back_to_gallery" type="button">Back</button>
+								<div class="row">
+									<div class="form-group col-lg-4 col-md-6">
+										<label class="form-label">eBay Payment Policy <span class="text-danger">*</span></label>
+										<select name="payment_policy_id" id="edit_payment_policy_id" class="form-control">
+											@foreach($ebay_payment_policies as $policy)
+											<option value="{{ $policy->id }}">{{ $policy->name }}</option>
+											@endforeach
+										</select>
+									</div>
+									<div class="form-group col-lg-4 col-md-6">
+										<label class="form-label">eBay Shipping Policy <span class="text-danger">*</span></label>
+										<select name="shipping_policy_id" id="edit_shipping_policy_id" class="form-control">
+											@foreach($ebay_shipping_policies as $policy)
+											<option value="{{ $policy->id }}">{{ $policy->name }}</option>
+											@endforeach
+										</select>
+									</div>
+									<div class="form-group col-lg-4 col-md-6">
+										<label class="form-label">Return Policy <span class="text-danger">*</span></label>
+										<select name="return_policy_id" id="edit_return_policy_id" class="form-control">
+											@foreach($ebay_return_policies as $policy)
+											<option value="{{ $policy->id }}">{{ $policy->name }}</option>
+											@endforeach
+										</select>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="form-group col-lg-4 col-md-6">
+										<label class="form-label">Package Type <span class="text-danger">*</span></label>
+										<select name="package_type" id="edit_package_type" class="form-control">
+											<option value="BulkyGoods">Bulky goods</option>
+											<option value="Caravan">Caravan</option>
+											<option value="Cars">Cars</option>
+											<option value="CustomCode">Reserved for internal or future use.</option>
+											<option value="Europallet">Europallet</option>
+											<option value="ExpandableToughBags">Expandable Tough Bags</option>
+											<option value="ExtraLargePack">Extra Large Package/Oversize 3</option>
+											<option value="Furniture">Furniture</option>
+											<option value="IndustryVehicles">Industry vehicles</option>
+											<option value="LargeCanadaPostBox">Large Canada Post Box</option>
+											<option value="LargeCanadaPostBubbleMailer">Large Canada Post Bubble Mailer</option>
+											<option value="LargeEnvelope">LargeEnvelope</option>
+											<option value="Letter" selected>Letter</option>
+											<option value="MailingBoxes">Mailing Boxes</option>
+											<option value="MediumCanadaPostBox">Medium Canada Post Box</option>
+											<option value="MediumCanadaPostBubbleMailer">Medium Canada Post Bubble Mailer</option>
+											<option value="Motorbikes">Motorbikes</option>
+											<option value="None">None</option>
+											<option value="OneWayPallet">Onewaypallet</option>
+											<option value="PackageThickEnvelope">Package/thick envelope</option>
+											<option value="PaddedBags">Padded Bags</option>
+											<option value="ParcelOrPaddedEnvelope">Parcel or padded Envelope</option>
+											<option value="Roll">Roll</option>
+											<option value="SmallCanadaPostBox">Small Canada Post Box</option>
+											<option value="SmallCanadaPostBubbleMailer">Small Canada Post Bubble Mailer</option>
+											<option value="ToughBags">Tough Bags</option>
+											<option value="UPSLetter">UPS Letter</option>
+											<option value="USPSFlatRateEnvelope">USPS Flat Rate Envelope</option>
+											<option value="USPSLargePack">USPS Large Package/Oversize 1</option>
+											<option value="VeryLargePack">Very Large Package/Oversize 2</option>
+											<option value="Winepak">Winepak</option>
+										</select>
+									</div>
+									<div class="form-group col-lg-4 col-md-6">
+										<label class="form-label">Package Weight (lbs)<span class="text-danger">*</span></label>
+										<input type="number" class="form-control text-center" id="edit_package_weight" name="package_weight" maxlength="190" min="0" step=".01" autocomplete="off" />
+									</div>
+
+								</div>
+								<div class="row">
+									<div class="form-group col-lg-4 col-md-6">
+										<label class="form-label">Dimension Length <span class="text-danger">*</span></label>
+										<input type="number" class="form-control text-center" id="edit_package_dimensions_length" name="package_dimensions_length" maxlength="190" min="0" step=".01" autocomplete="off" />
+
+									</div>
+									<div class="form-group col-lg-4 col-md-6">
+										<label class="form-label">Dimension Width <span class="text-danger">*</span></label>
+										<input type="number" class="form-control text-center" id="edit_package_dimensions_width" name="package_dimensions_width" maxlength="190" min="0" step=".01" autocomplete="off" />
+									</div>
+									<div class="form-group col-lg-4 col-md-6">
+										<label class="form-label">Dimension Height <span class="text-danger">*</span></label>
+										<input type="number" class="form-control text-center" id="edit_package_dimensions_height" name="package_dimensions_height" maxlength="190" min="0" step=".01" autocomplete="off" />
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-lg-4 col-md-6">
+										<label class="form-label">Country <span class="text-danger">*</span></label>
+										<select name="country" id="edit_country" class="form-control">
+											<option value="US" selected="selected">United States</option>
+
+											<option value="CA">Canada</option>
+											<option value="UK">United Kingdom</option>
+
+										</select>
+									</div>
+									<div class="form-group col-lg-4 col-md-6">
+										<label class="form-label">City, State <span class="text-danger">*</span></label>
+										<input type="text" class="form-control" id="edit_city_or_state" name="city_or_state" placeholder="City, State" autocomplete="off" />
+									</div>
+									<div class="form-group col-lg-4 col-md-6">
+										<label class="form-label">Zip Code <span class="text-danger">*</span></label>
+										<input type="text" class="form-control" id="edit_zip_code" name="zip_code" autocomplete="off" />
+									</div>
+								</div>
+
+								<!--  ebay end here-->
+
+
+								<div class="d-flex">
+									<button class="btn mr-auto btn-primary" id="back_to_gallery" type="button">Back</button>
 									<button class="btn btn-primary" type="submit">Submit</button>
+									<button class="btn btn-danger Save for later-btn" type="button">Save for later</button>
 								</div>
 								<hr>
 							</div>
@@ -530,6 +536,7 @@
 											<label class="col-sm-3 col-form-label">Stock<span>*</span></label>
 											<div class="col-sm-9">
 												<input type="text" class="form-control" value="" id="stock_value" name="stock">
+												<input type="hidden" class="form-control" value="1" id="save_state" name="save_state">
 											</div>
 										</div>
 									</div>
@@ -537,6 +544,7 @@
 								<div class="row col-md-12">
 									<button class="btn btn-primary" id="back_to_category" type="button">Back</button>
 									<button class="btn btn-primary" id="next_to_gallery" type="button">Next</button>
+									<button class="btn ml-auto btn-danger Save for later-btn" type="button">Save for later</button>
 								</div>
 							</div>
 						</div>
@@ -578,8 +586,17 @@
 	};
 </script>
 <script>
-	$('body').on('click', '.tox-icon', function() {
-		// alert("asd");
+	
+	/**
+	 * save to draft product
+	 * 2023-06-11
+	 * Author - Ilia
+	 */
+	$('body').on('click', '.Save', function(e) {
+		e.preventDefault();
+		$("#save_state").val(0);
+		$('.form-control').prop('required',false);
+		$('#submit_button input[type="submit"]').trigger('click');
 	});
 	/*Code For Show file After Load */
 	var loadFile = function(event) {
@@ -892,7 +909,7 @@
 		}, "slow");
 	});
 
-	function GetCustomFields(obj){
+	function GetCustomFields(obj) {
 		var custom = $(obj).find(':selected').attr('data-custom')
 		var json = JSON.parse(custom);
 		console.log(json);
@@ -900,10 +917,10 @@
 		$("#LoadCustomFields").html("");
 		var HTML = "";
 
-		for(i = 0; i < json.length; i++){
+		for (i = 0; i < json.length; i++) {
 			HTML += '<div class="form-group col-lg-4 col-md-6">';
-			HTML += '<label class="form-label">'+json[i]+'<span class="text-danger">*</span></label>';
-			HTML += '<input class="form-control text-center" name="custom['+json[i]+']" required autocomplete="off">';
+			HTML += '<label class="form-label">' + json[i] + '<span class="text-danger">*</span></label>';
+			HTML += '<input class="form-control text-center" name="custom[' + json[i] + ']" required autocomplete="off">';
 			HTML += '</div>'
 		}
 
