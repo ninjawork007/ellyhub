@@ -1705,5 +1705,112 @@ class ProductController extends Controller{
 
     }
 
+    /** 
+     * get draft products list
+     * 2023-06-08 */
+    public function product_draft_list(Request $request)
+    {
+
+        $input = array('search' => @$_GET['search']['value'], 'order' => @$_GET['order'][0]['column'], 'start' => @$_GET['start'], 'length' => @$_GET['length'], 'draw' => @$_GET['draw'], 'status' => @$_GET['status']);
+
+        $search = "";
+
+        $where = "";
+
+        if (Auth::user()->user_type == 'vendor') {
+
+            $where = "AND (a.vendor_id = '" . Auth::user()->id . "')";
+        }
+
+        if ($input['search']) {
+
+            $search = "AND (a.name LIKE '%" . $input['search'] . "%')";
+        }
+
+
+        if ($input['start'] == '') {
+
+            $input['start'] = 0;
+        }
+
+
+
+        if ($input['length'] == '') {
+
+            $input['length'] = 10;
+        }
+
+
+
+        $totalrows = count(DB::select(DB::raw("SELECT a.* FROM products as a WHERE a.status != 'approved' $search $where")));
+
+        $data  = DB::select(DB::raw("SELECT a.*,(SELECT name FROM users WHERE id=a.vendor_id) as vendor_name,(SELECT name FROM categories WHERE id=a.category_id) as category FROM products as a WHERE a.status != 'approved' $search $where limit " . $input['start'] . "," . $input['length'] . ""));
+
+        $final = [];
+
+        $i = 0;
+        
+        foreach ($data as $row) {
+
+            $disabled = '';
+
+            if (Auth::user()->user_type == 'vendor') {
+
+                $disabled = 'disabled';
+            }
+
+
+            $product_image = '<img data-fancybox="gallery" src="' . $row->image . '"  alt= "" class="product_img">' . $row->name;
+
+
+            $final[] = array(
+
+                $row->id,
+
+                $product_image,
+
+                $row->vendor_name,
+
+                $row->category,
+
+                $row->mrp_price,
+
+                $row->discount,
+
+                date('M d, Y', strtotime($row->created_at)),
+
+                ' <a href="' . $row->ebay_product_url . '" target="_blank" class="btn btn-outline-primary btn-sm"> ' . $row->ebay_product_id . ' </a>',
+
+                '<div class="btn-group" role="group" aria-label="Basic example">
+
+                            <a href="' . url('admin/product', [$row->id]) . '" class="btn btn-outline-primary btn-sm"> <i class="fa fa-eye"></i> </a>&nbsp;
+
+                           <br> <a href="' . url('admin/product/edit', [$row->id]) . '" class="btn btn-outline-warning btn-sm"><i class="fa fa-edit"></i></a>
+
+                            <br><a href="javascript:;" class="delete_row btn btn-outline-danger btn-sm" table="products" id="' . $row->id . '" data-value="1"><i class="fa fa-trash"></i></a>
+
+                            </div>'
+
+            );
+
+            $i++;
+        }
+
+        
+        $json_data = array(
+
+            "draw" => intval($input['draw']),   // for every request/draw by clientside , they send a number as a parameter, when they recieve a response/data they first check the draw number, so we are sending same number in draw. 
+
+            "recordsTotal"    => intval(count($final)),  // total number of records
+
+            "recordsFiltered" => intval($totalrows), // total number of records after searching, if there is no searching then totalFiltered = totalData
+
+            "data"            => $final   // total data array
+
+        );
+
+        echo json_encode($json_data);
+    }
+
 }
 
