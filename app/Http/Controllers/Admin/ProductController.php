@@ -478,6 +478,7 @@ class ProductController extends Controller{
        $update = DB::table('products')->where('id',$request->id)->update([
 
 		   'category_id'=>$request->category,
+           "upload_to_fb" => (isset($request->upload_to_fb)) ? 1 : 0,
 
 		   'sub_category_id'=>$request->sub_category,
 

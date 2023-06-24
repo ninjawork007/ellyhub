@@ -223,7 +223,7 @@ $connection = curl_init();
     }
 
     public function PostOnFB(){
-        $GetProduct = Product::get()->take(20);
+        $GetProduct = Product::where("upload_to_fb", 1)->get();
         
         $XML = '<?xml version="1.0"?>
                         <rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
@@ -243,8 +243,6 @@ $XML .= '<item>
 <g:image_link>'.$GPP->image.'</g:image_link>
 <g:brand>'.$GPP->brand.'</g:brand>
 <g:quantity_to_sell_on_facebook>'.$GPP->stock.'</g:quantity_to_sell_on_facebook>
-<g:fb_product_category>Electronics > Cameras</g:fb_product_category>
-<g:google_product_category>Electronics > Communications > Telephony > Mobile Phone Accessories</g:google_product_category>
 </item>';
         }
 
