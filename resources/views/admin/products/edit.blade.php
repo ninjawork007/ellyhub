@@ -527,7 +527,7 @@ input[type="checkbox"] {
 
 													<label id="gall_{{$key->id}}">
 
-														<img src="{{url('public/'.$key->images)}}" class="edit_img" /> 
+														<img src="{{ $key->images }}" class="edit_img" /> 
 
 														<i class="fa fa-trash delete_gallery" onclick="delete_gallery({{$key->id}})" ></i>
 
