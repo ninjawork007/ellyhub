@@ -115,7 +115,7 @@ class ReportController extends Controller{
             $discount = $amount.' '.$discount_type;
             $final[] = array(
                             "DT_RowId" => $row->id,
-                            '<img src="'.url($row->image).'"  alt= "" class="product_img">'.$row->name,
+                            '<img src="'.url('public/'.$row->image).'"  alt= "" class="product_img">'.$row->name,
                             $row->vendor_name,
                             ($row->sale_price==$row->mrp_price)? '₹'.$row->sale_price:'<del>₹'.$row->mrp_price.'</del> ₹'.$row->sale_price,
                             $discount,

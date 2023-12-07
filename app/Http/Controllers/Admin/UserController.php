@@ -100,9 +100,9 @@ class UserController extends Controller
             }
 			
 			if($row->image){
-				$image = '<img src="'.url($row->image).'" class="product_img">'.$row->name;
+				$image = '<img src="'.url('public/'.$row->image).'" class="product_img">'.$row->name;
 			} else {
-				$image = '<img src="'.url('no-image.png').'" class="product_img">'.$row->name;
+				$image = '<img src="'.url('public/no-image.png').'" class="product_img">'.$row->name;
 			}
 			
             $final[] = array(
@@ -134,7 +134,7 @@ class UserController extends Controller
         $check = DB::table('user_info')->Where('userid',$request->id)->first();
         $html = '';
         if ($check) {
-            $html.='<div class="rows text-center"><p>Pan Card</p><img class="images" src="'.url($check->pan_card).'"></div><hr><div class="rows text-center"><p>Adhar Card</p><img class="images" src="'.url($check->adhar_card).'"></div><hr><div class="rows text-center"><p>GST Registration</p><img class="images" src="'.url($check->gst_registration).'"></div><hr><div class="rows text-center"><p>Firm Registration</p><img class="images" src="'.url($check->firm_registration).'"></div>';
+            $html.='<div class="rows text-center"><p>Pan Card</p><img class="images" src="'.url('public/'.$check->pan_card).'"></div><hr><div class="rows text-center"><p>Adhar Card</p><img class="images" src="'.url('public/'.$check->adhar_card).'"></div><hr><div class="rows text-center"><p>GST Registration</p><img class="images" src="'.url('public/'.$check->gst_registration).'"></div><hr><div class="rows text-center"><p>Firm Registration</p><img class="images" src="'.url('public/'.$check->firm_registration).'"></div>';
             echo json_encode(array('success'=>true,'data'=>$html));
         }else{
             echo json_encode(array('success'=>false,'data'=>'<div class="alert alert-info" role="alert">No Document upload.</div>'));
@@ -183,9 +183,9 @@ class UserController extends Controller
             }
 			
            if($row->image){
-				$image = '<img src="'.url($row->image).'" class="product_img">'.$row->name;
+				$image = '<img src="'.url('public/'.$row->image).'" class="product_img">'.$row->name;
 			} else {
-				$image = '<img src="'.url('no-image.png').'" class="product_img">'.$row->name;
+				$image = '<img src="'.url('public/no-image.png').'" class="product_img">'.$row->name;
 			}
             $final[] = array(
                             "DT_RowId" => $row->id,

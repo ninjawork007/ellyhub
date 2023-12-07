@@ -42,7 +42,7 @@
 				<div class="row justify-content-md-center">
 					<div class="col-lg-4 col-md-6 col-12">
 						<div class="for-restaurant">
-							<img src="{{url('assets/icons/advisor.svg')}}" alt="Adviser">
+							<img src="{{url('public/assets/icons/advisor.svg')}}" alt="Adviser">
 							<h4>For Advisors</h4>
 							<p>Praesent rhoncus urna nec justo suscipit, id congue justo dictum.</p>
 							<a href="{{url('signup/advisor')}}" class="partner-btn1 btn-link">Signup</a>
@@ -50,7 +50,7 @@
 					</div>
 					<div class="col-lg-4 col-md-6 col-12">
 						<div class="for-restaurant">
-							<img src="{{url('assets/icons/users.svg')}}" alt="user">
+							<img src="{{url('public/assets/icons/users.svg')}}" alt="user">
 							<h4>For Users</h4>
 							<p>Praesent rhoncus urna nec justo suscipit, id congue justo dictum.</p>
 							<a href="{{url('signup/user')}}" class="partner-btn1 btn-link">Signup</a>

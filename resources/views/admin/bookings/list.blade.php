@@ -96,7 +96,7 @@
 												<td>
 													<span class="table-avatar">
 														<a href="#" class="avatar avatar-sm mr-2">
-															<img class="avatar-img rounded-circle" alt="" src="{{url('assets/admin/img/customer/user-01.jpg')}}">
+															<img class="avatar-img rounded-circle" alt="" src="{{url('public/assets/admin/img/customer/user-01.jpg')}}">
 														</a>
 														<a href="javascript:void(0);">Jeffrey Akridge</a>
 													</span>
@@ -104,7 +104,7 @@
 												<td>
 													<span class="table-avatar">
 														<a href="#" class="avatar avatar-sm mr-2">
-															<img class="avatar-img rounded-circle" alt="" src="{{url('assets/admin/img/provider/provider-01.jpg')}}">
+															<img class="avatar-img rounded-circle" alt="" src="{{url('public/assets/admin/img/provider/provider-01.jpg')}}">
 														</a>
 														<a href="javascript:void(0);">Thomas Herzberg</a>
 													</span>
@@ -122,7 +122,7 @@
 												<td>
 													<span class="table-avatar">
 														<a href="#" class="avatar avatar-sm mr-2">
-															<img class="avatar-img rounded-circle" alt="" src="{{url('assets/admin/img/customer/user-02.jpg')}}">
+															<img class="avatar-img rounded-circle" alt="" src="{{url('public/assets/admin/img/customer/user-02.jpg')}}">
 														</a>
 														<a href="javascript:void(0);">Nancy Olson</a>
 													</span>
@@ -130,7 +130,7 @@
 												<td>
 													<span class="table-avatar">
 														<a href="#" class="avatar avatar-sm mr-2">
-															<img class="avatar-img rounded-circle" alt="" src="{{url('assets/admin/img/provider/provider-02.jpg')}}">
+															<img class="avatar-img rounded-circle" alt="" src="{{url('public/assets/admin/img/provider/provider-02.jpg')}}">
 														</a>
 														<a href="javascript:void(0);">Matthew Garcia</a>
 													</span>
@@ -148,7 +148,7 @@
 												<td>
 													<span class="table-avatar">
 														<a href="#" class="avatar avatar-sm mr-2">
-															<img class="avatar-img rounded-circle" alt="" src="{{url('assets/admin/img/customer/user-03.jpg')}}">
+															<img class="avatar-img rounded-circle" alt="" src="{{url('public/assets/admin/img/customer/user-03.jpg')}}">
 														</a>
 														<a href="javascript:void(0);">Ramona Kingsley</a>
 													</span>
@@ -156,7 +156,7 @@
 												<td>
 													<span class="table-avatar">
 														<a href="#" class="avatar avatar-sm mr-2">
-															<img class="avatar-img rounded-circle" alt="" src="{{url('assets/admin/img/provider/provider-03.jpg')}}">
+															<img class="avatar-img rounded-circle" alt="" src="{{url('public/assets/admin/img/provider/provider-03.jpg')}}">
 														</a>
 														<a href="javascript:void(0);">Yolanda Potter</a>
 													</span>
@@ -174,7 +174,7 @@
 												<td>
 													<span class="table-avatar">
 														<a href="#" class="avatar avatar-sm mr-2">
-															<img class="avatar-img rounded-circle" alt="" src="{{url('assets/admin/img/customer/user-04.jpg')}}">
+															<img class="avatar-img rounded-circle" alt="" src="{{url('public/assets/admin/img/customer/user-04.jpg')}}">
 														</a>
 														<a href="javascript:void(0);">Ricardo Lung</a>
 													</span>
@@ -182,7 +182,7 @@
 												<td>
 													<span class="table-avatar">
 														<a href="#" class="avatar avatar-sm mr-2">
-															<img class="avatar-img rounded-circle" alt="" src="{{url('assets/admin/img/provider/provider-04.jpg')}}">
+															<img class="avatar-img rounded-circle" alt="" src="{{url('public/assets/admin/img/provider/provider-04.jpg')}}">
 														</a>
 														<a href="javascript:void(0);">Ricardo Flemings</a>
 													</span>
@@ -200,7 +200,7 @@
 												<td>
 													<span class="table-avatar">
 														<a href="#" class="avatar avatar-sm mr-2">
-															<img class="avatar-img rounded-circle" alt="" src="{{url('assets/admin/img/customer/user-05.jpg')}}">
+															<img class="avatar-img rounded-circle" alt="" src="{{url('public/assets/admin/img/customer/user-05.jpg')}}">
 														</a>
 														<a href="javascript:void(0);">Annette Silva</a>
 													</span>
@@ -208,7 +208,7 @@
 												<td>
 													<span class="table-avatar">
 														<a href="#" class="avatar avatar-sm mr-2">
-															<img class="avatar-img rounded-circle" alt="" src="{{url('assets/admin/img/provider/provider-05.jpg')}}">
+															<img class="avatar-img rounded-circle" alt="" src="{{url('public/assets/admin/img/provider/provider-05.jpg')}}">
 														</a>
 														<a href="javascript:void(0);">Maritza Wasson</a>
 													</span>
@@ -226,7 +226,7 @@
 												<td>
 													<span class="table-avatar">
 														<a href="#" class="avatar avatar-sm mr-2">
-															<img class="avatar-img rounded-circle" alt="" src="{{url('assets/admin/img/customer/user-06.jpg')}}">
+															<img class="avatar-img rounded-circle" alt="" src="{{url('public/assets/admin/img/customer/user-06.jpg')}}">
 														</a>
 														<a href="javascript:void(0);">Stephen Wilson</a>
 													</span>
@@ -234,7 +234,7 @@
 												<td>
 													<span class="table-avatar">
 														<a href="#" class="avatar avatar-sm mr-2">
-															<img class="avatar-img rounded-circle" alt="" src="{{url('assets/admin/img/provider/provider-06.jpg')}}">
+															<img class="avatar-img rounded-circle" alt="" src="{{url('public/assets/admin/img/provider/provider-06.jpg')}}">
 														</a>
 														<a href="javascript:void(0);">Marya Ruiz</a>
 													</span>
@@ -252,7 +252,7 @@
 												<td>
 													<span class="table-avatar">
 														<a href="#" class="avatar avatar-sm mr-2">
-															<img class="avatar-img rounded-circle" alt="" src="{{url('assets/admin/img/customer/user-07.jpg')}}">
+															<img class="avatar-img rounded-circle" alt="" src="{{url('public/assets/admin/img/customer/user-07.jpg')}}">
 														</a>
 														<a href="javascript:void(0);">Ryan Rodriguez</a>
 													</span>
@@ -260,7 +260,7 @@
 												<td>
 													<span class="table-avatar">
 														<a href="#" class="avatar avatar-sm mr-2">
-															<img class="avatar-img rounded-circle" alt="" src="{{url('assets/admin/img/provider/provider-07.jpg')}}">
+															<img class="avatar-img rounded-circle" alt="" src="{{url('public/assets/admin/img/provider/provider-07.jpg')}}">
 														</a>
 														<a href="javascript:void(0);">Richard Hughes</a>
 													</span>
@@ -278,7 +278,7 @@
 												<td>
 													<span class="table-avatar">
 														<a href="#" class="avatar avatar-sm mr-2">
-															<img class="avatar-img rounded-circle" alt="" src="{{url('assets/admin/img/customer/user-08.jpg')}}">
+															<img class="avatar-img rounded-circle" alt="" src="{{url('public/assets/admin/img/customer/user-08.jpg')}}">
 														</a>
 														<a href="javascript:void(0);">Lucile Devera</a>
 													</span>
@@ -286,7 +286,7 @@
 												<td>
 													<span class="table-avatar">
 														<a href="#" class="avatar avatar-sm mr-2">
-															<img class="avatar-img rounded-circle" alt="" src="{{url('assets/admin/img/provider/provider-08.jpg')}}">
+															<img class="avatar-img rounded-circle" alt="" src="{{url('public/assets/admin/img/provider/provider-08.jpg')}}">
 														</a>
 														<a href="javascript:void(0);">Nina Wilson</a>
 													</span>
@@ -304,7 +304,7 @@
 												<td>
 													<span class="table-avatar">
 														<a href="#" class="avatar avatar-sm mr-2">
-															<img class="avatar-img rounded-circle" alt="" src="{{url('assets/admin/img/customer/user-09.jpg')}}">
+															<img class="avatar-img rounded-circle" alt="" src="{{url('public/assets/admin/img/customer/user-09.jpg')}}">
 														</a>
 														<a href="javascript:void(0);">Roland Storey</a>
 													</span>
@@ -312,7 +312,7 @@
 												<td>
 													<span class="table-avatar">
 														<a href="#" class="avatar avatar-sm mr-2">
-															<img class="avatar-img rounded-circle" alt="" src="{{url('assets/admin/img/provider/provider-09.jpg')}}">
+															<img class="avatar-img rounded-circle" alt="" src="{{url('public/assets/admin/img/provider/provider-09.jpg')}}">
 														</a>
 														<a href="javascript:void(0);">David Morrison</a>
 													</span>
@@ -330,7 +330,7 @@
 												<td>
 													<span class="table-avatar">
 														<a href="#" class="avatar avatar-sm mr-2">
-															<img class="avatar-img rounded-circle" alt="" src="{{url('assets/admin/img/customer/user-10.jpg')}}">
+															<img class="avatar-img rounded-circle" alt="" src="{{url('public/assets/admin/img/customer/user-10.jpg')}}">
 														</a>
 														<a href="javascript:void(0);">Lindsey Parmley</a>
 													</span>
@@ -338,7 +338,7 @@
 												<td>
 													<span class="table-avatar">
 														<a href="#" class="avatar avatar-sm mr-2">
-															<img class="avatar-img rounded-circle" alt="" src="{{url('assets/admin/img/provider/provider-10.jpg')}}">
+															<img class="avatar-img rounded-circle" alt="" src="{{url('public/assets/admin/img/provider/provider-10.jpg')}}">
 														</a>
 														<a href="javascript:void(0);">Linda Brooks</a>
 													</span>
@@ -359,7 +359,7 @@
 				</div>
 			</div>
 		</div>
-<script src="{{url('assets/admin/js/moment.min.js')}}"></script>
-<script src="{{url('assets/admin/js/bootstrap-datetimepicker.min.js')}}"></script>
-<script src="{{url('assets/admin/plugins/datatables/datatables.min.js')}}"></script>
+<script src="{{url('public/assets/admin/js/moment.min.js')}}"></script>
+<script src="{{url('public/assets/admin/js/bootstrap-datetimepicker.min.js')}}"></script>
+<script src="{{url('public/assets/admin/plugins/datatables/datatables.min.js')}}"></script>
 @endsection

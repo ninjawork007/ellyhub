@@ -115,9 +115,9 @@
               </div>
               <div class="col-sm-3">
                            <?php if($data->logo){?>
-                    <img src="{{url($data->logo)}}"  id="show_img"   />
+                    <img src="{{url('public/'.$data->logo)}}"  id="show_img"   />
                <?php } else{?>
-                   <img src="{{url('no-image.png')}}"  id="show_img" class="edit_img" />
+                   <img src="{{url('public/no-image.png')}}"  id="show_img" class="edit_img" />
                <?php  }  ?>
                           </div>
                         </div>
@@ -135,9 +135,9 @@
                             </div>
                             <div class="col-sm-3">
                                          <?php if($data->footer_logo){?>
-                                  <img src="{{url($data->footer_logo)}}"  id="show_img2"   />
+                                  <img src="{{url('public/'.$data->footer_logo)}}"  id="show_img2"   />
                              <?php } else{?>
-                                 <img src="{{url('no-image.png')}}"  id="show_img2" class="edit_img" />
+                                 <img src="{{url('public/no-image.png')}}"  id="show_img2" class="edit_img" />
                              <?php  }  ?>
                           </div>
                         </div>
@@ -156,9 +156,9 @@
               </div>
                           <div class="col-sm-3">
                                        <?php if($data->icon){?>
-                                <img src="{{url($data->icon)}}"  id="show_img1"  />
+                                <img src="{{url('public/'.$data->icon)}}"  id="show_img1"  />
                            <?php } else{?>
-                               <img src="{{url('no-image.png')}}"  id="show_img1" class="edit_img" />
+                               <img src="{{url('public/no-image.png')}}"  id="show_img1" class="edit_img" />
                            <?php  }  ?>
                           </div>
                         </div>

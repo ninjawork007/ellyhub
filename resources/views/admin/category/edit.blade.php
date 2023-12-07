@@ -37,7 +37,7 @@
                           <div class="col-sm-9">
                             <input class="form-control" type="file" accept="image/x-png,image/svg" name="icon">
                             <small> only png,svg icon allow</small>
-							<?php if($category->image){?><img src="{{url($category->image)}}" alt="image" class="edit_img" /><?php }?>
+							<?php if($category->image){?><img src="{{url('public/'.$category->image)}}" alt="image" class="edit_img" /><?php }?>
                           </div>
                         </div>
 						 
@@ -48,7 +48,7 @@
                           <div class="col-sm-9">
                             <input class="form-control" type="file" accept="image/x-jpg,image/jpeg" name="banner">
                             <small> only JPG, JPEG images are allowed</small>
-							<?php if($category->banner){?><img src="{{url($category->banner)}}" alt="image" class="edit_img" /><?php }?>
+							<?php if($category->banner){?><img src="{{url('public/'.$category->banner)}}" alt="image" class="edit_img" /><?php }?>
                           </div>
                         </div>
                       </div>

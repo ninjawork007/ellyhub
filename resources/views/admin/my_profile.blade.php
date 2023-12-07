@@ -39,9 +39,9 @@ img.image_ {
                     <div class="row">
 					  <div class="col-md-12 text-center profile-pic">
                         @if(@$user_info->profile_photo)
-                        <img src="{{@url(''.$user_info->profile_photo)}}" class="image_">
+                        <img src="{{@url('public/'.$user_info->profile_photo)}}" class="image_">
                         @else
-                        <img src="{{url('no-image.png')}}" class="image_">
+                        <img src="{{url('public/no-image.png')}}" class="image_">
                         @endif
                       </div>
                     </div>
@@ -137,9 +137,9 @@ img.image_ {
                       <div class="col-md-6 ">
                         
 						 @if(@$user_info->pan_card)
-                        <img src="{{@url(''.$user_info->pan_card)}}" class="image_">
+                        <img src="{{@url('public/'.$user_info->pan_card)}}" class="image_">
                         @else
-                        <img src="{{url('no-image.png')}}" class="image_">
+                        <img src="{{url('public/no-image.png')}}" class="image_">
                         @endif
 						
                       </div>
@@ -155,9 +155,9 @@ img.image_ {
                       </div>
                       <div class="col-md-6">
 						@if(@$user_info->adhar_card)
-                        <img src="{{@url(''.$user_info->adhar_card)}}" class="image_">
+                        <img src="{{@url('public/'.$user_info->adhar_card)}}" class="image_">
                         @else
-                        <img src="{{url('no-image.png')}}" class="image_">
+                        <img src="{{url('public/no-image.png')}}" class="image_">
                         @endif
                       </div>
                       </div>
@@ -173,9 +173,9 @@ img.image_ {
                       <div class="col-md-6">
                         
 						@if(@$user_info->gst_registration)
-                        <img src="{{@url(''.$user_info->gst_registration)}}" class="image_">
+                        <img src="{{@url('public/'.$user_info->gst_registration)}}" class="image_">
                         @else
-                        <img src="{{url('no-image.png')}}" class="image_">
+                        <img src="{{url('public/no-image.png')}}" class="image_">
                         @endif
                       </div>
                       </div>
@@ -190,9 +190,9 @@ img.image_ {
                       </div>
                       <div class="col-md-6">
 						@if(@$user_info->firm_registration)
-                        <img src="{{@url(''.$user_info->firm_registration)}}" class="image_">
+                        <img src="{{@url('public/'.$user_info->firm_registration)}}" class="image_">
                         @else
-                        <img src="{{url('no-image.png')}}" class="image_">
+                        <img src="{{url('public/no-image.png')}}" class="image_">
                         @endif
                       </div>
                     </div>

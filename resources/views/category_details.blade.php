@@ -176,7 +176,7 @@
             </div>
             @else
             <div class="products row justify-content-center">
-                <img src="{{url('not-found.jpg')}}" style="max-width:50% !important;">
+                <img src="{{url('public/not-found.jpg')}}" style="max-width:50% !important;">
             </div>
             @endif
 

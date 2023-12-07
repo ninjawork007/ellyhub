@@ -527,7 +527,7 @@ input[type="checkbox"] {
 
 													<label id="gall_{{$key->id}}">
 
-														<img src="{{url('public/'.$key->images)}}" class="edit_img" /> 
+														<img src="{{ $key->images }}" class="edit_img" /> 
 
 														<i class="fa fa-trash delete_gallery" onclick="delete_gallery({{$key->id}})" ></i>
 
@@ -688,6 +688,27 @@ input[type="checkbox"] {
 															</div>
 
                                <div class="row" >
+
+
+
+                               	<div class="col-md-12">
+
+								<div class="form-group row">
+
+								  <label class="col-sm-3 col-form-label">Post to FB</label>
+
+								  <div class="col-sm-9">
+
+    <input type="checkbox" class="form-check-input" name="upload_to_fb" value="1" {{ $product->upload_to_fb == 1 ? 'checked' : '' }} >
+
+								  </div>
+
+								</div> 
+
+								</div>
+
+
+
 
 							  <div class="col-md-12">
 

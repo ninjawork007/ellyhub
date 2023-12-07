@@ -256,7 +256,7 @@ class WelcomeController extends Controller
 
             $data['message'] = 'Email verification completed.';
 
-            $data['image'] = url('assets/email-images/email-success.png');
+            $data['image'] = url('public/assets/email-images/email-success.png');
 
             return view('email_verify',$data);
 
@@ -266,7 +266,7 @@ class WelcomeController extends Controller
 
             $data['message'] = 'Sorry!!! user verification fail.';
 
-            $data['image'] = url('assets/email-images/email-error.png');
+            $data['image'] = url('public/assets/email-images/email-error.png');
 
             return view('email_verify',$data);
 
@@ -490,22 +490,22 @@ class WelcomeController extends Controller
 
 		 $data['product'] = DB::table('products')->where('id',$id)->first();
 
-         $data['wishlist'] = DB::table('wishlist')->where([['userid','=',session()->get('userid')],['product_id','=',$id]])->count();
+         $data['wishlist'] = DB::table('wishlist')->where([['userid','=',session()->get('userid')],['product_id','=',$data['product']->ebay_product_id]])->count();
 
-         $data['product_gallery'] = DB::table('product_gallery')->where('product_id',$id)->get()->toarray();
+         $data['product_gallery'] = DB::table('product_gallery')->where('product_id',$data['product']->ebay_product_id)->get()->toarray();
 
-         $data['product_colors'] = DB::table('product_colors')->where('product_id',$id)->get()->toarray();
+         $data['product_colors'] = DB::table('product_colors')->where('product_id',$data['product']->ebay_product_id)->get()->toarray();
 
-         $data['product_size'] = DB::table('product_size')->where('product_id',$id)->get()->toarray();
+         $data['product_size'] = DB::table('product_size')->where('product_id',$data['product']->ebay_product_id)->get()->toarray();
 
 		 $data['latest_product'] = DB::select(DB::raw("SELECT a.id, a.shipping_time , a.estimate_time, a.vendor_id, a.category_id, a.name, a.image, a.product_price, a.sale_price, a.status, a.modify_at, a.is_delete,(SELECT name FROM `categories` WHERE id=a.category_id) as category_name,(SELECT name FROM `users` WHERE id=a.vendor_id) as vendor FROM products as a WHERE a.is_delete='0' AND a.status='approved' LIMIT 8"));
-         $data['cart'] = DB::select(DB::raw("SELECT * FROM `cart` WHERE `userid`='".session()->get('userid')."' AND `product_id`='".$id."'"));
+         $data['cart'] = DB::select(DB::raw("SELECT * FROM `cart` WHERE `userid`='".session()->get('userid')."' AND `product_id`='".$data['product']->ebay_product_id."'"));
           $data['reviews'] = DB::table('reviews')
                             ->leftJoin('users','reviews.userid','=','users.id')
                             ->select('reviews.*','users.name','users.image')
-                            ->where('reviews.productid',$id)
+                            ->where('reviews.productid',$data['product']->ebay_product_id)
                             ->get();
-          $data['sum_of_review'] = DB::select(DB::raw("SELECT sum(rating) as rating FROM reviews WHERE productid='".$id."'"));
+          $data['sum_of_review'] = DB::select(DB::raw("SELECT sum(rating) as rating FROM reviews WHERE productid='".$data['product']->ebay_product_id."'"));
           // dd($data['reviews']);
           $data['common'] = new Common;
         return view('product_details',$data);
@@ -837,7 +837,7 @@ class WelcomeController extends Controller
 
             $data['message'] = 'Email verification completed.';
 
-            $data['image'] = url('assets/email-images/email-success.png');
+            $data['image'] = url('public/assets/email-images/email-success.png');
 
             return view('email_verify',$data);
 
@@ -847,7 +847,7 @@ class WelcomeController extends Controller
 
             $data['message'] = 'Sorry!!! user verification fail.';
 
-            $data['image'] = url('assets/email-images/email-error.png');
+            $data['image'] = url('public/assets/email-images/email-error.png');
 
             return view('email_verify',$data);
 
@@ -1640,7 +1640,7 @@ class WelcomeController extends Controller
                                     $image_array = explode(',',$value->image);
                                     echo "<img src=".$image_array[0]." class='img-search'>";
                                 }else{
-                                    echo "<img src=".url(''.$value->image)." class='img-search'>";
+                                    echo "<img src=".url('public/'.$value->image)." class='img-search'>";
                                 }
                         
                         echo "</div><div><div class='search-pro-name'>". $name ."</div><div class='serch-pro-price'> <del>". $currency.$value->mrp_price ." </del>  <strong> ". $currency.$value->sale_price ." </strong> </div></div></a> 

@@ -30,11 +30,11 @@ body .banner-img {
 					<div class="col-md-9">
 							<?php if($banner->banner){?>
 							<label class="col-form-label">Web Image</label><br>
-								<img src="{{url(''.$banner->banner)}}"    class="banner-img"/>
+								<img src="{{url('public/'.$banner->banner)}}"    class="banner-img"/>
 							<?php }?>
 							<?php if($banner->m_banner){?>
 							<label class="col-form-label">Mobile Image</label><br>
-								<img src="{{url(''.$banner->m_banner)}}"    class="banner-img"/>
+								<img src="{{url('public/'.$banner->m_banner)}}"    class="banner-img"/>
 							<?php }?>
                            
                         </div>

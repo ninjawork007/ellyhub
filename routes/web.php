@@ -9,6 +9,11 @@ Route::get('/cache', function(){
 });
 
 Route::get('GetCategory','Admin\EbayCronController@fetchProduct');
+Route::get('fetchProductsSingle/{id}','Admin\EbayCronController@fetchProductsSingle');
+Route::get('fetchProductsSingle','Admin\EbayCronController@fetchProductsSingle');
+Route::get('PostCarg','Admin\EbayController@PostCarg');
+Route::get('PostOnFB','Admin\EbayController@PostOnFB');
+Route::get('PostOnFBNew','Admin\EbayController@PostOnFB');
 
 Route::get('track','WelcomeController@track_order')->name('track');
 Route::get('find','CommonController@find_product')->name('find_product');
@@ -126,6 +131,7 @@ Route::group(['middleware' => 'auth'], function(){
 		// product routes
 		Route::get('products','ProductController@products')->name('products');
 		Route::get('products_ajax','ProductController@product_list')->name('ajax_get_products');
+
 		/**
 		 * get draft list
 		 * 2023-06-09
@@ -141,6 +147,8 @@ Route::group(['middleware' => 'auth'], function(){
 		 */
 		Route::post('products-draft','ProductController@product_draft')->name('draft_product');
 		
+		Route::get('products-add','ProductController@product_add')->name('add_product');
+		Route::post('products-save','ProductController@product_save')->name('save_product');
 		Route::get('product/{id}','ProductController@product_detail')->name('product_detail_admin');
 		Route::get('product/edit/{id}','ProductController@product_edit')->name('product_edit_admin');
 		Route::get('update_product_status','ProductController@update_product_status')->name('update_product_status');

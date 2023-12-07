@@ -19,7 +19,7 @@
                         <div class="category__top">
                             <div class="category__header">
                                 <h3 class="category__name">
-								<img src="{{ $brands->banner}}" class="top_cat_img">
+								<img src="{{url('public/')}}/{{ $brands->banner}}" class="top_cat_img">
 								{{$brands->title}}
 								</h3>
                               

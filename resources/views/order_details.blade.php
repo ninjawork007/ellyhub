@@ -59,7 +59,7 @@ full-width white-bg @endsection
                 <div class="card-head">
                 	<div class="row">
                 		<div class="col-md-6">
-                			<img src="{{url($setting[0]->logo)}}" style="width: 160px;margin-left: 14%;">
+                			<img src="{{url('public/'.$setting[0]->logo)}}" style="width: 160px;margin-left: 14%;">
                 		</div>
                 		<div class="col-md-6">
                 			<p style="text-align: right;">Tax invoice/Bill of supply/Cash memo</p>
@@ -167,7 +167,7 @@ $("#btn_print").click(function() {
     var divToPrint = document.getElementById('print_div');
     var newWin = window.open('', 'Print-Window');
     newWin.document.open();
-    newWin.document.write('<html><head><link rel="stylesheet" href="//bazarhat99.com/assets/web/bootstrap/css/bootstrap.min.css"></head><body onload="window.print()">' + divToPrint.innerHTML + '</body></html>');
+    newWin.document.write('<html><head><link rel="stylesheet" href="//bazarhat99.com/public/assets/web/bootstrap/css/bootstrap.min.css"></head><body onload="window.print()">' + divToPrint.innerHTML + '</body></html>');
     newWin.document.close();
     setTimeout(function() {
         newWin.close();
