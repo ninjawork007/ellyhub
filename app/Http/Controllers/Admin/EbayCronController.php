@@ -2973,14 +2973,316 @@ class EbayCronController extends Controller
                     print_r($productsMultiple);
                     
                    // $user = Auth::user();
-                    
 
-                    $productStore = Product::where('vendor_id', $user->id)->where('ebay_product_id', $item_id)->first();
+
+                    $productStore = Product::where('vendor_id', $user->id)->where('ebay_product_id', $product['ItemID'])->first();
                     if (!$productStore) {
                         $productStore = Product::insert($productsMultiple);
                     }
                     else{
-                        $productStore = Product::where('vendor_id', $user->id)->where('ebay_product_id', $item_id)->update($productsMultiple);
+                        $productStore = Product::where('vendor_id', $user->id)->where('ebay_product_id', $product['ItemID'])->update($productsMultiple);
+                    }
+                }
+            }
+        }
+    }
+
+    public function fetchDeletedProducts(){
+        $userToken = $this->getToken(true,0);
+        $dataProducts = [];
+        $pageno = 1;
+        $requestXmlBody = '<?xml version="1.0" encoding="utf-8"?>';
+        $requestXmlBody .= '<GetSellerListRequest xmlns="urn:ebay:apis:eBLBaseComponents">';
+        $requestXmlBody .= '<EndTimeFrom>'.date('c', strtotime('-120 days')).'</EndTimeFrom>';
+        $requestXmlBody .= '<EndTimeTo>'.date('c').'</EndTimeTo>';
+        $requestXmlBody .= '<Pagination>
+                        <EntriesPerPage>' . 200
+            . '</EntriesPerPage>
+                        <PageNumber>' . $pageno . '</PageNumber>
+                      </Pagination>';
+        $requestXmlBody .= '<RequesterCredentials>';
+        $requestXmlBody .= "<eBayAuthToken>$userToken</eBayAuthToken>";
+        $requestXmlBody .= "</RequesterCredentials></GetSellerListRequest>";
+
+        $callname = 'GetSellerList';
+        $responseXml = $this->sendHttpRequest($requestXmlBody, $userToken, $callname);
+        $productData = $this->xmlToArray($responseXml);
+        array_push($dataProducts, $productData['ItemArray']);
+
+        if ($productData['Ack'] == 'Success') {
+            foreach($dataProducts as $itemarraysingle){
+                $pageno++;
+                foreach($itemarraysingle['Item'] as $single){
+                    $requestXmlBody = '<?xml version="1.0" encoding="utf-8"?>';
+                    $requestXmlBody .= '<GetItemRequest xmlns="urn:ebay:apis:eBLBaseComponents">';
+                    $requestXmlBody .= '<RequesterCredentials>';
+                    $requestXmlBody .= '<eBayAuthToken>' . $userToken . '</eBayAuthToken>';
+                    $requestXmlBody .= '</RequesterCredentials>';
+                    $requestXmlBody .= '<ErrorLanguage>en_US</ErrorLanguage>';
+                    $requestXmlBody .= '<WarningLevel>High</WarningLevel>';
+                    $requestXmlBody .= '<DetailLevel>ReturnAll</DetailLevel>';
+                    $requestXmlBody .= '<IncludeItemSpecifics>true</IncludeItemSpecifics>';
+                    $requestXmlBody .= '<ItemID>' . $single['ItemID']. '</ItemID>';
+                    $requestXmlBody .= '</GetItemRequest>';
+                    $callname = 'GetItem';
+                    $responseXml = $this->sendHttpRequest($requestXmlBody, $userToken, $callname);
+                    $productData = $this->xmlToArray($responseXml);
+
+                    // Your eBay API credentials
+                    $clientId = $this->appId;
+                    $clientSecret = $this->certId;
+
+                    $fieldgroups = 'FULL';
+                    $pageSize = 100; // Set the page size (number of items per page)
+                    $pageNumber = 1;
+
+                    $dataProducts = [];
+                    array_push($dataProducts, $productData);
+
+                    if (!empty($dataProducts)) {
+                        //foreach ($dataProducts as $dataProduct) {
+                        if ($productData['Ack'] == 'Success') {
+                            $product = $productData['Item'];
+                            //}
+                            $ebayCategoryId = $product['PrimaryCategory']['CategoryID'] ?? '';
+                            $ebayCategoryName = $product['PrimaryCategory']['CategoryName'] ?? '';
+
+                            $item_specific = '';
+                            $ItemSpecificationKeys = array();
+
+                            if (isset($product['ItemSpecifics']['NameValueList'])) {
+                                $ItemSpecifics = json_decode(json_encode($product['ItemSpecifics']));
+                                if (gettype($ItemSpecifics->NameValueList) == 'object') {
+                                    if (isset($ItemSpecifics->NameValueList->Name)) {
+                                        $ItemSpecificationKeys[] = $ItemSpecifics->NameValueList->Name;
+                                        $key = $ItemSpecifics->NameValueList->Name;
+                                        $value = $ItemSpecifics->NameValueList->Value;
+                                        $item_specific_array = [];
+                                        $item_specific_array[$key] = $value;
+                                        $item_specific = json_encode($item_specific_array);
+                                    }
+                                } else if (gettype($ItemSpecifics->NameValueList) == 'array') {
+                                    $item_specific_array = [];
+                                    foreach ($ItemSpecifics->NameValueList as $itemSpecific) {
+                                        $ItemSpecificationKeys[] = $itemSpecific->Name;
+                                        $key = $itemSpecific->Name;
+                                        $value = $itemSpecific->Value;
+                                        $item_specific_array[$key] = $value;
+                                    }
+                                    $item_specific = json_encode($item_specific_array);
+                                }
+                            }
+
+                            if ($ebayCategoryId) {
+                                $checkCategory = EbayCategory::where('category_id', $ebayCategoryId)->first();
+                                if (!$checkCategory) {
+                                    $checkCategory = new EbayCategory();
+                                    $checkCategory->category_id = $ebayCategoryId;
+                                    $checkCategory->name = $ebayCategoryName != '' ? str_replace(':', ' > ', $ebayCategoryName) : '';
+                                    $checkCategory->status = 1;
+                                    $checkCategory->custom_fields = json_encode($ItemSpecificationKeys);
+                                    $checkCategory->save();
+                                }
+                            }
+
+                            $ExpCatName = explode(":", $ebayCategoryName);
+                            $MainCatID = 0;
+                            $SubCatID = 0;
+                            $ChildCatID = 0;
+
+                            if(isset($ExpCatName[0])){
+                                $CheckCategoryExists = Category::where("name", trim($ExpCatName[0]))->first();
+                                if(isset($CheckCategoryExists->id)){
+                                    $MainCatID = $CheckCategoryExists->id;
+                                }else{
+                                    $CatObj = new Category();
+                                    $CatObj->name = trim($ExpCatName[0]);
+                                    if(trim($ExpCatName[0]) == "Cell Phones & Accessories" || trim($ExpCatName[0]) == "Cameras & Photo"){
+                                        $CatObj->home_screen = "yes";
+                                    }
+                                    $CatObj->slug = $this->slugify(trim($ExpCatName[0]));
+                                    $CatObj->home_category = 1;
+                                    $CatObj->save();
+                                    $MainCatID = $CatObj->id;
+                                }
+                            }
+
+                            if(isset($ExpCatName[1])){
+                                $CheckCategoryExists = SubCategory::where("title", trim($ExpCatName[1]))->first();
+                                if(isset($CheckCategoryExists->id)){
+                                    $SubCatID = $CheckCategoryExists->id;
+                                }else{
+                                    $CatObj = new SubCategory();
+                                    $CatObj->category_id = $MainCatID;
+                                    $CatObj->title = trim($ExpCatName[1]);
+                                    $CatObj->slug = $this->slugify(trim($ExpCatName[1]));
+                                    $CatObj->save();
+                                    $SubCatID = $CatObj->id;
+                                }
+                            }
+
+                            if(isset($ExpCatName[2])){
+                                $CheckCategoryExists = ChildCategory::where("name", trim($ExpCatName[2]))->first();
+                                if(isset($CheckCategoryExists->id)){
+                                    $ChildCatID = $CheckCategoryExists->id;
+                                }else{
+                                    $CatObj = new ChildCategory();
+                                    $CatObj->category_id = $MainCatID;
+                                    $CatObj->sub_category_id = $SubCatID;
+                                    $CatObj->name = trim($ExpCatName[2]);
+                                    $CatObj->slug = $this->slugify(trim($ExpCatName[2]));
+                                    $CatObj->save();
+                                    $ChildCatID = $CatObj->id;
+                                }
+
+
+                            }                    $ShippingServiceCost = 0;
+                            if(isset($product['ShippingDetails']['ShippingServiceOptions']) && is_array($product['ShippingDetails']['ShippingServiceOptions'])){
+                                foreach($product['ShippingDetails']['ShippingServiceOptions'] as $ShippingServiceOptions){
+                                    if(is_array($ShippingServiceOptions)){
+                                        $ShippingServiceCost += $ShippingServiceOptions['ShippingServiceCost'];
+                                    }
+                                    else{
+                                        $ShippingServiceCost = $product['ShippingDetails']['ShippingServiceOptions']['ShippingServiceCost'];
+                                    }
+                                }
+                            }
+                            else{
+                                $ShippingServiceCost = $product['ShippingDetails']['ShippingServiceOptions']['ShippingServiceCost'] ?? '';
+                            }
+
+                            $categoryId = $ebayCategoryId;
+
+                            $title = $product['Title'] ?? '';
+                            $sku = $product['SKU'] ?? null;
+
+                            $description = $product['Description'] ?? '';
+                            $quantity = $product['Quantity'] ?? 0;
+                            $price = $product['SellingStatus']['CurrentPrice'] ?? 0;
+
+                            $brand = $product['ProductListingDetails']['BrandMPN']['Brand'] ?? null;
+                            //$MPN = $product['ProductListingDetails']['BrandMPN']['MPN'] ?? null;
+
+                            //return [$item_specific, $product];
+
+                            $UPC = $product['ProductListingDetails']['UPC'] ?? null;
+
+                            $picture_url = "";
+                            if (isset($product['PictureDetails']['PhotoDisplay'])) {
+                                if ($product['PictureDetails']['PhotoDisplay'] == 'PicturePack') {
+                                    $picture_url = isset($product['PictureDetails']['PictureURL']) ? (gettype($product['PictureDetails']['PictureURL']) == 'string' ? $product['PictureDetails']['PictureURL'] : (gettype($product['PictureDetails']['PictureURL']) == 'array' ? $product['PictureDetails']['PictureURL'][0] : "")) : "";
+                                } else if (isset($product['PictureDetails']['GalleryURL'])) {
+                                    $picture_url = isset($product['PictureDetails']['GalleryURL']) ? (gettype($product['PictureDetails']['GalleryURL']) == 'string' ? $product['PictureDetails']['GalleryURL'] : (gettype($product['PictureDetails']['GalleryURL']) == 'array' ? $product['PictureDetails']['GalleryURL'][0] : "")) : "";
+                                }
+                            }
+                            $picture_url = isset($product['PictureDetails']['PictureURL']) ? (gettype($product['PictureDetails']['PictureURL']) == 'string' ? $product['PictureDetails']['PictureURL'] : $product['PictureDetails']['PictureURL'][0]) : "";
+                            $shipping_policy_id = null;
+                            $return_policy_id = null;
+                            $payment_policy_id = null;
+
+                            $ShippingProfileID = $product['SellerProfiles']['SellerShippingProfile']['ShippingProfileID'] ?? '';
+                            $ReturnProfileID = $product['SellerProfiles']['SellerReturnProfile']['ReturnProfileID'] ?? '';
+                            $PaymentProfileID = $product['SellerProfiles']['SellerPaymentProfile']['PaymentProfileID'] ?? '';
+
+                            if ($ShippingProfileID) {
+                                $ShippingPolicy = EbayShippingPolicy::where('policy_id', '=', $ShippingProfileID)->first();
+                                if (!$ShippingPolicy) {
+                                    $ShippingPolicy = new ShippingPolicy();
+                                    $ShippingPolicy->policy_id = $ShippingProfileID;
+                                    $ShippingPolicy->name = $product['SellerProfiles']['SellerShippingProfile']['ShippingProfileName'] ?? '';
+                                    $ShippingPolicy->save();
+                                }
+                                $shipping_policy_id = $ShippingPolicy->id;
+                            }
+
+                            if ($ReturnProfileID) {
+                                $ReturnPolicy = EbayReturnPolicy::where('policy_id', '=', $ReturnProfileID)->first();
+                                if (!$ReturnPolicy) {
+                                    $ReturnPolicy = new EbayReturnPolicy();
+                                    $ReturnPolicy->policy_id = $ReturnProfileID;
+                                    $ReturnPolicy->name = $product['SellerProfiles']['SellerReturnProfile']['ReturnProfileName'] ?? '';
+                                    $ReturnPolicy->save();
+                                }
+                                $return_policy_id = $ReturnPolicy->id;
+                            }
+
+                            if ($PaymentProfileID) {
+                                $PaymentPolicy = EbayPaymentPolicy::where('policy_id', '=', $PaymentProfileID)->first();
+                                if (!$PaymentPolicy) {
+                                    $PaymentPolicy = new EbayPaymentPolicy();
+                                    $PaymentPolicy->policy_id = $PaymentProfileID;
+                                    $PaymentPolicy->name = $product['SellerProfiles']['SellerPaymentProfile']['PaymentProfileName'] ?? '';
+                                    $PaymentPolicy->save();
+                                }
+                                $payment_policy_id = $PaymentPolicy->id;
+                            }
+
+
+                            $package_type = $product['ShippingPackageDetails']['ShippingPackage'] ?? '';
+                            $package_dimensions_length = $product['ShippingPackageDetails']['PackageLength'] ?? '';
+                            $package_dimensions_width = $product['ShippingPackageDetails']['PackageWidth'] ?? '';
+                            $package_dimensions_height = $product['ShippingPackageDetails']['PackageDepth'] ?? '';
+
+                            $irregular_package = $product['ShippingPackageDetails']['ShippingIrregular'] ?? false;
+                            $package_weight_major = $product['ShippingPackageDetails']['WeightMajor'] ?? '0';
+                            $package_weight_minor = $product['ShippingPackageDetails']['WeightMinor'] ?? '0';
+
+                            $package_weight = $package_weight_major . '.' . $package_weight_minor;
+
+                            $country = $product['Country'] ?? '';
+                            $zip_code = $product['PostalCode'] ?? '';
+                            $city_or_state = $product['Location'] ?? '';
+
+                            $user = Auth::user();
+
+                            $productsMultiple = [
+                                'vendor_id' => $user->id,
+                                'ebay_category_id' => $categoryId,
+                                'category_id' => $MainCatID,
+                                'sub_category_id' => $SubCatID,
+                                'child_category_id' => $ChildCatID,
+                                'name' => $title,
+                                'sku' => $sku,
+                                'description' => $description,
+                                'sale_price' => $price,
+                                'mrp_price' => $price,
+                                'product_price' => $price,
+                                'stock' => $quantity,
+                                'brand' => $brand,
+                                'return_policy_id'=> $return_policy_id,
+                                'payment_policy_id' => $payment_policy_id,
+                                'shipping_policy_id' => $shipping_policy_id,
+                                'package_type' => $package_type,
+                                'package_dimensions_length' => $package_dimensions_length,
+                                'package_dimensions_width' => $package_dimensions_width,
+                                'package_dimensions_height' => $package_dimensions_height,
+                                'package_weight' => $package_weight,
+                                'country' => $country,
+                                'zip_code' => $zip_code,
+                                'city_or_state' => $city_or_state,
+                                'image' => $picture_url,
+                                'is_uploaded' => 1,
+                                'is_delete' => 1,
+                                'status' => 'approved',
+                                'ebay_product_id' => $product['ItemID'],
+                                'ebay_product_url' => ($this->environment=='sandbox') ? 'https://www.sandbox.ebay.com/itm/'. $product['ItemID'] : 'https://www.ebay.com/itm/'. $product['ItemID'],
+                                'shipping_charges' => $ShippingServiceCost
+                            ];
+
+                            /*echo "<pre>";
+                            print_r($productsMultiple);
+                                exit;*/
+                            //
+
+
+                            $productStore = Product::where('vendor_id', $user->id)->where('ebay_product_id', $item_id)->first();
+                            if (!$productStore) {
+                                $productStore = Product::insert($productsMultiple);
+                            }
+                            else{
+                                $productStore = Product::where('vendor_id', $user->id)->where('ebay_product_id', $item_id)->update($productsMultiple);
+                            }
+                        }
                     }
                 }
             }
