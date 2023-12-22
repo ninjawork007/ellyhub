@@ -10,6 +10,7 @@ Route::get('/cache', function(){
 
 Route::get('GetCategory','Admin\EbayCronController@fetchProduct');
 Route::get('fetchDeletedProducts','Admin\EbayCronController@fetchDeletedProducts');
+Route::get('fetchReturnRefund','Admin\EbayCronController@fetchReturnRefund');
 Route::get('fetchProductsSingle/{id}','Admin\EbayCronController@fetchProductsSingle');
 Route::get('fetchProductsSingle','Admin\EbayCronController@fetchProductsSingle');
 Route::get('PostCarg','Admin\EbayController@PostCarg');

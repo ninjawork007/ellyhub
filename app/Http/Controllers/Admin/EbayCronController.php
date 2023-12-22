@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\EbayProductStatus;
 
+use App\Models\disputesModel;
 use App\Models\EbayCategory;
 use App\Models\EbayPaymentPolicy;
 use App\Models\Product;
@@ -3287,5 +3288,94 @@ class EbayCronController extends Controller
                 }
             }
         }
+    }
+
+    public function fetchReturnRefund(){
+        $userToken = $this->getToken(true,0);
+        $curl = curl_init();
+        $disputeData = [];
+
+        $limit =  3;
+        $offset = 0;
+        $pageNo = 1;
+        $totalRecords = $limit;
+        for($i = $pageNo;$i <= $totalRecords;$i++){
+
+
+                $curlsecond = curl_init();
+                curl_setopt_array($curlsecond, array(
+                    CURLOPT_URL => 'https://apiz.ebay.com/sell/fulfillment/v1/payment_dispute_summary?limit='.$limit.'&offset='.$offset,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'GET',
+                    CURLOPT_HTTPHEADER => array(
+                        'Authorization: Bearer '.$userToken
+                    ),
+                ));
+
+                $response = curl_exec($curlsecond);
+
+                curl_close($curlsecond);
+
+                $response = json_decode($response, true);
+                if(!empty($response['paymentDisputeSummaries'])){
+                    $disputeData = array_merge($disputeData, $response['paymentDisputeSummaries']);
+                }
+                $pageNo++;
+                $offset = $offset + count($response['paymentDisputeSummaries']);
+                curl_close($curlsecond);
+                $totalRecords = (int)round($response['total'] / $limit);
+                if(!isset($response['next'])) {
+                    break;
+                }
+        }
+
+        foreach($disputeData as $eachData){
+            $disputeDataArr = [];
+            $disputeDataArr[$eachData['paymentDisputeId']] = $eachData;
+            if(isset($disputeDataArr[$eachData['paymentDisputeId']]['amount']['value'])){
+                $disputeDataArr[$eachData['paymentDisputeId']]['amount_value'] = $eachData['amount']['value'];
+                $disputeDataArr[$eachData['paymentDisputeId']]['amount_currency'] = $eachData['amount']['currency'];
+            }
+            $disputeDataArr[$eachData['paymentDisputeId']]['openDate'] = isset($eachData['openDate']) ? $eachData['openDate'] : 'NULL';
+            $disputeDataArr[$eachData['paymentDisputeId']]['closedDate'] = isset($eachData['closedDate']) ? $eachData['closedDate'] : 'NULL';
+            unset($disputeDataArr[$eachData['paymentDisputeId']]['amount']);
+
+            disputesModel::updateOrCreate(['paymentDisputeId' => $eachData['paymentDisputeId']], $disputeDataArr[$eachData['paymentDisputeId']]);
+        }
+
+        /*foreach($disputeData as $allDisputeDatas){
+            $curl = curl_init();
+            $disputeData = [];
+
+            $limit = $offset = 3;
+
+            $pageNo = 1;
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://apiz.ebay.com/sell/fulfillment/v1/payment_dispute/'.$allDisputeDatas['paymentDisputeId'],
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+                CURLOPT_HTTPHEADER => array(
+                    'Authorization: Bearer '.$userToken
+                ),
+            ));
+
+            $response = curl_exec($curl);
+
+            $response = json_decode($response, true);
+            dd($response);
+
+            curl_close($curl);
+        }*/
     }
 }
