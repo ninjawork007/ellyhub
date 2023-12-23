@@ -3295,7 +3295,7 @@ class EbayCronController extends Controller
         $curl = curl_init();
         $disputeData = [];
 
-        $limit =  3;
+        $limit =  100;
         $offset = 0;
         $pageNo = 1;
         $totalRecords = $limit;
