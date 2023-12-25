@@ -2994,8 +2994,8 @@ class EbayCronController extends Controller
         $pageno = 1;
         $requestXmlBody = '<?xml version="1.0" encoding="utf-8"?>';
         $requestXmlBody .= '<GetSellerListRequest xmlns="urn:ebay:apis:eBLBaseComponents">';
-        $requestXmlBody .= '<EndTimeFrom>'.date('c', strtotime('-120 days')).'</EndTimeFrom>';
-        $requestXmlBody .= '<EndTimeTo>'.date('c').'</EndTimeTo>';
+        $requestXmlBody .= '<EndTimeFrom>'.date('c', strtotime('-10 days')).'</EndTimeFrom>';
+        $requestXmlBody .= '<EndTimeTo>'.date('c', strtotime('-5 days')).'</EndTimeTo>';
         $requestXmlBody .= '<Pagination>
                         <EntriesPerPage>' . 200
             . '</EntriesPerPage>
@@ -3013,8 +3013,8 @@ class EbayCronController extends Controller
         for($i = $pageno+5;$i <= $productData['PaginationResult']['TotalNumberOfPages'];$i++){
             $requestXmlBody = '<?xml version="1.0" encoding="utf-8"?>';
             $requestXmlBody .= '<GetSellerListRequest xmlns="urn:ebay:apis:eBLBaseComponents">';
-            $requestXmlBody .= '<EndTimeFrom>'.date('c', strtotime('-120 days')).'</EndTimeFrom>';
-            $requestXmlBody .= '<EndTimeTo>'.date('c').'</EndTimeTo>';
+            $requestXmlBody .= '<EndTimeFrom>'.date('c', strtotime('-10 days')).'</EndTimeFrom>';
+            $requestXmlBody .= '<EndTimeTo>'.date('c', strtotime('-5 days')).'</EndTimeTo>';
             $requestXmlBody .= '<Pagination>
                             <EntriesPerPage>' . 1
                 . '</EntriesPerPage>
@@ -3033,7 +3033,7 @@ class EbayCronController extends Controller
 
         if (!empty($dataProducts)) {
             foreach($dataProducts as $itemarraysingle){
-                $pageno++;
+                //$pageno++;
                 foreach($itemarraysingle['Item'] as $single){
                     $requestXmlBody = '<?xml version="1.0" encoding="utf-8"?>';
                     $requestXmlBody .= '<GetItemRequest xmlns="urn:ebay:apis:eBLBaseComponents">';
