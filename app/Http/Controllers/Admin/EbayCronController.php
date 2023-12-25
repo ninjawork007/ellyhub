@@ -3031,7 +3031,7 @@ class EbayCronController extends Controller
             array_push($dataProducts, $productData['ItemArray']);
         }
 
-        if ($productData['Ack'] == 'Success') {
+        if (!empty($dataProducts)) {
             foreach($dataProducts as $itemarraysingle){
                 $pageno++;
                 foreach($itemarraysingle['Item'] as $single){
