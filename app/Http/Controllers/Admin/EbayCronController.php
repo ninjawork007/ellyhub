@@ -3010,6 +3010,27 @@ class EbayCronController extends Controller
         $productData = $this->xmlToArray($responseXml);
         array_push($dataProducts, $productData['ItemArray']);
 
+        for($i = $pageno+5;$i <= $productData['PaginationResult']['TotalNumberOfPages'];$i++){
+            $requestXmlBody = '<?xml version="1.0" encoding="utf-8"?>';
+            $requestXmlBody .= '<GetSellerListRequest xmlns="urn:ebay:apis:eBLBaseComponents">';
+            $requestXmlBody .= '<EndTimeFrom>'.date('c', strtotime('-120 days')).'</EndTimeFrom>';
+            $requestXmlBody .= '<EndTimeTo>'.date('c').'</EndTimeTo>';
+            $requestXmlBody .= '<Pagination>
+                            <EntriesPerPage>' . 1
+                . '</EntriesPerPage>
+                            <PageNumber>' . $i . '</PageNumber>
+                        </Pagination>';
+            $requestXmlBody .= '<RequesterCredentials>';
+            $requestXmlBody .= "<eBayAuthToken>$userToken</eBayAuthToken>";
+            $requestXmlBody .= "</RequesterCredentials></GetSellerListRequest>";
+
+            $callname = 'GetSellerList';
+            $responseXml = $this->sendHttpRequest($requestXmlBody, $userToken, $callname);
+            $productData = $this->xmlToArray($responseXml);
+
+            array_push($dataProducts, $productData['ItemArray']);
+        }
+
         if ($productData['Ack'] == 'Success') {
             foreach($dataProducts as $itemarraysingle){
                 $pageno++;
