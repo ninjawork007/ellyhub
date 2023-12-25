@@ -102,6 +102,31 @@ class EbayController extends Controller
 
        
     }
+	
+    public function fetchDeletedProductsCron()
+    {
+		
+		 try {
+			 // Storage::disk('local')->put(date("Y-m-d H:i:s").'_'.'ebay.txt', 'content');
+				$ebay=new EbayCronController();
+				  
+				$ebay_credentials = EbayCredential::get(); 
+				if ($ebay_credentials) 
+				{
+					foreach($ebay_credentials as $cre)
+						$ebay->fetchDeletedProducts('',false,$cre->user_id);
+				}
+                logger("Cron Job Running");
+		 }
+          catch (\Exception $exception) {
+			  Storage::disk('local')->put(date("Y-m-d H:i:s").'_'.'error.txt', $exception->getMessage());
+          
+          }
+       
+		return true;
+
+       
+    }
 
 	
 	 public function fetchEbayProduct()

@@ -2988,7 +2988,7 @@ class EbayCronController extends Controller
         }
     }
 
-    public function fetchDeletedProducts(){
+    public function fetchDeletedProducts($id = '',$isAuth=true,$user_id=0){
         $userToken = $this->getToken(true,0);
         $dataProducts = [];
         $pageno = 1;

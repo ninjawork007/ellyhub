@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
     {
         //$schedule->command('inspire')->hourly();
 		$schedule->call('App\Http\Controllers\Admin\EbayController@fetchEbayProductCron')->cron('0 */3 * * *');
+		$schedule->call('App\Http\Controllers\Admin\EbayController@fetchDeletedProducts')->cron('0 0 * * *');
     }
 
     /**
