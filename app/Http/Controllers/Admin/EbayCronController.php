@@ -190,6 +190,7 @@ class EbayCronController extends Controller
                     $callname = 'GetMyeBaySelling';
                     $responseXml = $this->sendHttpRequest($requestXmlBody, $userToken, $callname);
                     $productData = $this->xmlToArray($responseXml);
+                    
                     array_push($dataProducts, $productData["ActiveList"]['ItemArray']);
 
                     $t++;
@@ -225,6 +226,7 @@ class EbayCronController extends Controller
 
                 foreach ($dataProducts as $dataProduct) {
                     foreach ($dataProduct['Item'] as $productstore) {
+                        $ItemIds[$productstore['ItemID']] = $productstore['ItemID'];
                         $dataArray[] = [
                             'ItemID' => $productstore['ItemID'],
                             'rowData' => json_encode($productstore),
@@ -234,6 +236,8 @@ class EbayCronController extends Controller
                 }
 
                 DB::table('ebay_selling')->insert($dataArray);
+
+                Product::whereNotIn('ebay_product_id', $ItemIds)->update(['is_delete' => 1]);
 
                 exit;
             }
@@ -2989,6 +2993,7 @@ class EbayCronController extends Controller
     }
 
     public function fetchDeletedProducts($id = '',$isAuth=true,$user_id=0){
+        return false;
         $userToken = $this->getToken(true,0);
         $dataProducts = [];
         $pageno = 1;
