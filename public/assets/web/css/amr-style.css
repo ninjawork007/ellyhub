@@ -964,7 +964,7 @@ a.button_link: hover {
     box-shadow: 0.5rem 0.5rem 1.5rem 0 rgb(0 0 0 / 15%);
     position: absolute;
     z-index: 9999;
-    top: -200vh;
+    top: -220vh;
     left: -200vw;
     right: 0;
     background: #fff;
@@ -1191,6 +1191,7 @@ ul.header-customer-area li.user-hover {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 ul.header-customer-area li.user-hover .dropdown-list {
     position: absolute;

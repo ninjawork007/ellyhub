@@ -21590,9 +21590,9 @@ p.stars.selected a:not(.active):before {
 .products .product:hover .onsale {
     display: none;
 }
-.products .product a {
+/*.products .product a {
     position: relative;
-}
+}*/
 .quantity .qty {
     width: 4.235801032em;
     padding-left: 20px;
@@ -22094,13 +22094,18 @@ dl.variation dd {
 }
 .products .product h2, .products .product h3, .products .product .amr-loop-product-title {
     line-height: 1.5em;
-    font-weight: 400;
-    color: #626060;
-    font-size: 1em;
+    font-weight: 600;
+    color: #000;
+    font-size: 1.1em;
     overflow: hidden;
-    height: 42px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-bottom: 0;
+}
+.products .product h2, .products .product h3, .products .product .amr-loop-product-type {
+    line-height: 1.5em;
+    font-weight: 600;
+    color: #626060;
+    font-size: 1.1em;
+    overflow: hidden;
     margin-bottom: 0;
 }
 .products .product .amr-product-rating {
@@ -26066,4 +26071,91 @@ select.form-control {
 }
 .page-link {
     color: #62ab00;
+}
+
+#navbarSupportedContent li{
+    padding-right:30px;
+    font-style: italic;
+}
+
+#navbarSupportedContent li a{
+    font-style: italic;
+    color:#000;
+}
+
+.navbar-expand-lg.header-search{
+    border:2px solid #000;
+    border-radius: 5px;
+}
+
+.dropdown-menu{
+    min-width:400px;
+    max-width: 100%;
+}
+
+.dropdown-menu a.font-normal{
+    font-style: normal !important;
+    font-weight: bolder;
+}
+
+.dropdown-menu a span{
+    text-decoration: underline;
+}
+
+.dropdown-menu .product-link{  font-size:13px;  }
+
+.dropdown-menu .products-watchlist b{
+    color:#000;
+    font-style: normal;
+    font-weight: 600;
+}
+
+.dropdown-menu .products-watchlist p{  font-size:13px;  }
+
+.product .watch-list-img {     
+    right: 30px;
+    top: 0;
+    top: 38px;
+    position: absolute;
+    background-color: white;
+    /* width: fit-content; */
+    padding: 5px;
+    border-radius: 50%;}
+
+.product .amr-product-img .border{
+    border: 0;
+    background-color: #f1f1f1;
+    height: 150px;
+    border-radius: 5px;
+}
+
+.product .amr-product-img .border div{
+    height:100%;
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.product-price ins .amount{
+    color: #000;
+}
+
+.wishlist .product-price ins .amount{
+    font-size:25px;
+    color:#494747;
+    font-weight: bolder;
+}
+
+.wishlist .shipping-charges{
+    font-size:10px;
+    color:#494747;
+    font-weight: bolder;
+}
+
+.wishlist .cart_button{
+    background-color: #101010;
+    color:#fff;
+    -webkit-border-radius:25px;
+    -moz-border-radius:25px;
+    border-radius:25px;
+    border-color:#101010;
 }

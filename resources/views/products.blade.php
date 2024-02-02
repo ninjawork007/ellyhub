@@ -2,75 +2,66 @@
 @section('pagebodyclass')
 full-width @endsection
 @section('content')
-<nav class="amrcart-breadcrumb">
-    <a href="{{url('/')}}">Home</a>
-    <span class="delimiter">
-        <i class="icon amr-breadcrumbs-arrow-right"></i>
-    </span> Products
-</nav>
 <div id="primary" class="content-area">
-    <main id="main" class="site-main">
-        <h4 class="title"><span class="main-color">{{$products->count()}}</span> Product Found</h4>
-        <div class="category-products-list columns-5">
+    <main id="main" class="site-main container-fluid">
+        <div class="category-products-list columns-7">
             <div class="products">
                 @if($products->count())
                 @foreach($products as $key)
-                <div class="product">
-                    <div class="amr-add-to-wishlist">
-                        <a onclick="add_wishlist('{{$key->id}}','wishlist')" href="JavaScript:void(0);" rel="nofollow"
-                            class="add_to_wishlist"> Add to Wishlist</a>
-                    </div>
-                    <a class="amr-LoopProduct-link" href="{{route('product_details',[$key->id])}}">
-                        @if($key->discount_type)
-                        <span class="onsale">
-                            @if($key->discount)
-                            <span class="amr-Price-amount amount">
-                                @if($key->discount_type=='flat')
-                                {{'Rs '. $key->discount}} off
-                                @else
-                                {{$key->discount}}% off
-                                @endif
-                            </span>
+                <div class="product border-0">
+                    <a href="{{url('/product/'.$key->id)}}">
+                        <div class="watch-list-img">
+                            @if(in_array($key->id,$wishlists))
+                                <img onclick="remove_watchlist('{{array_search($key->id,$wishlists)}}','wishlist')" src="{{url('public/assets/web/images/open-eye.png')}}">
+                            @else
+                                <img onclick="add_wishlist('{{$key->id}}','wishlist')" src="{{url('public/assets/web/images/closed-eye.png')}}">
                             @endif
-                        </span>
-                        @endif
+                        </div>
                         <div class="amr-product-img">
                             @if($key->is_uploaded)
-                                <?php
-                                $image_array = explode(',',$key->image);
-
-                                ?>
-                                <img src="{{$image_array[0]}}" alt="">
+                                <?php $image_array = explode(',',$key->image); ?>
+                                <div class="border" >
+                                    <div style="background-image: url('{{$image_array[0]}}');"></div>
+                                </div>
                             @else
-                                <img src="{{url('public/'.$key->image)}}" alt="{{$key->name}}">
+                                <div class="border" >
+                                    <div style="background-image: url('{{url('public/'.$key->image)}}');"></div>
+                                </div>
                             @endif
                         </div>
-                        <div class="pro-info">
-                            <h2 class="amr-loop-product-title">{{$key->name}}</h2>
-                            <span class="price">
-                                <ins>
-                                    <span class="amount"> ₹{{ $key->sale_price }}</span>
-                                </ins>
-                                @if($key->sale_price != $key->mrp_price)
-                                <del>
-                                    <span class="amount">₹{{ $key->mrp_price}}</span>
-                                </del>
-                                @endif
-                                <span class="amount"></span>
-                            </span>
-                            <!-- <div>{{$key->vendor_name}}</div> -->
-                        </div>
+                        <?php
+                        $dateToCheck = new DateTime($key->created_at);
 
+                        $currentDate = new DateTime();
+
+                        $timeDifference = $currentDate->diff($dateToCheck);
+                        if ($timeDifference->days < 1) {
+                            $listingText = "NEW LISTING";
+                        } else {
+                            $listingText = "";
+                        }
+                        ?>
+                        <div class="pro-info">
+                            <div class="desc  text-start">
+                                <h2 class="amr-loop-product-title text-start font-bold">{{strip_tags($key->name)}}</h2>
+                                <h2 class="amr-loop-product-type text-start">{{($key->product_type!='new')?"Pre-Owned":"New"}}  {{$key->brand}}</h2>
+                                <h2 class="amr-loop-product-title text-start">{{$listingText}}</h2>
+                                <span class="product-price">
+                                    <ins>
+                                        <span class="amount"> ${{ $key->sale_price }}</span>
+                                    </ins>
+                                    @if($key->sale_price != $key->mrp_price)
+                                    <del>
+                                        <span class="amount">${{ $key->mrp_price}}</span>
+                                    </del>
+                                    @endif
+                                    <span class="amount"></span>
+                                </span>
+                                <h2 class="amr-loop-product-type text-start">Buy It Now</h2>
+                                <h2 class="amr-loop-product-type text-start">{{(empty($key->shipping_charges)) ? "+ $".$key->shipping_charges : "Free Shipping"}}</h2>
+                            </div>
+                        </div>
                     </a>
-                    <div class="hover-area">
-                        <a class="button add_to_cart_button" href="{{url('product',[$key->id])}}" rel="nofollow">View
-                            Product</a>
-                        @if($key->shipping_time == 'yes')
-                        <p class="amr-shipping-estimate">
-                            <i class="icon amr-order-tracking"></i> Delivery - {{ $key->estimate_time}}
-                        </p>
-                        @endif
-                    </div>
                 </div>
                 @endforeach
                 @endif

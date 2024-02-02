@@ -1131,7 +1131,6 @@ class WelcomeController extends Controller
     public function find_product(Request $request){
 
         $where = [];
-
         $where[] = ['status','=','approved'];
 
         if (isset($request->keyword) && $request->keyword!='') {
@@ -1151,14 +1150,18 @@ class WelcomeController extends Controller
         $data['products'] = DB::table('products')
 
                             ->join('users','products.vendor_id','=','users.id')
-
                             ->select('products.*','users.name as vendor_name')
 
                             ->where($where)
 
                             ->orderby('id','desc')
 
-                            ->paginate(20);
+                            ->paginate(14);
+                            $userPairs = [];
+                            if(!empty(Auth::user()->id)){
+                                $userPairs = DB::table('wishlist')->where('userid','=',Auth::user()->id)->pluck('product_id','id')->toArray();
+                            }
+        $data['wishlists'] = $userPairs;
 
         return view('products',$data);
 

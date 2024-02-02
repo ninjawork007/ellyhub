@@ -56,7 +56,7 @@ foreach($reviews as $key){
             <div class="product-detail-left">
                 <div class="detail-box">
                     <div class="detail-box-inner">
-                        <a class="add-to-wishlist {{($wishlist)?'wishlist-selected':''}}" onclick="add_wishlist('{{$product->id}}','wishlist')" href="JavaScript:void(0);"><i class="icon amr-favorites"></i></a>
+                        <a class="add-to-wishlist {{($wishlist)?'wishlist-selected':''}}" onclick="add_wishlist('{{$product->id}}','wishlist')" href="JavaScript:void(0);"><i class="change-icon fa fa-heart-o"></i></a>
                         <div class="product-images-wrapper detail-box">
                             <div id="amr-single-product-gallery" class="amr-single-product-gallery amr-single-product-gallery--with-images amr-single-product-gallery--columns-4 images" data-columns="4">
                                 <div class="amr-single-product-gallery-images" data-ride="amr-slick-carousel" data-wrap=".amrcart-product-gallery__wrapper" data-slick="{&quot;infinite&quot;:false,&quot;slidesToShow&quot;:1,&quot;slidesToScroll&quot;:1,&quot;dots&quot;:false,&quot;arrows&quot;:false,&quot;asNavFor&quot;:&quot;#amr-single-product-gallery .amr-single-product-gallery-thumbnails__wrapper&quot;}">
@@ -611,24 +611,6 @@ $('.single_add_to_cart_button').click(function() {
                         }
                     }
                 });
-            }
-            get_wishlist();
-
-            function get_wishlist() {
-                $.ajax({
-                    url: site_url+"/get_wishlist_ajax",
-                    cache: false,
-                    success: function(response) {
-                        var ress = jQuery.parseJSON(response);
-                        console.log(ress);
-                        if (ress.success) {
-                            $('#top-cart-wishlist-count').html(ress.count);
-                        } else {
-                            //console.log(response);
-                        }
-                    }
-                });
-
             }
             function change_product_size(productid){
                 var size = $('#product_size').val();

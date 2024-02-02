@@ -241,24 +241,53 @@ class CommonController extends Controller
 	
 	
 	 public function add_wishlist(Request $request){
-		 if (!DB::table($request->table)->where([['userid','=',$request->session()->get('userid')],['product_id','=',$request->id]])->exists()) {
-       $insert = DB::table($request->table)->insert(['product_id'=>$request->id,'userid'=>$request->session()->get('userid')]);
-       if ($insert) {
-        $count = DB::table($request->table)->where([['userid','=',$request->session()->get('userid')]])->count();
-         echo json_encode(array('success'=>true,'count'=>$count,'message'=>'Product add to wishlist.'));
-       }else{
-        
-        echo json_encode(array('success'=>false,'count'=>0,'message'=>'SOmething went wrong. Please try after sometime.'));
-       }
-     }else{
-      echo json_encode(array('success'=>false,'count'=>0,'message'=>'Product add to wishlist.'));
-     }
+         /*if(empty(Auth::user()->id)){
+             echo json_encode(array('success'=>false,'count'=>0,'message'=>'Product add to wishlist.'));
+         }
+         else{*/
+         if (!DB::table($request->table)->where([['userid','=',$request->session()->get('userid')],['product_id','=',$request->id]])->exists()) {
+             $insert = DB::table($request->table)->insert(['product_id'=>$request->id,'userid'=>$request->session()->get('userid')]);
+             if ($insert) {
+                 $count = DB::table($request->table)->where([['userid','=',$request->session()->get('userid')]])->count();
+                 echo json_encode(array('success'=>true,'count'=>$count,'message'=>'Product add to wishlist.'));
+             }else{
+
+                 echo json_encode(array('success'=>false,'count'=>0,'message'=>'Something went wrong. Please try after sometime.'));
+             }
+         }else{
+             echo json_encode(array('success'=>false,'count'=>0,'message'=>'Product add to wishlist.'));
+         }
+         //}
 		 
 	 }
 
    public function get_wishlist_ajax(Request $request){
-     $count = DB::table('wishlist')->where([['userid','=',$request->session()->get('userid')]])->count();
-         echo json_encode(array('success'=>true,'count'=>$count,'message'=>''));
+       $count = DB::table('wishlist')->where([['userid','=',$request->session()->get('userid')]]);
+
+       $wishlist = DB::table('wishlist')
+           ->where([['userid','=',$request->session()->get('userid')]])
+           ->leftJoin('products', 'products.id', '=', 'wishlist.product_id')
+           ->limit(4)
+           ->get(array('wishlist.*', 'products.image', 'products.name', 'products.shipping_charges', 'products.product_price'));
+       $div = '';
+       $div .= '<div class="row mt-4">';
+       foreach($wishlist as $records){
+           $shipping_charges = (empty($records->shipping_charges)) ? "+ $".$records->shipping_charges : "Free";
+           $name = \Illuminate\Support\Str::limit($records->name, 40, $end='...');
+           $div .= '
+            <div class="col-md-6">
+                <div class="border" style="height:100px;">
+                    <a href="'.route('product_details',[$records->id]).'" class="product-link"><div style="background-image: url('.$records->image.');height:100%;background-size:contain"></div></a>
+                </div>
+                <div class="products-watchlist">
+                    <a href="'.route('product_details',[$records->id]).'" class="product-link">'.$name.'</a><br>
+                    <b>$'.number_format($records->product_price, 2).'</b>
+                    <p style="font-style:normal;color:#000;font-weight:bold">'.$shipping_charges.' Shipping</p>
+                </div>
+            </div>';
+       }
+       $div .= '</div>';
+       echo json_encode(array('success'=>true,'count'=>$count->count(),'html' => $div, 'message'=>''));
    }
 	 
 	 /* Add Compare*/
@@ -454,9 +483,15 @@ class CommonController extends Controller
    public function wishlist(Request $request){
      $data['wishlist'] = DB::table('wishlist')
                           ->join('products', 'wishlist.product_id', '=', 'products.id')
-                          ->select('wishlist.*', 'products.name', 'products.image','products.sale_price')
+                          ->select('wishlist.*', 'products.name', 'products.image','products.sale_price', 'products.is_uploaded',
+                              'products.product_type', 'products.brand', 'products.mrp_price', 'products.shipping_charges')
                           ->where('wishlist.userid','=',$request->session()->get('userid'))
                           ->get();
+       $userPairs = [];
+       if(!empty($request->session()->get('userid'))){
+           $userPairs = DB::table('wishlist')->where('userid','=',$request->session()->get('userid'))->pluck('product_id','id')->toArray();
+       }
+       $data['wishlists'] = $userPairs;
     return view('wishlist',$data);
    }
 

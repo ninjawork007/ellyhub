@@ -35,7 +35,6 @@
    <meta name="msapplication-TileColor" content="#ffffff">
    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png')}}">
    <meta name="theme-color" content="#ffffff">
-   <link rel="" href= "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100;200,300,400,500,600,700,900">
    <link rel="stylesheet" href="{{url('public/assets/web/bootstrap/css/bootstrap.min.css')}}" media="all" />
    <link rel="stylesheet" href="{{url('public/assets/web/font-awesome/css/font-awesome.css')}}" media="all" />
@@ -141,7 +140,58 @@
                     </div>
                 </div>
             </div>
-            <div class="header-search">
+            <nav class="navbar navbar-expand-lg header-search">
+                <div class="container">
+                    <a class="navbar-brand" href="#">&nbsp;</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+                        <ul class="navbar-nav mb-2 mb-lg-0 justify-content-center text-center">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">HOME</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">MESSAGES</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">PURCHASES</a>
+                            </li>
+                            <li class="nav-item nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">WATCHING</a>
+                                <div class="dropdown-menu px-3 pt-1 pb-2">
+                                    <a href="#" ><span>View your saved seller list</span> &nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right"></i></a><br>
+                                    <a href="{{url('wishlist')}}" class="font-normal"><span>View all items you are watching</span> &nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right"></i></a>
+
+                                    <div class="append-wishlist">
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">SELLER HUB</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">NOTIFICATIONS</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">PAYMENTS</a>
+                            </li>
+                            <!--<li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Dropdown
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                </ul>
+                            </li>-->
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="header-search mt-0">
                 <div class="container">
                     <div class="navbar-search">
                         <label class="search-input-label" for="search">
@@ -560,14 +610,59 @@ cache: false,
 success: function(response) {
     var ress = JSON.parse(response);
     if (ress.success) {
-     @if(Route::currentRouteName() != 'product_details')
-     alert("Added to wishlist.");
-     @endif
-     $('.badge.bg-warning.wishlist').html(ress.count);
-     $('.fa.fa-heart').addClass('red');
- }
+         @if(Route::currentRouteName() != 'product_details')
+         alert("Added to wishlist.");
+        window.location.reload();
+         @endif
+         $('.badge.bg-warning.wishlist').html(ress.count);
+        if($('.change-icon').hasClass('fa-heart-o')){
+            $('.change-icon').removeClass('fa-heart-o');
+            $('.change-icon').addClass('fa-heart');
+        }
+        else{
+            $('.change-icon').removeClass('fa-heart');
+            $('.change-icon').addClass('fa-heart-o');
+        }
+    }
+    else{
+        alert('you need to login before add into watchlist');
+        window.location.href = "{{url('/user/login')}}";
+    }
 }
 });
+}
+function remove_watchlist(id){
+
+if (confirm('Do you want to remove from wishlist?')) {
+
+    $.ajax({
+
+    url:'{{url("/remove_from_wishlist")}}',
+
+    data:{id:id},
+
+    cache:false,
+
+    success:function(res){
+
+      if (res) {
+
+        window.location.reload();
+
+        // /$('#cartrow'+id+'').fadeOut(1200).css({'background-color':'#f2dede'});
+
+      }
+
+    }
+
+  }); 
+
+}else{
+
+    return false;
+
+}
+
 }
 
 $('#verify_address').submit(function(e){
@@ -595,6 +690,7 @@ $.ajax({
 });
 </script>
 <script type="text/javascript" src="{{url('public/assets/web/bootstrap/js/tether.min.js')}}"></script>
+<script type="text/javascript" src="{{url('public/assets/web/bootstrap/js/popper.min.js')}}"></script>
 <script type="text/javascript" src="{{url('public/assets/web/bootstrap/js/bootstrap.min.js')}}"></script>
 <script type="text/javascript" src="{{url('public/assets/web/js/jquery-migrate.min.js')}}"></script>
 <script type="text/javascript" src="{{url('public/assets/web/js/hidemaxlistitem.min.js')}}"></script>
@@ -699,6 +795,26 @@ $('body').on('click','.bounce.load-arow',function () {
 $('body').on('click','.see-more-category',function () {
     $('.off-canvas-wrapper').addClass('open');
 });
+
+get_wishlist();
+
+function get_wishlist() {
+  $.ajax({
+      url: site_url+"/get_wishlist_ajax",
+      cache: false,
+      success: function(response) {
+          var ress = jQuery.parseJSON(response);
+          console.log(ress);
+          if (ress.success) {
+              $('#top-cart-wishlist-count').html(ress.count);
+              $('.append-wishlist').html(ress.html);
+          } else {
+              //console.log(response);
+          }
+      }
+  });
+
+}
 
 </script>
 </body>

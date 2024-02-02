@@ -190,7 +190,6 @@ class EbayCronController extends Controller
                     $callname = 'GetMyeBaySelling';
                     $responseXml = $this->sendHttpRequest($requestXmlBody, $userToken, $callname);
                     $productData = $this->xmlToArray($responseXml);
-                    
                     array_push($dataProducts, $productData["ActiveList"]['ItemArray']);
 
                     $t++;

@@ -10,17 +10,73 @@
     <a href="https://bazarhat99.com">Home</a>
     <span class="delimiter">
         <i class="icon amr-breadcrumbs-arrow-right"></i>
-    </span> Wishlist
+    </span> Watch List
 </nav>
 
          <div id="primary" class="content-area">
 <main id="main" class="site-main">
 
-            <div class="container">
+            <div class="container-fluid">
 
-                <h2 class="page__title">Wishlist</h2>
+                <h2 class="page__title text-black font-bolder">Watch List</h2>
 
-                <div class="wishlist__content">
+                <main id="main" class="site-main wishlist">
+                    <div class="category-products-list columns-7">
+                        <div class="products">
+                            @if($wishlist->count())
+                                @foreach($wishlist as $key)
+                                    <div class="product border-0">
+                                        <a href="{{url('/product/'.$key->product_id)}}">
+                                            <div class="watch-list-img">
+                                                @if(in_array($key->id,$wishlists))
+                                                    <img onclick="remove_watchlist('{{array_search($key->id,$wishlists)}}','wishlist')" src="{{url('public/assets/web/images/closed-eye.png')}}">
+                                                @else
+                                                    <img onclick="add_wishlist('{{$key->id}}','wishlist')" src="{{url('public/assets/web/images/open-eye.png')}}">
+                                                @endif
+                                            </div>
+                                            <div class="amr-product-img">
+                                                @if($key->is_uploaded)
+                                                    <?php $image_array = explode(',',$key->image); ?>
+                                                    <div class="border h-100">
+                                                        <div style="background-image: url('{{$image_array[0]}}');"></div>
+                                                    </div>
+                                                @else
+                                                    <div class="border h-100">
+                                                        <div style="background-image: url('{{url('public/'.$key->image)}}');"></div>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            <div class="pro-info">
+                                                <div class="desc  text-start">
+                                                    <h2 class="amr-loop-product-title text-start font-bold">{{\Illuminate\Support\Str::limit(strip_tags($key->name), 30, $end='...')}}</h2>
+                                                    <h2 class="amr-loop-product-type text-start">{{($key->product_type!='new')?"Used - Excellent":"Brand New"}}</h2>
+                                                    <span class="product-price">
+                                                        <ins>
+                                                            <span class="amount"> ${{ $key->sale_price }}</span>
+                                                        </ins>
+                                                        @if($key->sale_price != $key->mrp_price)
+                                                            <del>
+                                                                <span class="amount">${{ $key->mrp_price}}</span>
+                                                            </del>
+                                                        @endif
+                                                        <span class="amount"></span>
+                                                    </span>
+                                                    <p class="shipping-charges text-start">{{(empty($key->shipping_charges)) ? "+ $".$key->shipping_charges : "Free Shipping"}}</p>
+                                                    <div class="product-actions">
+                                                        <button class="single_add_to_cart_button cart_button" data-id="{{$key->product_id}}" name="add-to-cart">Add to cart</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                @endforeach
+                            @endif
+                        </div>
+
+                    </div>
+                </main>
+
+                {{--<div class="wishlist__content">
 
                     <div class="wishlist__product">
 
@@ -95,7 +151,7 @@
 
                     </div>
 
-                </div>
+                </div>--}}
 
             </div>
 </main>
@@ -113,7 +169,7 @@
 
             $.ajax({
 
-            url:'/remove_from_wishlist',
+            url:'{{url('/remove_from_wishlist')}}',
 
             data:{id:id},
 
@@ -139,6 +195,31 @@
 
         }
 
+    });
+
+    $('body').on('click', '.single_add_to_cart_button', function(e) {
+        e.preventDefault();
+        amenties = {}
+        id = $(this).attr('data-id');
+
+        $.ajax({
+            url: site_url+"/add_to_cart_ajax",
+            data: {
+                product_id: id,
+                quantity: 1,
+            },
+            cache: false,
+            success: function(response) {
+                var ress = jQuery.parseJSON(response);
+                if (ress.success) {
+                    $('body').addClass('show-mini-cart');
+                    $('.list-cart').html(ress.data);
+                    $('.count').html(ress.count);
+                    $('.total').html(currency + ress.total);
+                    $('.title-item-count').html('('+ress.count+' Items)');
+                }
+            }
+        });
     });
 
 </script>
