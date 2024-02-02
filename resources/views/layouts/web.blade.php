@@ -131,10 +131,13 @@
                                 <div class="notification" id="top-cart-wishlist-count">0</div>
                             </a>
                         </li>
-                        <li class="icon-menu">
+                        <li class="icon-menu position-relative">
                             <a href="javascript:;" class="minicart-btn"> <img src="{{url('public/assets/web/images/cart-icon.png')}}" alt="My Cart">
                                 <div class="notification count">0</div>
                             </a>
+                            <div class="show-mini-cart-v2 p-3 border" style="right:30px;top:100%;z-index:999;position: absolute;display:none;background-color:#fff;height:300px;width:400px;overflow-y:scroll">
+
+                            </div>
                         </li>
                     </ul>
                     </div>

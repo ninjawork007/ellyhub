@@ -412,6 +412,68 @@ class CommonController extends Controller
             echo json_encode(array('success'=>false,'message'=>'No product in cart','data'=>$html,'total'=>0,'count'=>0));
           }
    }
+
+    public function get_cart_ajax_v2(Request $request){
+    $html='';
+     if ($request->session()->has('userid')) {
+       $userid = $request->session()->get('userid');
+     }else{
+        $userid = 0;
+     }
+
+     $cart_product = DB::table('cart')->where([['userid','=',$userid]])->leftJoin('products', 'products.id', '=', 'cart.product_id')
+         ->limit(4)
+         ->get(array('cart.*', 'products.image', 'products.name', 'products.shipping_charges', 'products.product_price'));;
+     $setting = DB::select(DB::raw("SELECT * FROM settings WHERE id='1'"));
+     $total = DB::select(DB::raw("SELECT sum(total_price) as total FROM cart WHERE userid='".$userid."'"));
+          if (!$cart_product->isEmpty()) {
+
+            foreach ($cart_product as $key) {
+                $is_upload = DB::table('products')->where('id',$key->product_id)->first()->is_uploaded;
+                $html .= '<div class="row align-items-center">';
+                $html .= '<div class="col-md-3">';
+                if ($is_upload) {
+                    $image_array = explode(',',$key->image);
+                    $html.='<img class="" src="'.$image_array[0].'" alt="alt">';
+                }else{
+                    $html.='<img class="" src="'.url('public/'.$key->image).'" alt="alt">';
+                }
+
+                $html .= '</div>';
+                $html .= '<div class="col-md-9">';
+                $html .= '<a href="javascript:;" class="px-0">'.\Illuminate\Support\Str::limit($key->product_name, 25, $end='...').'</a>';
+                $html .= '<div class="row">';
+                    $html .= '<div class="col-md-6">';
+                        $html .= '<h5 class="text-black mb-0">$'.$key->product_price.'</h5>';
+                    $html .= '</div>';
+                    $html .= '<div class="col-md-6">';
+                        $html .= '<p class="text-black mb-0">Qty: '.$key->product_quantity.'</p>';
+                    $html .= '</div>';
+                $html .= '</div>';
+                $html .= '<div class="row">';
+                $html .= '<div class="col-md-6">';
+                $shipping_charges = (empty($key->shipping_charges)) ? "+ $".$key->shipping_charges : "Free";
+                $html .= '<p class="text-black mb-0">'.$shipping_charges.' Shipping</p>';
+                $html .= '</div>';
+                $html .= '<div class="col-md-6">';
+                $html.='<a class="amr-mc-item-remove justify-content-end p-0" onclick="remove_cart_item('.$key->id.')"><img src="'.url('public/assets/web/images/Screenshot_6.png').'"></a>';
+                $html .= '</div>';
+                $html .= '</div>';
+                $html .= '</div>';
+                $html .= '</div>';
+            }
+              $html .= '<span class="view_cart_header"><a class="" href="'.url('cart').'">View cart</a> to see all of your items</span>';
+              $html .= '<div class="border row py-3" style="background-color: rgb(247,247,247)">';
+              $html .= '<div class="col-md-6 text-black font-bold">Total</div>';
+              $html .= '<div class="col-md-6 text-end text-black font-bold">$'.$total[0]->total.'</div>';
+              $html .= '</div>';
+              $html .= '<a class="btn checkout-header justify-content-center mt-4" href="'.url('checkout').'">Checkout</a>';
+              $html .= '<a class=" mt-4 btn justify-content-center cart-header" href="'.url('cart').'">View cart</a>';
+              echo json_encode(array('success'=>true,'message'=>'product Added','data'=>$html,'total'=>$total[0]->total,'count'=>$cart_product->count()));
+          }else{
+            echo json_encode(array('success'=>false,'message'=>'No product in cart','data'=>$html,'total'=>0,'count'=>0));
+          }
+   }
    
     public function remove_from_cart_ajax(Request $request){
       DB::table('cart')->where('id',$request->cartid)->delete();

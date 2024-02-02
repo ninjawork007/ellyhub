@@ -678,6 +678,11 @@ class WelcomeController extends Controller
         return view('user_login');
 
     }
+    public function user_login_register(){
+
+        return view('user_login_register');
+
+    }
 
 
 

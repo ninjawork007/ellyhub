@@ -596,12 +596,12 @@ $('.single_add_to_cart_button').click(function() {
 
             function get_cart() {
                 $.ajax({
-                    url: site_url+"/get_cart_ajax",
+                    url: site_url+"/get_cart_ajax_v2",
                     cache: false,
                     success: function(response) {
                         var ress = jQuery.parseJSON(response);
                         if (ress.success) {
-                            $('.list-cart').html(ress.data);
+                            $('.show-mini-cart-v2').html(ress.data);
                             $('.count').html(ress.count);
                             $('.total').html(currency + ress.total);
                             $('.title-item-count').html('('+ress.count+' Items)');

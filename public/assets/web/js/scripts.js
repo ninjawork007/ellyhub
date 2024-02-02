@@ -146,7 +146,8 @@
         $('.minicart-btn, .plus.button.detail, .minus.button.detail').on('click', function(event) {
             event.preventDefault();
             event.stopPropagation();
-            $('body').addClass('show-mini-cart')
+            //$('body').addClass('show-mini-cart')
+            $('.show-mini-cart-v2').toggle();
         });
         $('.close-mini-cart').on('click', function(event) {
             $('body').removeClass('show-mini-cart')

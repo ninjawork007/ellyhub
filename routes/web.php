@@ -53,11 +53,13 @@ Route::get('get_wishlist_ajax','CommonController@get_wishlist_ajax')->name('get_
 Route::get('get_cart_ajax','CommonController@get_cart_ajax')->name('get_cart_ajax');
 Route::get('cart','WelcomeController@cart_list')->name('cart');
 Route::get('checkout','WelcomeController@checkout')->name('checkout');
+Route::get('get_cart_ajax_v2','CommonController@get_cart_ajax_v2')->name('get_cart_ajax_v2');
 Route::get('make-order','WelcomeController@make_order')->name('make_order');
 Route::post('make_payment','WelcomeController@make_payment')->name('make_payment');
 Route::get('logout','WelcomeController@logout')->name('user_logout');
 // user routes
 Route::get('user/login','WelcomeController@user_login')->name('user_login');
+Route::get('user/login_register','WelcomeController@user_login_register')->name('user_login_register');
 Route::post('user/dologin','WelcomeController@user_do_login')->name('user_do_login');
 Route::get('user/register','WelcomeController@user_register')->name('user_register');
 Route::post('user/save','WelcomeController@user_save')->name('user_register_form_save');

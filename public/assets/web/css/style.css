@@ -26140,7 +26140,7 @@ select.form-control {
 }
 
 .wishlist .product-price ins .amount{
-    font-size:25px;
+    font-size:21px;
     color:#494747;
     font-weight: bolder;
 }
@@ -26158,4 +26158,121 @@ select.form-control {
     -moz-border-radius:25px;
     border-radius:25px;
     border-color:#101010;
+}
+
+.show-mini-cart-v2 a {
+    font-size:16px !important;
+    color:#000;
+}
+
+.show-mini-cart-v2 h5 {
+    font-weight: bolder;
+    color:#000;
+}
+
+.show-mini-cart-v2 p {
+    font-size:13px !important;
+    color: #6a6a6a !important;
+    font-weight:bold;
+}
+
+.show-mini-cart-v2 .view_cart_header {
+    color:#6a6a6a;
+}
+
+.show-mini-cart-v2 .view_cart_header a {
+    display:inline-block;
+    padding:0 !important;
+    padding-bottom:10px !important;
+    text-decoration: underline;
+}
+
+.font-bold{font-weight: bold;}
+
+.show-mini-cart-v2 .checkout-header{
+    background-color: rgb(52,105,234);
+    color:#fff;
+    border-radius:0;
+}
+
+.show-mini-cart-v2 .cart-header{
+    background-color: transparent;
+    border:2px solid rgb(52,105,234) !important;
+    color:#000;
+    border-radius:0;
+}
+
+.div-tab{
+    justify-content: center;
+}
+.div-tab button{
+    width: 50%;
+    border: 0 !important;
+    border-bottom: 1px solid #000 !important;
+    color: #010101 !important;
+}
+.div-tab button.active{
+    border-bottom: 4px solid #ff8b46 !important;
+    color: #ff8b46 !important;
+    font-weight: 800;
+}
+.tab-content .tab-pane h4{
+    color: #010101 !important;
+    font-weight: 700;
+    text-align: center;
+    padding-top: 25px;
+    padding-bottom: 10px;
+}
+.row-input-div label{
+    color: #010101 !important;
+    font-weight: 700;
+    text-align: center;
+    padding-bottom: 5px
+}
+.row-input-div input{
+    color: #010101 !important;
+    border: 2px solid #857f7f !important;
+    text-align: center;
+    border-radius: 10px;
+}
+.tab-content div{
+    padding-bottom: 10px;
+}
+.row-input-div .btn-light{
+    width: 100%;
+    background: #EEEEEE !important;
+    color: #2f2f2f;
+    font-weight: 900;
+    border-radius: 70px;
+}
+.link-blue{
+    color: #5B8AF8;
+}
+.form-check{
+    padding-left: 40px;
+}
+.form-check-label{
+    text-align: start !important;
+    color: #857f7f !important;
+}
+
+.h4-hor { 
+    display: flex; 
+    flex-direction: row; 
+    color: #857f7f !important;
+} 
+  
+.h4-hor:before, 
+.h4-hor:after { 
+    content: ""; 
+    flex: 1 1; 
+    border-bottom: 2px solid #857f7f; 
+    margin: auto; 
+} 
+.row-input-div .btn-blue{
+    width: 100%;
+    background: #3B5998 !important;
+    color: #ffffff;
+    font-weight: 900;
+    border-radius: 70px;
 }
