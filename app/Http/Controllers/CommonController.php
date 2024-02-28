@@ -289,6 +289,31 @@ class CommonController extends Controller
        $div .= '</div>';
        echo json_encode(array('success'=>true,'count'=>$count->count(),'html' => $div, 'message'=>''));
    }
+
+    public function get_notifications_ajax(Request $request){
+       $wishlist = DB::table('notifications')
+           ->where([['userid','=',$request->session()->get('userid')]])
+           ->limit(6)
+           ->get();
+       $div = '';
+       foreach($wishlist as $records){
+           $name = \Illuminate\Support\Str::limit($records->notification_title, 40, $end='...');
+           $description = \Illuminate\Support\Str::limit($records->notification, 40, $end='...');
+           $div .= '
+            <div class="border-bottom">
+                <div class="row align-items-center">
+                    <div class="col-md-3">
+                        <img src="'.$records->image.'" class="img-fluid">
+                    </div>
+                    <div class="col-md-9">
+                        <small class="text-uppercase">'.$name.'</small><br>
+                        <div class="description">'.$description.'</div>
+                    </div>
+                </div>
+            </div>';
+       }
+       echo json_encode(array('success'=>true,'html' => $div, 'message'=>''));
+   }
 	 
 	 /* Add Compare*/
 	 public function add_compare(Request $request){
@@ -430,7 +455,7 @@ class CommonController extends Controller
 
             foreach ($cart_product as $key) {
                 $is_upload = DB::table('products')->where('id',$key->product_id)->first()->is_uploaded;
-                $html .= '<div class="row align-items-center">';
+                $html .= '<div class="row align-items-center" id="cart_remove'.$key->id.'">';
                 $html .= '<div class="col-md-3">';
                 if ($is_upload) {
                     $image_array = explode(',',$key->image);
@@ -489,7 +514,14 @@ class CommonController extends Controller
      $total = DB::select(DB::raw("SELECT sum(total_price) as total FROM cart WHERE userid='".$userid."'"));
           if (!$cart_product->isEmpty()) {
             foreach ($cart_product as $key) {
-              $html.='<li class="amr-mc-item" id="cart_remove'.$key->id.'"><div class="amr-mc-detail"><div class="amr-mc-thumb"><a href="javascript:;"><img class="ps-product__thumbnail" src="'.url('public/'.$key->image).'" alt="alt"></a></div><div class="amr-mc-product-name"><a href="javascript:;">'.$key->product_name.'</a><p class="amr-mc-product-meta"> <span class="amr-mc-price">'.$setting[0]->currency_sign.$key->total_price.'</span><span class="amr-mc-quantity">(x'.$key->product_quantity.')</span></p></div></div><a class="amr-mc-item-remove" onclick="remove_cart_item('.$key->id.')"><i class="amr-close"></i></a></li>';
+              $html.='<li class="amr-mc-item" id="cart_remove'.$key->id.'"><div class="amr-mc-detail">
+              <div class="amr-mc-thumb"><a href="javascript:;">
+              <img class="ps-product__thumbnail" src="'.url('public/'.$key->image).'" alt="alt"></a>
+              </div><div class="amr-mc-product-name"><a href="javascript:;">'.$key->product_name.'</a>
+              <p class="amr-mc-product-meta">
+              <span class="amr-mc-price">'.$setting[0]->currency_sign.$key->total_price.'</span>
+              <span class="amr-mc-quantity">(x'.$key->product_quantity.')</span></p></div></div>
+              <a class="amr-mc-item-remove" onclick="remove_cart_item('.$key->id.')"><i class="amr-close"></i></a></li>';
             }
               echo json_encode(array('success'=>true,'message'=>'product Added','data'=>$html,'total'=>$total[0]->total,'count'=>$cart_product->count()));
           }else{
@@ -549,11 +581,6 @@ class CommonController extends Controller
                               'products.product_type', 'products.brand', 'products.mrp_price', 'products.shipping_charges')
                           ->where('wishlist.userid','=',$request->session()->get('userid'))
                           ->get();
-       $userPairs = [];
-       if(!empty($request->session()->get('userid'))){
-           $userPairs = DB::table('wishlist')->where('userid','=',$request->session()->get('userid'))->pluck('product_id','id')->toArray();
-       }
-       $data['wishlists'] = $userPairs;
     return view('wishlist',$data);
    }
 

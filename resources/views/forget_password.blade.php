@@ -9,33 +9,33 @@ full-width
         <i class="icon amr-breadcrumbs-arrow-right"></i>
     </span> Forget Password
 </nav>
-<div id="primary" class="content-area">
-    <main id="main" class="site-main">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-                    <div class="card card-signin">
-                        <div class="card-body registration__info">
-                            <h5 class="card-title text-center">Forget Password</h5>
-                            @include('alerts')
-                            <div class="error_"></div>
-                            <form method="post" action="{{route('send_password')}}" data-parsley-validate="">
-                                @csrf
-                                <input type="hidden" name="type" value="{{$type}}">
-                                <div class="form-label-group  mb-3">
-                                    <label for="inputEmail">Email address</label>
-                                    <input class="form-control" type="email" placeholder="Enter Email" name="email"
-                                        required="" data-parsley-trigger="change" value="{{old('email')}}" autofocus>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="login-div">
+                <div class="tab-content" id="nav-tabContent">
+                    <form method="post" action="{{route('send_password')}}" data-parsley-validate="">
+                    @csrf
+                        <div class="tab-pane show active fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+                            <h2>Password Reset</h2>
+                            <p class="text-class">Enter your email address and we'll send you a link to reset your password.</a></p>
+                            <div class="row">
+                                <div class="row-input-div col-md-12">
+                                    <label for="email">Your Email</label>
+                                    <input required value="{{old('email')}}" type="text" class="form-control" id="email">
                                 </div>
-                                <button class="btn ps-button btn-lg btn-primary btn-block text-uppercase  mb-3" type="submit">Reset Password</button>
-                                
-                                <p>Login? <b><a class="main-color" href="{{url('/user/login')}}">click here</a></b></p>
-                            </form>
+                            </div>
+                            <div class="row">
+                                <div class="row-input-div col-md-12">
+                                    <button type="submit"  aria-describedby="signupterms" class="btn btn-light">Send Password Reset Email</button>
+                                </div>
+                            </div>
+                            <p class="forgot-pass">If you need help, just <a class="link-blue" href="{{url('/user/forget-password')}}">let us know</a></p>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
 </div>
 @endsection

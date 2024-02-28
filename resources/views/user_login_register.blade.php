@@ -16,73 +16,119 @@ full-width
             <div class="login-div">
                 <nav>
                 <div class="nav nav-tabs div-tab" id="nav-tab" role="tablist">
-                    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Sign Up</button>
-                    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Log In</button>
+                    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true"><span>Sign Up</span></button>
+                    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false"><span>Log In</span></button>
                 </div>
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
-                    <h4>Create an Ellyhub Account</h4>
-                    <div class="row">
-                        <div class="row-input-div col-md-6">
-                            <label for="first_name">First Name</label>
-                            <input type="text" class="form-control" id="first_name">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+                        <h4>Create an Ellyhub Account</h4>
+                        <div class="row">
+                            <div class="row-input-div col-md-6">
+                                <label for="first_name">First Name</label>
+                                <input type="text" class="form-control" id="first_name">
+                            </div>
+                            <div class="row-input-div col-md-6">
+                                <label for="last_name">Last Name</label>
+                                <input type="text" class="form-control" id="last_name">
+                            </div>
                         </div>
-                        <div class="row-input-div col-md-6">
-                            <label for="last_name">Last Name</label>
-                            <input type="text" class="form-control" id="last_name">
+                        <div class="row">
+                            <div class="row-input-div col-md-12">
+                                <label for="email">Email</label>
+                                <input type="text" class="form-control" id="email">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="row-input-div col-md-12">
+                                <label for="email">Email Confirmation</label>
+                                <input type="text" class="form-control" id="email">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="row-input-div col-md-12">
+                                <label for="email">Password</label>
+                                <input type="text" class="form-control" aria-describedby="passwordhelp" id="email">
+                                <small id="passwordhelp" class="form-text text-muted">(at least 8 characters)</small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="row-input-div col-md-12">
+                                <button type="button"  aria-describedby="signupterms" class="btn btn-light">Sign Up</button>
+                                <small id="signupterms"  class="form-text text-muted">This site is protected by reCAPTCHA Enterprise and Google <a class="link-blue">Privacy Policy</a> and <a class="link-blue"> Terms of Service </a> apply.</small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-check col-md-12">
+                                <input class="form-check-input" type="checkbox" value="1" id="flexCheckChecked">
+                                <label class="form-check-label" for="flexCheckChecked">By clicking Sign Up, I expressly agree to accept Ellyhub's<a class="link-blue">Terms of Use</a> and <a class="link-blue">Privacy Policy</a> <span class="required-span">REQUIRED</span>
+                                </label>
+                            </div>
+                        </div>
+                        <p class="h4-hor">OR</p>
+                        <div class="row">
+                            <div class="row-input-div col-md-12">
+                                <button type="button" class="btn btn-light"> <img src="{{url('public/assets/web/images/google.png')}}"> Sign Up with Google</button>
+                                
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="row-input-div col-md-12">
+                                <button type="button" class="btn btn-light"> <img src="{{url('public/assets/web/images/apple.png')}}"> Sign Up with Apple</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="row-input-div col-md-12">
+                                <button type="button" class="btn btn-blue"> <img src="{{url('public/assets/web/images/facebook.png')}}"> Sign Up with Facebook</button>
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="row-input-div col-md-12">
-                            <label for="email">Email</label>
-                            <input type="text" class="form-control" id="email">
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+                        <h4>Log in to Ellyhub</h4>
+                        <div class="row">
+                            <div class="row-input-div col-md-12">
+                                <label for="email">Email</label>
+                                <input type="text" class="form-control" id="email">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="row-input-div col-md-12">
+                                <label for="email">Password</label>
+                                <input type="text" class="form-control" aria-describedby="passwordhelp" id="email">
+                                <small id="passwordhelp" class="form-text text-muted">(at least 8 characters)</small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="row-input-div col-md-12">
+                                <button type="button"  aria-describedby="signupterms" class="btn btn-light">Log in</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-check col-md-12">
+                                <input class="form-check-input" type="checkbox" value="1" id="flexCheckChecked" checked>
+                                <label class="form-check-label" for="flexCheckChecked">Stay signed in</span>
+                                </label>
+                            </div>
+                        </div>
+                        <p class="forgot-pass">Forgot your Password? <a class="link-blue" href="{{url('/user/forget-password')}}">Reset it</a></p>
+                        <p class="h4-hor">OR</p>
+                        <div class="row">
+                            <div class="row-input-div col-md-12">
+                                <button type="button" class="btn btn-light"> <img src="{{url('public/assets/web/images/google.png')}}"> Log In with Google</button>
+                                
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="row-input-div col-md-12">
+                                <button type="button" class="btn btn-light"> <img src="{{url('public/assets/web/images/apple.png')}}"> Log In with Apple</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="row-input-div col-md-12">
+                                <button type="button" class="btn btn-blue"> <img src="{{url('public/assets/web/images/facebook.png')}}"> Log In with Facebook</button>
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="row-input-div col-md-12">
-                            <label for="email">Email Confirmation</label>
-                            <input type="text" class="form-control" id="email">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="row-input-div col-md-12">
-                            <label for="email">Password</label>
-                            <input type="text" class="form-control" aria-describedby="passwordhelp" id="email">
-                            <small id="passwordhelp" class="form-text text-muted">(at least 8 characters)</small>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="row-input-div col-md-12">
-                            <button type="button"  aria-describedby="signupterms" class="btn btn-light">Sign Up</button>
-                            <small id="signupterms"  class="form-text text-muted">This site is protected by reCAPTCHA Enterprise and Google <span class="link-blue">Privacy Policy</span> and <span class="link-blue"> Terms of Service </span> apply.</small>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-check col-md-12">
-                            <input class="form-check-input" type="checkbox" value="1" id="flexCheckChecked" checked>
-                            <label class="form-check-label" for="flexCheckChecked">By clicking Sign Up, I expressly agree to accept Ellyhub's<span class="link-blue">Terms of Use</span> and <span class="link-blue">Privacy Policy</span> <span class="required-span">REQUIRED</span>
-                            </label>
-                        </div>
-                    </div>
-                    <p class="h4-hor">OR</p>
-                    <div class="row">
-                        <div class="row-input-div col-md-12">
-                            <button type="button" class="btn btn-light">Sign Up with Google</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="row-input-div col-md-12">
-                            <button type="button" class="btn btn-light">Sign Up with Apple</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="row-input-div col-md-12">
-                            <button type="button" class="btn btn-blue">Sign Up with Facebook</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0"></div>
                 </div>
             </div>
         </div>

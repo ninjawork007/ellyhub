@@ -1,4 +1,3 @@
-var site_url = $('.siteurl').data('url');
 var currency = '$';
 function remove_cart_item(id) {
     swal({

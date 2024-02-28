@@ -884,6 +884,34 @@ class WelcomeController extends Controller
 
     }
 
+    public function cart_list_v2(Request $request){
+
+        $data['cart'] = DB::table('cart')
+
+                            ->join('products', 'cart.product_id', '=', 'products.id')
+
+                            ->join('users', 'products.vendor_id', '=', 'users.id')
+
+                            ->leftJoin('user_info', 'products.vendor_id', '=', 'user_info.userid')
+
+                            ->leftJoin('product_size', 'products.id', '=', 'product_size.product_id')
+
+                            ->select('cart.*', 'products.id as product_id', 'products.shipping_charges',
+                                'products.stock', 'products.vendor_id', 'users.name', 'products.is_uploaded',
+                                'user_info.complete_address', 'product_size.quantity')
+
+                            ->where([['cart.userid','=',$request->session()->get('userid')]])
+
+                            ->get();
+
+        $data['total'] = DB::select(DB::raw("SELECT sum(total_price) as total FROM cart WHERE userid='".$request->session()->get('userid')."'"))[0]->total;
+
+        //dd($data);
+
+        return view('cart_v2',$data);
+
+    }
+
 
 
     public function checkout(Request $request){
@@ -1163,8 +1191,8 @@ class WelcomeController extends Controller
 
                             ->paginate(14);
                             $userPairs = [];
-                            if(!empty(Auth::user()->id)){
-                                $userPairs = DB::table('wishlist')->where('userid','=',Auth::user()->id)->pluck('product_id','id')->toArray();
+                            if(!empty($request->session()->get('userid'))){
+                                $userPairs = DB::table('wishlist')->where('userid','=',(string)$request->session()->get('userid'))->pluck('product_id','id')->toArray();
                             }
         $data['wishlists'] = $userPairs;
 

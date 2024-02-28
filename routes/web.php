@@ -8,14 +8,14 @@ Route::get('/cache', function(){
 	return  'Cache is cleared.';
 });
 
-Route::get('GetCategory','Admin\EbayCronController@fetchProduct');
-Route::get('fetchDeletedProducts','Admin\EbayCronController@fetchDeletedProducts');
+//Route::get('GetCategory','Admin\EbayCronController@fetchProduct');
+//Route::get('fetchDeletedProducts','Admin\EbayCronController@fetchDeletedProducts');
 Route::get('fetchReturnRefund','Admin\EbayCronController@fetchReturnRefund');
-Route::get('fetchProductsSingle/{id}','Admin\EbayCronController@fetchProductsSingle');
-Route::get('fetchProductsSingle','Admin\EbayCronController@fetchProductsSingle');
+//Route::get('fetchProductsSingle/{id}','Admin\EbayCronController@fetchProductsSingle');
+//Route::get('fetchProductsSingle','Admin\EbayCronController@fetchProductsSingle');
 Route::get('PostCarg','Admin\EbayController@PostCarg');
-Route::get('PostOnFB','Admin\EbayController@PostOnFB');
-Route::get('PostOnFBNew','Admin\EbayController@PostOnFB');
+//Route::get('PostOnFB','Admin\EbayController@PostOnFB');
+//Route::get('PostOnFBNew','Admin\EbayController@PostOnFB');
 
 Route::get('track','WelcomeController@track_order')->name('track');
 Route::get('find','CommonController@find_product')->name('find_product');
@@ -52,8 +52,10 @@ Route::get('add_to_cart_ajax','CommonController@add_to_cart')->name('add_to_cart
 Route::get('get_wishlist_ajax','CommonController@get_wishlist_ajax')->name('get_wishlist_ajax');
 Route::get('get_cart_ajax','CommonController@get_cart_ajax')->name('get_cart_ajax');
 Route::get('cart','WelcomeController@cart_list')->name('cart');
+Route::get('cart_v2','WelcomeController@cart_list_v2')->name('cart_v2');
 Route::get('checkout','WelcomeController@checkout')->name('checkout');
 Route::get('get_cart_ajax_v2','CommonController@get_cart_ajax_v2')->name('get_cart_ajax_v2');
+Route::get('get_notifications_ajax','CommonController@get_notifications_ajax')->name('get_notifications_ajax');
 Route::get('make-order','WelcomeController@make_order')->name('make_order');
 Route::post('make_payment','WelcomeController@make_payment')->name('make_payment');
 Route::get('logout','WelcomeController@logout')->name('user_logout');
@@ -356,3 +358,9 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/google/redirect', 'WelcomeController@google_redirectToProvider');
 	Route::get('/google/callback', 'WelcomeController@google_handleProviderCallback');
 	Route::get('test_sms','WelcomeController@test_sms')->name('test_sms');
+
+	//reports-pages
+	
+	Route::get('reports-taxes','reportsAndTeaxesController@getreportsAndTaxes')->name('reports-taxes');
+	Route::get('tax-invoice','reportsAndTeaxesController@getTaxInvoices')->name('tax-invoice');
+	Route::get('finanical-statements','reportsAndTeaxesController@getFinancialStatements')->name('finanical-statements');

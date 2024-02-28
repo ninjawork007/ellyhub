@@ -94,10 +94,72 @@
                         <ul class="nav header-customer-area justify-content-end">
                         @guest
                         <li class="menu-item become-vendor-link"><a title="My Account" href="{{url('vendor/register')}}">Become A Vendor</a></li>
-                        <li class="menu-item my-profile-menu"><a title="My Account" href="{{url('user/login')}}"><span>Sign in </span><img src="{{url('public/assets/web/images/user-icon-dark.png')}}" alt="My Profile"></a></li>
+                        <li class="menu-item my-profile-menu"><a title="My Account" href="{{url('user/login_register')}}"><span>Sign in </span><img src="{{url('public/assets/web/images/user-icon-dark.png')}}" alt="My Profile"></a></li>
                         <!-- <li class="menu-item"><a title="My Account" href="{{url('user/register')}}"><i class="icon amr-login-register"></i>User Register</a></li> -->
                         @else
-                        <li class="icon-menu user-hover"> <a href="{{route('user_account')}}"><i class="pe-7s-user"></i></a>
+                        <li class="dropdown">
+                            <a class="open-location-popup" href="#" role="button">Locate me ?</a>
+                            <div class="dropdown-menu px-3 pt-3 pb-2 main-popup">
+                                <div class="location-popup">
+                                    <h3 class="text-center font-bold">Location</h3>
+
+                                    <h6 class="text-black">Distance</h6>
+                                    <input type="hidden" name="distance" id="radiusAmount">
+                                    <div class="wrap-slider">
+                                        <div id="slider-custom" class="position-relative"></div>
+                                    </div>
+
+                                    <h6 class="text-black font-bold">ZIP Code</h6>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <a href="#" class="open-div text-black" data-close="location-popup" data-target="zip-popup">Brawley, CA 92227</a>
+                                        </div>
+                                        <div class="col-md-6 text-end">
+                                            <a href="#" data-close="location-popup" data-target="zip-popup" class="open-div text-black justify-content-end"><h5><i class="fa fa-angle-right"></i></h5></a>
+                                        </div>
+                                    </div>
+
+                                    <h6 class="text-black font-bold">Delivery Method</h6>
+                                    <p>Shipping to continental 48 states, excluding Arkansas</p>
+                                    <label class="form-control border-0"><input type="radio" name="shipping_type" class="" value="local_shipping"> Local + Shipping</label>
+                                    <label class="form-control border-0"><input type="radio" name="shipping_type" class="" value="local"> Local</label>
+                                    <label class="form-control border-0"><input type="radio" name="shipping_type" class="" value="shipping"> Shipping</label>
+
+                                    <div class="pt-3">
+                                        <button type="submit" class="btn btn-aqua form-control">See Listings</button>
+                                    </div>
+                                </div>
+                                <div class="zip-popup" style="display:none">
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-2">
+                                            <a href="#" data-close="zip-popup" data-target="location-popup" class="open-div"><h5 class="text-black"><i class="fa fa-angle-left"></i></h5></a>
+                                        </div>
+                                        <div class="col-md-8 text-center">
+                                            <h3>ZIP Code</h3>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a href="#" data-close="main-popup" class="open-div"><h5 class="text-black"><i class="fa fa-times font-normal"></i></h5></a>
+                                        </div>
+
+                                        <h6 class="text-center text-black">Where are you searching?</h6>
+                                        <a href="#" class="btn btn-location"><i class="fa fa-map-marker"></i>&nbsp;Get my location</a>
+
+                                        <p class="my-2 text-black font-bold text-center">Or</p>
+
+                                        <div class="col-md-6 mx-auto">
+                                            <input type="text" name="zip_code" value="" class="form-control" placeholder="Enter zip code">
+                                        </div>
+
+                                        <p class="mb-2 mt-1 text-black font-bold text-center">Brawley, CA</p>
+
+                                        <div class="pt-5 mt-5">
+                                            <button type="submit" class="btn btn-aqua form-control">Apply</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="icon-menu user-hover background-transparent"> <a href="{{route('user_account')}}" style="background-color: transparent;padding:10px;"><img src="http://localhost/ellyhub_personal/public/assets/web/images/user-icon-dark.png" alt="My Profile"></a>
                             <ul class="dropdown-list">
                                 <li class="user-info">
                                     <div class="user-img">
@@ -160,7 +222,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#">PURCHASES</a>
                             </li>
-                            <li class="nav-item nav-item dropdown">
+                            <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">WATCHING</a>
                                 <div class="dropdown-menu px-3 pt-1 pb-2">
                                     <a href="#" ><span>View your saved seller list</span> &nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right"></i></a><br>
@@ -170,14 +232,32 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">SELLER HUB</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">SELLER HUB</a>
+                                <div class="dropdown-menu saller-hub-div" style="min-width:200px;">
+                                    <div class="border-bottom ps-2"><a href="#" class="saller-hub-links" >Orders</a></div>
+                                    <div class="border-bottom ps-2"><a href="#" class="saller-hub-links">Active Listings</a></div>
+                                    <div class="border-bottom ps-2"><a href="#" class="saller-hub-links">Draft</a></div>
+                                    <div class="border-bottom ps-2"><a href="#" class="saller-hub-links">Unsold</a></div>
+                                    <div class="border-bottom ps-2"><a href="#" class="saller-hub-links">Feedback</a></div>
+                                    <div class="ps-2"><a href="#" class="saller-hub-links">Assistance</a></div>
+                                </div>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">NOTIFICATIONS</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">NOTIFICATIONS</a>
+                                <div class="dropdown-menu notifications">
+                                    <div class="append-notifications">
+                                    </div>
+                                </div>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">PAYMENTS</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">PAYMENTS</a>
+                                <div class="dropdown-menu saller-hub-div ps-2" style="min-width:200px;">
+                                    <div class="w-100"><a href="#" class="saller-hub-links" style="font-style: normal">Summary</a></div>
+                                    <div class="w-100"><a href="#" class="saller-hub-links" style="font-style: normal">All transactions</a></div>
+                                    <div class="w-100"><a href="#" class="saller-hub-links" style="font-style: normal">Payouts</a></div>
+                                    <div class="w-100"><a href="{{url('reports-taxes')}}" class="saller-hub-links" style="font-style: normal">Taxes and Reports</a></div>
+                                </div>
                             </li>
                             <!--<li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -603,6 +683,7 @@
 </div>
 <script type="text/javascript">
  function add_wishlist(id, table) {
+     event.preventDefault();
   $.ajax({
    url: '{{route("add_wishlist")}}',
    data: {
@@ -626,47 +707,43 @@ success: function(response) {
             $('.change-icon').removeClass('fa-heart');
             $('.change-icon').addClass('fa-heart-o');
         }
-    }
-    else{
-        alert('you need to login before add into watchlist');
-        window.location.href = "{{url('/user/login')}}";
+        event.preventDefault();
     }
 }
 });
 }
-function remove_watchlist(id){
+ function remove_watchlist(id) {
 
-if (confirm('Do you want to remove from wishlist?')) {
+     if (confirm('Do you want to remove from wishlist?')) {
 
-    $.ajax({
+         $.ajax({
 
-    url:'{{url("/remove_from_wishlist")}}',
+             url: '<?php echo e(url("/remove_from_wishlist")); ?>',
 
-    data:{id:id},
+             data: {id: id},
 
-    cache:false,
+             cache: false,
 
-    success:function(res){
+             success: function (res) {
 
-      if (res) {
+                 if (res) {
 
-        window.location.reload();
+                     window.location.reload();
 
-        // /$('#cartrow'+id+'').fadeOut(1200).css({'background-color':'#f2dede'});
+                     // /$('#cartrow'+id+'').fadeOut(1200).css({'background-color':'#f2dede'});
 
-      }
+                 }
 
-    }
+             }
 
-  }); 
+         });
 
-}else{
+     } else {
+         event.preventDefault();
+         return false;
 
-    return false;
-
-}
-
-}
+     }
+ }
 
 $('#verify_address').submit(function(e){
  e.preventDefault();
@@ -691,7 +768,50 @@ $.ajax({
 }
 });
 });
+
+ $(function() {
+     var valMap = [5, 10, 20, 30, 50];
+
+     $("#slider-custom").slider({
+         max: valMap.length - 1,
+         slide: function(event, ui) {
+             $("#radiusAmount").val(valMap[ui.value]);
+
+             showVal(valMap[ui.value]);
+         }
+     })
+     .each(function() {
+
+         var opt = $(this).data().uiSlider.options;
+
+         var vals = opt.max - opt.min;
+
+
+         var arrayLength = valMap.length;
+         for (var i = 0; i < arrayLength; i++) {
+             if(i == 0){
+                 var el = $('<label>' + (valMap[i]) + '</label>').css('left', (i / vals * 100) + '%');
+
+                 $("#slider-custom").append(el);
+             }
+             else{
+                 var el = $('<label>' + (valMap[i]) + '</label>').css('left', (i / vals * 100 - 5) + '%');
+             }
+
+             $("#slider-custom").append(el);
+
+         }
+
+     });
+ });
+
+ function showVal(newVal){
+     $("#slider-custom").css('background', 'linear-gradient(193deg, rgba(12,172,132,1) '+newVal+'%, rgba(12,172,132,0) '+newVal+'%, rgba(12,172,132,1) 100%)');
+     //document.getElementById("valBox").innerHTML=newVal;
+ }
 </script>
+
+   <script>var site_url = '{{url('/')}}';</script>
 <script type="text/javascript" src="{{url('public/assets/web/bootstrap/js/tether.min.js')}}"></script>
 <script type="text/javascript" src="{{url('public/assets/web/bootstrap/js/popper.min.js')}}"></script>
 <script type="text/javascript" src="{{url('public/assets/web/bootstrap/js/bootstrap.min.js')}}"></script>
@@ -799,7 +919,35 @@ $('body').on('click','.see-more-category',function () {
     $('.off-canvas-wrapper').addClass('open');
 });
 
-get_wishlist();
+  $('.open-location-popup').click(function(e){
+      e.preventDefault();
+      $(this).parent().find('.dropdown-menu').css('top', '50px').toggle();
+  });
+
+  $('.open-div').click(function(e){
+      e.preventDefault();
+      var target = $(this).data('target');
+      var close = $(this).data('close');
+      $('.'+target).fadeIn();
+      $('.'+close).fadeOut();
+  });
+
+  $(document).ready(function(){
+      $.ajax({
+          url: site_url+"/get_notifications_ajax",
+          cache: false,
+          success: function(response) {
+              var ress = jQuery.parseJSON(response);
+              if (ress.success) {
+                  $('.append-notifications').html(ress.html);
+              } else {
+                  //console.log(response);
+              }
+          }
+      });
+  });
+
+/*get_wishlist();
 
 function get_wishlist() {
   $.ajax({
@@ -817,7 +965,7 @@ function get_wishlist() {
       }
   });
 
-}
+}*/
 
 </script>
 </body>
