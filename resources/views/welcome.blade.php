@@ -7,6 +7,7 @@ homepage-template
     <main id="main" class="site-main">
         <div class="home-slider-section">
     <div class="container">
+    @include('common.alerts')
             <div class="slider-block">
                 <div class="home-slider">
                     @if(count($home_banner))

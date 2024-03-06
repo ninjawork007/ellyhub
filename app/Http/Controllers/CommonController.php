@@ -699,4 +699,8 @@ class CommonController extends Controller
             return back()->with('danger','Something went wrong. Please try after sometime.');
        }
    }
+
+    public function notificationsInsert($data = []){
+        DB::table('notifications')->insert($data);
+    }
 }

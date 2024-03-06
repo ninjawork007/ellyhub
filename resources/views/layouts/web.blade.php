@@ -51,6 +51,7 @@
    <link rel="stylesheet" href="{{url('public/assets/web/css/style.css')}}" media="all" />
    <link rel="stylesheet" href="{{url('public/assets/web/css/amr-style.css')}}" media="all" />
    <link rel="stylesheet" href="{{url('public/assets/web/css/website-colors.css')}}" media="all" />
+   <link rel="stylesheet" href="{{url('public/assets/web/css/dropzone.min.css')}}" media="all" />
    <script type="text/javascript" src="{{url('public/assets/web/js/jquery.min.js')}}"></script>
 </head>
 <body class="@yield('pagebodyclass')">
@@ -220,7 +221,7 @@
                                 <a class="nav-link" href="#">MESSAGES</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">PURCHASES</a>
+                                <a class="nav-link" href="{{url('purchases')}}">PURCHASES</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">WATCHING</a>
@@ -811,8 +812,7 @@ $.ajax({
  }
 </script>
 
-   <script>var site_url = '{{url('/')}}';</script>
-<script type="text/javascript" src="{{url('public/assets/web/bootstrap/js/tether.min.js')}}"></script>
+<script>var site_url = '{{url('/')}}';</script>
 <script type="text/javascript" src="{{url('public/assets/web/bootstrap/js/popper.min.js')}}"></script>
 <script type="text/javascript" src="{{url('public/assets/web/bootstrap/js/bootstrap.min.js')}}"></script>
 <script type="text/javascript" src="{{url('public/assets/web/js/jquery-migrate.min.js')}}"></script>
@@ -831,6 +831,7 @@ $.ajax({
 <!-- custom code-->
 <script type="text/javascript" src="{{url('public/assets/web/js/scripts.js')}}"></script>
 @if(Route::currentRouteName()!='product_details' && Route::currentRouteName()!='cart')
+<script type="text/javascript" src="{{url('public/assets/web/js/dropzone.min.js')}}"></script>
 <script type="text/javascript" src="{{url('public/assets/web/js/custom-script.js')}}"></script>
 <script type="text/javascript">
   jQuery(window).ready(function() {

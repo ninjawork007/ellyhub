@@ -4,7 +4,6 @@ full-width @endsection
 @section('content')
 <div id="primary" class="content-area">
     <main id="main" class="site-main container-fluid">
-
         <div class="filters container-fluid my-5">
             <ul class="all-filter">
                 <li><a class="remove-filter" href="#">Used <i class="fa fa-times"></i> </a></li>
@@ -123,6 +122,7 @@ full-width @endsection
                 </li>
             </ul>
         </div>
+        @include('common.alerts')
         <div class="category-products-list columns-7">
             <div class="products">
                 @if($products->count())

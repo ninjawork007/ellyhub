@@ -70,6 +70,8 @@ Route::get('user/forget-password','WelcomeController@user_forget_password')->nam
 Route::post('user/send_password','WelcomeController@send_password')->name('send_password');
 Route::get('vendor/forget-password','WelcomeController@vendor_forget_password')->name('vendor_forget_password');
 
+Route::get('purchases/{id?}', 'PurchasesController@index');
+
 Route::get('vendor/{name}','WelcomeController@vendor_profile_view')->name('vendor_profile_view');
 // admin route
 Route::get('admin','Admin\LoginController@index')->name('login');
@@ -313,54 +315,60 @@ Route::group(['middleware' => 'auth'], function(){
 
 });
 
-	// common routes
-	Route::get('get_sub_category','CommonController@get_sub_category')->name('get_sub_category');
-	Route::get('get_child_category','CommonController@get_child_category')->name('get_child_category');
-	Route::get('get_featured_category','CommonController@get_featured_category')->name('get_featured_category');
-	Route::get('get_product_ajax','CommonController@get_product_ajax')->name('get_product_ajax');
-	Route::post('get_brand_product','CommonController@get_brand_product')->name('get_brand_product');
-	
-	
-	Route::get('add_wishlist', 'CommonController@add_wishlist')->name('add_wishlist');
-	Route::get('add_compare', 'CommonController@add_compare')->name('add_compare');
-	Route::get('add_cart', 'CommonController@add_cart')->name('add_cart');
- 	Route::get('check_login','CommonController@check_login')->name('check_login');
- 	Route::get('remove_from_cart','CommonController@remove_from_cart')->name('remove_from_cart');
- 	Route::get('remove_from_cart_ajax','CommonController@remove_from_cart_ajax')->name('remove_from_cart_ajax');
-	Route::get('empty_cart','CommonController@empty_cart')->name('empty_cart');
-	Route::get('apply_coupen','CommonController@apply_coupen')->name('apply_coupen');
-	Route::get('order-success','CommonController@order_success')->name('order_success');
-	Route::get('orders','CommonController@user_orders')->name('orders');
-	Route::get('order_detail/{id}','CommonController@order_detail')->name('order_detail');
-	Route::get('rate-and-review/{orderid}','CommonController@rate_and_review')->name('rate_and_review');
-	Route::post('submit_review','CommonController@submit_review')->name('submit_review');
-	Route::post('update_review','CommonController@update_review')->name('update_review');
-	Route::get('cancel_order/{id}','CommonController@cancel_order')->name('cancel_order');
-	Route::get('vendor_order_detail/{orderid}/{vendorid}','CommonController@vendor_order_detail')->name('vendor_order_detail');
-	Route::get('wishlist','CommonController@wishlist')->name('wishlist');
-	Route::get('remove_from_wishlist','CommonController@remove_from_wishlist')->name('remove_from_wishlist');
-	Route::get('account','WelcomeController@user_account')->name('user_account');
-	Route::get('access-denied','WelcomeController@access_denied')->name('access_denied');
-	Route::post('update-profile','WelcomeController@update_profile')->name('update_profile');
-	Route::get('test-mail','CommonController@test_mail');
-	Route::get('get_address','CommonController@get_address')->name('get_address');
-	Route::get('wallet','WelcomeController@get_wallet')->name('wallet');
-	Route::get('my-address','WelcomeController@shipping_address')->name('shipping_address');
-	Route::get('trash_address','WelcomeController@remove_from_address')->name('remove_from_address');
-	Route::get('change_product_size','WelcomeController@change_product_size')->name('change_product_size');
+// common routes
+Route::get('get_sub_category','CommonController@get_sub_category')->name('get_sub_category');
+Route::get('get_child_category','CommonController@get_child_category')->name('get_child_category');
+Route::get('get_featured_category','CommonController@get_featured_category')->name('get_featured_category');
+Route::get('get_product_ajax','CommonController@get_product_ajax')->name('get_product_ajax');
+Route::post('get_brand_product','CommonController@get_brand_product')->name('get_brand_product');
 
 
-	Route::get('login/facebook', 'WelcomeController@redirectToProvider');
-	Route::get('login/facebook/callback', 'WelcomeController@handleProviderCallback');
-	Route::get('verify_pincode','WelcomeController@verify_pincode')->name('verify_pincode');
-	Route::get('login_with_facebook','WelcomeController@login_with_facebook')->name('login_with_facebook');
+Route::get('add_wishlist', 'CommonController@add_wishlist')->name('add_wishlist');
+Route::get('add_compare', 'CommonController@add_compare')->name('add_compare');
+Route::get('add_cart', 'CommonController@add_cart')->name('add_cart');
+Route::get('check_login','CommonController@check_login')->name('check_login');
+Route::get('remove_from_cart','CommonController@remove_from_cart')->name('remove_from_cart');
+Route::get('remove_from_cart_ajax','CommonController@remove_from_cart_ajax')->name('remove_from_cart_ajax');
+Route::get('empty_cart','CommonController@empty_cart')->name('empty_cart');
+Route::get('apply_coupen','CommonController@apply_coupen')->name('apply_coupen');
+Route::get('order-success','CommonController@order_success')->name('order_success');
+Route::get('orders','CommonController@user_orders')->name('orders');
+Route::get('order_detail/{id}','CommonController@order_detail')->name('order_detail');
+Route::get('rate-and-review/{orderid}','CommonController@rate_and_review')->name('rate_and_review');
+Route::post('submit_review','CommonController@submit_review')->name('submit_review');
+Route::post('update_review','CommonController@update_review')->name('update_review');
+Route::get('cancel_order/{id}','CommonController@cancel_order')->name('cancel_order');
+Route::get('vendor_order_detail/{orderid}/{vendorid}','CommonController@vendor_order_detail')->name('vendor_order_detail');
+Route::get('wishlist','CommonController@wishlist')->name('wishlist');
+Route::get('remove_from_wishlist','CommonController@remove_from_wishlist')->name('remove_from_wishlist');
+Route::get('account','WelcomeController@user_account')->name('user_account');
+Route::get('access-denied','WelcomeController@access_denied')->name('access_denied');
+Route::post('update-profile','WelcomeController@update_profile')->name('update_profile');
+Route::get('test-mail','CommonController@test_mail');
+Route::get('get_address','CommonController@get_address')->name('get_address');
+Route::get('wallet','WelcomeController@get_wallet')->name('wallet');
+Route::get('my-address','WelcomeController@shipping_address')->name('shipping_address');
+Route::get('trash_address','WelcomeController@remove_from_address')->name('remove_from_address');
+Route::get('change_product_size','WelcomeController@change_product_size')->name('change_product_size');
 
-	Route::get('/google/redirect', 'WelcomeController@google_redirectToProvider');
-	Route::get('/google/callback', 'WelcomeController@google_handleProviderCallback');
-	Route::get('test_sms','WelcomeController@test_sms')->name('test_sms');
 
-	//reports-pages
-	
-	Route::get('reports-taxes','reportsAndTeaxesController@getreportsAndTaxes')->name('reports-taxes');
-	Route::get('tax-invoice','reportsAndTeaxesController@getTaxInvoices')->name('tax-invoice');
-	Route::get('finanical-statements','reportsAndTeaxesController@getFinancialStatements')->name('finanical-statements');
+Route::get('login/facebook', 'WelcomeController@redirectToProvider');
+Route::get('login/facebook/callback', 'WelcomeController@handleProviderCallback');
+Route::get('verify_pincode','WelcomeController@verify_pincode')->name('verify_pincode');
+Route::get('login_with_facebook','WelcomeController@login_with_facebook')->name('login_with_facebook');
+
+Route::get('/google/redirect', 'WelcomeController@google_redirectToProvider');
+Route::get('/google/callback', 'WelcomeController@google_handleProviderCallback');
+Route::get('test_sms','WelcomeController@test_sms')->name('test_sms');
+
+//reports-pages
+
+Route::get('reports-taxes','reportsAndTeaxesController@getreportsAndTaxes')->name('reports-taxes');
+Route::get('tax-invoice','reportsAndTeaxesController@getTaxInvoices')->name('tax-invoice');
+Route::get('finanical-statements','reportsAndTeaxesController@getFinancialStatements')->name('finanical-statements');
+
+Route::get('feedback/{type}/{order_id}', 'FeedbackController@index');
+Route::post('submit_feedback', 'FeedbackController@submitFeedback');
+Route::post('submit_feedback_images', 'FeedbackController@submitFeedbackImages');
+Route::post('refund_value', 'PurchasesController@refunds');
+Route::post('report_users', 'PurchasesController@reportVendor');
