@@ -43,7 +43,7 @@ full-width @endsection
                                 We'd love to hear more about your experience</h4>
                         </div>
                     </div>
-                    <form class="dropzone border-0" id="dropzoneFileUpload" action="{{url('submit_feedback')}}" method="post" enctype="multipart/form-data">
+                    <form class="border-0" action="{{url('submit_feedback')}}" method="post" enctype="multipart/form-data">
                         @csrf
 
                         <input type="hidden" name="type" value="{{$type}}">
@@ -74,11 +74,16 @@ full-width @endsection
                                 </div>
                                 <div class="col-md-3">
                                     <p class="text-black fst-italic"><span class="images-upload">0</span> of 5</p>
-                                    <div class="previews"></div>
+                                    <input type="file" name="file[]" id="image-filestep3" onchange="checkFiles(this)" class="upload_images" multiple accept="image/x-png, image/jpeg" style="display : none;"/>
+                                    <label class="image-label" for="image-filestep3"><i class="fa fa-plus-circle" style="font-size:70px;"></i> </label>
                                 </div>
                                 <div class="col-md-4">
                                     <button type="submit" name="submit_feedback" class="btn btn-blue">Cancel Feedback</button>
                                 </div>
+                            </div>
+
+                            <div class="gallery row">
+
                             </div>
                         </div>
                     </form>
@@ -90,8 +95,9 @@ full-width @endsection
                     <div class="row">
                         <div class="col-md-2">
                             <?php
-                            if(strpos('http', $order[0]->image) !== false){
-                                $url = $order[0]->image;
+                            if(strpos($order[0]->image, '//') !== false){
+                                $urlex = explode(',', $order[0]->image);
+                                $url = $urlex[0];
                             }
                             else{
                                 $url = url('public/'.$order[0]->image);
@@ -214,7 +220,7 @@ full-width @endsection
                             </div>
                         </div>
                     </div>
-                    <form class="dropzone" id="dropzoneFileUpload" action="{{url('submit_feedback')}}" method="post" enctype="multipart/form-data">
+                    <form action="{{url('submit_feedback')}}" method="post" enctype="multipart/form-data">
                         @csrf
 
                         <input type="hidden" name="type" value="{{$type}}">
@@ -248,12 +254,17 @@ full-width @endsection
                                 </div>
                                 <div class="col-md-3">
                                     <p class="text-black fst-italic"><span class="images-upload">0</span> of 5</p>
-                                    <div class="previews"></div>
+                                    <input type="file" name="file[]" id="image-filestep3" onchange="checkFiles(this)" class="upload_images" multiple accept="image/x-png, image/jpeg" style="display : none;"/>
+                                    <label class="image-label" for="image-filestep3"><i class="fa fa-plus-circle" style="font-size:70px;"></i> </label>
                                 </div>
                                 <div class="col-md-4">
                                     <button href="{{url('/')}}" name="submit_feedback" class="btn btn-dark-blue mb-3">Submit Resolution Request</button>
                                     <a href="{{url('/')}}" name="submit_feedback" class="btn btn-blue">Cancel Resolution Request</a>
                                 </div>
+                            </div>
+
+                            <div class="gallery row">
+
                             </div>
                         </div>
                     </form>
@@ -285,23 +296,45 @@ full-width @endsection
                 $('.report_count').text(len);
             }
         });
-
-        Dropzone.options.dropzoneFileUpload = {
-            paramName: "file",
-            maxFiles: 5,
-            init: function() {
-                this.on("addedfile", function(file) {
-                    alert("Added file.");
-                }),
-                this.on("success", function(file, response) {
-                    console.log(response);
-                    var json_parse = JSON.parse(response);
-                    $('body').find(json_parse.type).show();
-                    $('body').find('alert-'+json_parse.type).empty().append(json_parse.response);
-                })
-            }
-        };
     });
+
+    var imagesPreview = function(input, placeToInsertImagePreview) {
+        if (input.files) {
+            var filesAmount = input.files.length;
+
+            for (i = 0; i < filesAmount; i++) {
+                var reader = new FileReader();
+
+                reader.onload = function(event) {
+                    var html = '<div class="col-md-2"><img src="'+event.target.result+'"></div>';
+                    $($.parseHTML(html)).appendTo(placeToInsertImagePreview);
+                }
+
+                reader.readAsDataURL(input.files[i]);
+            }
+        }
+
+    };
+
+    function checkFiles(files) {
+
+        var file = files.files;
+        var id = $(files).attr('id');
+
+        if(file.length>5) {
+
+            let list = new DataTransfer;
+            for(let i=0; i<5; i++)
+                list.items.add(file[i])
+
+            document.getElementById(id).files = list.files;
+        }
+
+        imagesPreview(files, $('.gallery'));
+
+        var numFiles = $(files)[0].files.length;
+        $('.images-upload').html(numFiles);
+    }
 
     $('#refund').submit(function(e){
         e.preventDefault();

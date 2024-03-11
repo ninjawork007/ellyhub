@@ -16,45 +16,55 @@ full-width
             <div class="login-div">
                 <nav>
                 <div class="nav nav-tabs div-tab" id="nav-tab" role="tablist">
-                    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true"><span>Sign Up</span></button>
-                    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false"><span>Log In</span></button>
+                    <button class="nav-link {{Request::is('user/register')?'active':''}}" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true"><span>Sign Up</span></button>
+                    <button class="nav-link {{Request::is('user/login')?'active':''}}" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false"><span>Log In</span></button>
                 </div>
                 </nav>
+                @include('alerts')
                 <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+                    <div class="tab-pane fade {{Request::is('user/register')?'show active':''}}" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+                    <form method="post" action="{{route('user_register_form_save')}}" data-parsley-validate="">
+                    @csrf
+                    <input type="hidden" name="type" value="customer">
                         <h4>Create an Ellyhub Account</h4>
                         <div class="row">
                             <div class="row-input-div col-md-6">
                                 <label for="first_name">First Name</label>
-                                <input type="text" class="form-control" id="first_name">
+                                <input type="text" class="form-control" name="first_name" id="first_name" required>
                             </div>
                             <div class="row-input-div col-md-6">
                                 <label for="last_name">Last Name</label>
-                                <input type="text" class="form-control" id="last_name">
+                                <input type="text" class="form-control" name="last_name"  id="last_name" required>
                             </div>
                         </div>
                         <div class="row">
                             <div class="row-input-div col-md-12">
                                 <label for="email">Email</label>
-                                <input type="text" class="form-control" id="email">
+                                <input type="email" class="form-control" name="email" id="email" required>
                             </div>
                         </div>
                         <div class="row">
                             <div class="row-input-div col-md-12">
-                                <label for="email">Email Confirmation</label>
-                                <input type="text" class="form-control" id="email">
+                                <label for="email_confirmation">Email Confirmation</label>
+                                <input type="email" class="form-control" name="email_confirmation" id="email_confirmation">
+                                @if ($errors->has('email'))
+                                    <span class="text-danger">{{ $errors->first('email') }}</span>
+                                @endif
                             </div>
                         </div>
                         <div class="row">
                             <div class="row-input-div col-md-12">
                                 <label for="email">Password</label>
-                                <input type="text" class="form-control" aria-describedby="passwordhelp" id="email">
+                                <input type="password" class="form-control" name="password" aria-describedby="passwordhelp" id="password" required>
                                 <small id="passwordhelp" class="form-text text-muted">(at least 8 characters)</small>
+                                @if ($errors->has('email'))
+                                    <span class="text-danger">{{ $errors->first('password') }}</span>
+                                @endif
                             </div>
                         </div>
                         <div class="row">
                             <div class="row-input-div col-md-12">
-                                <button type="button"  aria-describedby="signupterms" class="btn btn-light">Sign Up</button>
+                                <button type="submit"  aria-describedby="signupterms" class="btn btn-light">Sign Up</button>
                                 <small id="signupterms"  class="form-text text-muted">This site is protected by reCAPTCHA Enterprise and Google <a class="link-blue">Privacy Policy</a> and <a class="link-blue"> Terms of Service </a> apply.</small>
                             </div>
                         </div>
@@ -82,52 +92,57 @@ full-width
                                 <button type="button" class="btn btn-blue"> <img src="{{url('public/assets/web/images/facebook.png')}}"> Sign Up with Facebook</button>
                             </div>
                         </div>
+                    </form>
                     </div>
-                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
-                        <h4>Log in to Ellyhub</h4>
-                        <div class="row">
-                            <div class="row-input-div col-md-12">
-                                <label for="email">Email</label>
-                                <input type="text" class="form-control" id="email">
+                    <div class="tab-pane fade {{Request::is('user/login')?'show active':''}}" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+                        <form method="post" action="{{route('user_do_login')}}" data-parsley-validate="">
+                        @csrf
+                            <h4>Log in to Ellyhub</h4>
+                            <div class="row">
+                                <div class="row-input-div col-md-12">
+                                    <label for="email">Email</label>
+                                    <input type="text" name="email" value="{{old('email')}}" class="form-control" id="email">
+                                    <input type="hidden" name="type" value="customer">
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="row-input-div col-md-12">
-                                <label for="email">Password</label>
-                                <input type="text" class="form-control" aria-describedby="passwordhelp" id="email">
-                                <small id="passwordhelp" class="form-text text-muted">(at least 8 characters)</small>
+                            <div class="row">
+                                <div class="row-input-div col-md-12">
+                                    <label for="email">Password</label>
+                                    <input type="password" class="form-control" name="password" aria-describedby="passwordhelp" id="email">
+                                    <small id="passwordhelp" class="form-text text-muted">(at least 8 characters)</small>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="row-input-div col-md-12">
-                                <button type="button"  aria-describedby="signupterms" class="btn btn-light">Log in</button>
+                            <div class="row">
+                                <div class="row-input-div col-md-12">
+                                    <button type="submit"  aria-describedby="signupterms" class="btn btn-light">Log in</button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-check col-md-12">
-                                <input class="form-check-input" type="checkbox" value="1" id="flexCheckChecked" checked>
-                                <label class="form-check-label" for="flexCheckChecked">Stay signed in</span>
-                                </label>
+                            <div class="row">
+                                <div class="form-check col-md-12">
+                                    <input class="form-check-input" type="checkbox" name="remember" value="1" id="flexCheckChecked" checked>
+                                    <label class="form-check-label" for="flexCheckChecked">Stay signed in</span>
+                                    </label>
+                                </div>
                             </div>
-                        </div>
-                        <p class="forgot-pass">Forgot your Password? <a class="link-blue" href="{{url('/user/forget-password')}}">Reset it</a></p>
-                        <p class="h4-hor">OR</p>
-                        <div class="row">
-                            <div class="row-input-div col-md-12">
-                                <button type="button" class="btn btn-light"> <img src="{{url('public/assets/web/images/google.png')}}"> Log In with Google</button>
-                                
+                            <p class="forgot-pass">Forgot your Password? <a class="link-blue" href="{{url('/user/forget-password')}}">Reset it</a></p>
+                            <p class="h4-hor">OR</p>
+                            <div class="row">
+                                <div class="row-input-div col-md-12">
+                                    <button type="button" class="btn btn-light"> <img src="{{url('public/assets/web/images/google.png')}}"><a id="googleSignIn" href="{{url('google/redirect')}}"> Log In with Google</a></button>
+                                    
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="row-input-div col-md-12">
-                                <button type="button" class="btn btn-light"> <img src="{{url('public/assets/web/images/apple.png')}}"> Log In with Apple</button>
+                            <div class="row">
+                                <div class="row-input-div col-md-12">
+                                    <button type="button" class="btn btn-light"> <img src="{{url('public/assets/web/images/apple.png')}}"> Log In with Apple</button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="row-input-div col-md-12">
-                                <button type="button" class="btn btn-blue"> <img src="{{url('public/assets/web/images/facebook.png')}}"> Log In with Facebook</button>
+                            <div class="row">
+                                <div class="row-input-div col-md-12">
+                                    <button type="button" class="btn btn-blue" onclick="fbLogin()"> <img src="{{url('public/assets/web/images/facebook.png')}}"> Log In with Facebook</button>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>

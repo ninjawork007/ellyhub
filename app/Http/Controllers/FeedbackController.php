@@ -29,16 +29,14 @@ class FeedbackController extends Controller
 
         $image = [];
         if(!empty($checkrecord)){
-            $feedback = feedback::find($checkrecord->id);
-            $decodeImages = json_decode($checkrecord->images);
+            return Redirect::to('/')->with('danger', 'Your feedback is already submitted!');
         }
-        else{
-            $feedback = new feedback();
-        }
+
+        $feedback = new feedback();
 
         if ($request->hasFile('file')) {
 
-            foreach($request->allFiles('attachments') as $file) {
+            foreach($request->file('file') as $file) {
                 $destinationPath = public_path('uploads/feedbacks');
 
                 if (!File::isDirectory($destinationPath)) {
@@ -46,8 +44,6 @@ class FeedbackController extends Controller
                     File::makeDirectory($destinationPath, 0777, true, true);
     
                 }
-    
-                $filename = $file->getClientOriginalName();
     
                 $extension = $file->getClientOriginalExtension();
 
@@ -82,21 +78,11 @@ class FeedbackController extends Controller
 
         $feedback->save();
 
-        if ($request->hasFile('file')) {
-            if($feedback->save()){
-                return json_encode(['type' => 'success', 'message' => 'Feedback added successfully!']);
-            }
-            else{
-                return json_encode(['type' => 'danger', 'message' => 'Feedback not added successfully!']);
-            }
+        if($feedback->save()){
+            return Redirect::to('/')->with('success', 'Feedback added successfully!');
         }
         else{
-            if($feedback->save()){
-                return Redirect::to('/')->with('success', 'Feedback added successfully!');
-            }
-            else{
-                return back()->with('danger', 'Feedback not added successfully!');
-            }
+            return back()->with('danger', 'Feedback not added successfully!');
         }
     }
 }

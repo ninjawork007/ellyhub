@@ -363,12 +363,20 @@ Route::get('test_sms','WelcomeController@test_sms')->name('test_sms');
 
 //reports-pages
 
-Route::get('reports-taxes','reportsAndTeaxesController@getreportsAndTaxes')->name('reports-taxes');
-Route::get('tax-invoice','reportsAndTeaxesController@getTaxInvoices')->name('tax-invoice');
-Route::get('finanical-statements','reportsAndTeaxesController@getFinancialStatements')->name('finanical-statements');
+Route::group(['middleware' => 'userAuth'], function(){
+	Route::get('reports-taxes/{filter?}','reportsAndTeaxesController@getreportsAndTaxes')->name('reports-taxes');
+	Route::get('tax-invoice','reportsAndTeaxesController@getTaxInvoices')->name('tax-invoice');
+	Route::get('finanical-statements','reportsAndTeaxesController@getFinancialStatements')->name('finanical-statements');
 
-Route::get('feedback/{type}/{order_id}', 'FeedbackController@index');
-Route::post('submit_feedback', 'FeedbackController@submitFeedback');
-Route::post('submit_feedback_images', 'FeedbackController@submitFeedbackImages');
-Route::post('refund_value', 'PurchasesController@refunds');
-Route::post('report_users', 'PurchasesController@reportVendor');
+	Route::get('feedback/{type}/{order_id}', 'FeedbackController@index');
+	Route::post('submit_feedback', 'FeedbackController@submitFeedback');
+	Route::post('submit_feedback_images', 'FeedbackController@submitFeedbackImages');
+	Route::post('refund_value', 'PurchasesController@refunds');
+	Route::post('report_users', 'PurchasesController@reportVendor');
+	Route::get('order_details/{order_id}/{product_id}', 'PurchasesController@orderDetails');
+	Route::post('return_items', 'PurchasesController@returnItems');
+
+	Route::get('chats/{order_id}/{product_id}', 'ChatController@index');
+
+	Route::get('taxes_pdf', 'reportsAndTeaxesController@downloadTaxPdf');
+});

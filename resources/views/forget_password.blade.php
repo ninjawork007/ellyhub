@@ -20,9 +20,10 @@ full-width
                             <h2>Password Reset</h2>
                             <p class="text-class">Enter your email address and we'll send you a link to reset your password.</a></p>
                             <div class="row">
+                            <input type="hidden" name="type" value="{{$type}}">
                                 <div class="row-input-div col-md-12">
                                     <label for="email">Your Email</label>
-                                    <input required value="{{old('email')}}" type="text" class="form-control" id="email">
+                                    <input required value="{{old('email')}}" type="text" class="form-control" name="email" id="email">
                                 </div>
                             </div>
                             <div class="row">

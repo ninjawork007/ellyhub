@@ -3,24 +3,25 @@
 full-width
 @endsection
 @section('content')
-<nav class="amrcart-breadcrumb">
-    <a href="{{url('/')}}">Home</a>
-    <span class="delimiter">
-        <i class="icon amr-breadcrumbs-arrow-right"></i>
-    </span> Reports
-</nav>
-<div class="report-main-div">
+<div class="report-main-div container-fluid">
     <h2 class="header-main">Reports</h2>
     <h4 class="header-main">Financial Overview</h4>
     <div class="filter-bar">
         <div class="row">
-            <div class="col-md-6 time-period-div">
+            <div class="col-md-6 time-period-div position-relative">
                 <div class="time-period-dropdown">
                     <p>Time Period</p>
                     <label class="main-label">Current month</label>
                     <i class="fa fa-chevron-down"></i>
                 </div>
-                <label class="time-period-label">Jan 01, 2024-Jan 09,2024</label>
+                <label class="time-period-label">{{date('M 01, Y')}}-{{date('M d, Y')}}</label>
+                <div class="filters position-absolute" style="display:none;padding:10px 100px 10px 10px;top:60px;background-color: #fff;border-radius: 10px;border:1px solid #000">
+                    <a href="{{url('reports-taxes/current-month')}}" class="text-black">Current month</a><br>
+                    <a href="{{url('reports-taxes/last-week')}}" class="text-black">Last week</a><br>
+                    <a href="{{url('reports-taxes/last-month')}}" class="text-black">Last month</a><br>
+                    <a href="{{url('reports-taxes/last-year')}}" class="text-black">Last year</a><br>
+                    <a href="#" class="text-black">Custom</a>
+                </div>
             </div>
             <div class="col-md-6 download-div">
                 <button type="button" class="btn btn-outline-primary">Download PDF</button>
@@ -32,7 +33,7 @@ full-width
                 <div class="main-data-div">
                     <div class="row">
                         <div class="col-md-6">
-                            <label class="div-label">Order   <img src="{{url('public/assets/web/images/info-1.png')}}"></label>
+                            <label class="div-label">Order <img src="{{url('public/assets/web/images/info-1.png')}}"></label>
                         </div>
                         <div class="col-md-6 download-icon-div">
                             <img src="{{url('public/assets/web/images/download-icon.png')}}">
@@ -40,7 +41,7 @@ full-width
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <h3 class="total-label">$9,595.54</h3>
+                            <h3 class="total-label">${{(!empty($ordersTotal)) ? number_format($ordersTotal, 2) : ''}}</h3>
                         </div>
                     </div>
                 </div>
@@ -236,8 +237,8 @@ full-width
     <div class="filter-bar">
         <div class="col">
             <div class="form-switch">
-                <label class="form-check-label " for="flexSwitchCheckChecked">Paperless delivery </label>
-                <input class="form-check-input" type="radio" id="flexSwitchCheckChecked" checked>
+                <label class="form-check-label">Paperless delivery </label>
+                <input class="form-check-input checkbox" type="checkbox" name="paperless_delivery" value="1">
             </div>
         </div>
     </div>
@@ -258,7 +259,7 @@ full-width
         <tr>
             <td>2022</td>
             <td>Jan 21, 2023</td>
-            <td><a  class="link-tag" href="#">Form 1099-K_2022.pdf</a></td>
+            <td><a  class="link-tag" href="{{url('taxes_pdf')}}">Form 1099-K_2022.pdf</a></td>
         </tr>
         <tr>
             <td>2021</td>
@@ -267,4 +268,9 @@ full-width
         </tr>
     </table>
 </div>
+<script>
+    $('.time-period-dropdown').click(function(){
+        $('.filters').fadeToggle();
+    });
+</script>
 @endsection

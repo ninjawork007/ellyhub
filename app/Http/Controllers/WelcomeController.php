@@ -674,8 +674,9 @@ class WelcomeController extends Controller
 
 
     public function user_login(){
+        return view('user_login_register');
 
-        return view('user_login');
+        // return view('user_login');
 
     }
     public function user_login_register(){
@@ -696,23 +697,27 @@ class WelcomeController extends Controller
 
         ]);
 
+        // dd($request->password);
+
 
 
         $email = $request->email;
 
         $password = $request->password;
+        $remember = $request->has('remember');
+        // $credentials = $request->only('email', 'password');
 
         // Check validation
 
         
 
-        if (Auth::attempt(['email' => $email, 'password' => $password,'user_type'=>$request->type])) {
+        if (Auth::attempt(['email' => $email, 'password' => $password,'user_type'=>$request->type],$remember)) {
 
             if (Auth::user()->email_verify=='no'){
 
                 Auth::logout();
 
-                return redirect('/user/login')->with('info','Your email is not verify. Please verify your email.')->with('email',$email);
+                return redirect('/user/login')->with('info','Your email is not verify. Please verify your email.')->withInput($request->all());
 
             }
 
@@ -730,7 +735,7 @@ class WelcomeController extends Controller
 
             $user = Auth::user();
 
-            return redirect(url('/'));
+            return redirect(url('/'))->withInput($request->all());
 
         } else {
 
@@ -738,7 +743,7 @@ class WelcomeController extends Controller
 
             return back()->with('danger','Crediantials not matched with records.');
 
-            return redirect('/user/login');
+            return redirect('/user/login')->withInput($request->all());;
 
         }
 
@@ -748,13 +753,20 @@ class WelcomeController extends Controller
 
     public function user_register(){
 
-        return view('user_register');
+        return view('user_login_register');
 
     }
 
 
 
     public function user_save(Request $request){
+
+        request()->validate([
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'confirmed'],
+            'password' => ['required', 'string', 'min:8'],
+        ]);
 
          if (DB::table('users')->where([['email','=',$request->email],['user_type','=',$request->type]])->exists()) {
 
@@ -764,7 +776,7 @@ class WelcomeController extends Controller
 
 
 
-        $register = DB::table('users')->insert(['name'=>$request->name,'email'=>$request->email,'password'=>Hash::make($request->password),'user_type'=>$request->type,'email_verify'=>'yes','email_verified_at'=>date('Y-m-d H:i:s'),'isactive'=>'1']);
+        $register = DB::table('users')->insert(['name'=>$request->first_name.' '.$request->last_name,'first_name'=>$request->first_name,'last_name'=>$request->last_name,'email'=>$request->email,'password'=>Hash::make($request->password),'user_type'=>$request->type,'email_verify'=>'yes','email_verified_at'=>date('Y-m-d H:i:s'),'isactive'=>'1']);
 
         if ($register) {
 
@@ -1533,8 +1545,8 @@ class WelcomeController extends Controller
     public function send_password(Request $request){
         $common = new Common;
         $setting = DB::select(DB::raw("SELECT * FROM settings WHERE id='1'"));
+        // dd([$request->email,$request->type]);
         if (!DB::table('users')->where([['email','=',$request->email],['user_type','=',$request->type]])->exists()) {
-
             return redirect('user/forget-password')->with('danger','This email not register with us.');
 
         }
@@ -1542,18 +1554,21 @@ class WelcomeController extends Controller
         $password = rand(1111,9999);
 
         DB::table('users')->where('email',$request->email)->update(['password'=>Hash::make($password)]);
-
         $user = DB::table('users')->where('email',$request->email)->first();
-        $array['data']['html']='';
-        $array['data']['html'].='<tr><td>Hello '.$user->name.',</td></tr>';
-        $array['data']['html'].='<tr><td>'.$password.' is your new password.</td></tr>';
-        $array['data']['html'].='<tr><td>Please update your strong password after login.</td></tr><br>';
-        $array['data']['html'].='<tr><td>Regards</td></tr>';
-        $array['data']['html'].='<tr><td>Team '.$setting[0]->site_title.'</td></tr>';
-        $array['data']['email']=$user->email;
-        $array['data']['subject']=$user->email;
-        $common->send_email($array['data']['html'],$array['data']['email'],$user->name,$array['data']['subject']);
-        return redirect(url('user/login'))->with('success','We have sent you password email on '.$request->email.'. please check you email.');
+        try{
+            $array['data']['html']='';
+            $array['data']['html'].='<tr><td>Hello '.$user->name.',</td></tr>';
+            $array['data']['html'].='<tr><td>'.$password.' is your new password.</td></tr>';
+            $array['data']['html'].='<tr><td>Please update your strong password after login.</td></tr><br>';
+            $array['data']['html'].='<tr><td>Regards</td></tr>';
+            $array['data']['html'].='<tr><td>Team '.$setting[0]->site_title.'</td></tr>';
+            $array['data']['email']=$user->email;
+            $array['data']['subject']=$user->email;
+            $common->send_email($array['data']['html'],$array['data']['email'],$user->name,$array['data']['subject']);
+        }catch(\Exception $e){
+
+        }
+        return redirect(url('user/login'))->with('success','We have sent you password email on '.$request->email.'. please check you email.')->withInput($request->all());
 
 
 
@@ -1591,7 +1606,7 @@ class WelcomeController extends Controller
 
         }
 
-        dd($user);
+        // dd($user);
 
         // only allow people with @company.com to login
 

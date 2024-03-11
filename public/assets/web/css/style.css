@@ -26383,7 +26383,7 @@ p.text-class{
 #slider-custom label {
     position: absolute;
     width: 20px;
-    margin-top: -25px;
+    margin-top: -31px;
     margin-left: 5px;
     text-align:left;
     font-size: 13px;
@@ -26395,7 +26395,7 @@ p.text-class{
     border:1px solid #e3e3e3;
     width: 20px;
     height: 20px;
-    top: -5px;
+    top: -7px;
     cursor:grab;
     position: absolute;
     -webkit-box-shadow: 0px 1px 4px 3px rgba(217,217,217,1);
@@ -26537,9 +26537,6 @@ p.text-class{
     top: 5px;
 }
 
-.report-main-div{
-    margin-left: 30px;
-}
 .header-main{
     color: #000;
     font-weight: 700;
@@ -26551,6 +26548,7 @@ p.text-class{
     width: 33%;
     border-radius: 15px;
     padding-left: 20px;
+    position: relative;
 }
 
 .time-period-dropdown p{
@@ -26563,7 +26561,8 @@ p.text-class{
 }
 .time-period-dropdown i{
     position: absolute;
-    margin: -4px 81px;
+    right:9px;
+    top:16px;
     color: #000;
 }
 .time-period-label{
@@ -26598,7 +26597,7 @@ p.text-class{
     width:25px;
 }
 .total-col-data{
-    padding: 10px 12px;
+    padding-top: 20px;
 }
 .main-data-div label.div-label{
     padding: 15px;
@@ -26755,9 +26754,9 @@ p.text-class{
     position: absolute;
     content: "";
     border-bottom: 3px solid #ccc;
-    width: 100%;
+    width: 80%;
     top: 12px;
-    left: -100%;
+    left: -83%;
     z-index: 2;
 }
 
@@ -26782,6 +26781,7 @@ p.text-class{
     border-radius: 50%;
     background: #ccc;
     margin-bottom: 6px;
+    padding-bottom:0;
 }
 
 .stepper-item.active {
@@ -26971,4 +26971,38 @@ p.text-class{
     font-size: 15px;
     border-radius: 70px;
     letter-spacing:1px;
+}
+
+.more-actions ul li{
+    padding-bottom:7px;
+    font-weight: bold;
+}
+
+.image-label{
+    position: relative;
+    width: 200px;
+    height: 200px;
+    background: #fff;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    border:1px dashed #3665F3;
+    border-radius: 0;
+    color:#3665F3;
+    flex-direction: column;
+    gap: 15px;
+    user-select: none;
+    cursor: pointer;
+    transition: all 1s;
+}
+.image-label:hover{
+    color: #18ac1c;
+}
+
+input.checkbox.form-check-input[type=checkbox]:checked{
+    background-color: #0d6efd !important;
+    border-color: #000;
 }

@@ -778,7 +778,15 @@ $.ajax({
          slide: function(event, ui) {
              $("#radiusAmount").val(valMap[ui.value]);
 
-             showVal(valMap[ui.value]);
+             var opt = $(this).data().uiSlider.options;
+
+             var vals = opt.max - opt.min;
+
+             var arrayLength = valMap.length;
+
+             var el = (ui.value / vals * 100);
+
+             showVal(el);
          }
      })
      .each(function() {
@@ -807,7 +815,7 @@ $.ajax({
  });
 
  function showVal(newVal){
-     $("#slider-custom").css('background', 'linear-gradient(193deg, rgba(12,172,132,1) '+newVal+'%, rgba(12,172,132,0) '+newVal+'%, rgba(12,172,132,1) 100%)');
+     $("#slider-custom").css('background', `linear-gradient(90deg, rgba(12,172,132,1) ${newVal}%, rgba(0,0,0,0.1) ${newVal}%)`);
      //document.getElementById("valBox").innerHTML=newVal;
  }
 </script>
