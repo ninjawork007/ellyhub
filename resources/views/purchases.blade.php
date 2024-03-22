@@ -118,12 +118,12 @@ box-shadow: 1px 5px 1px 1px rgba(194,194,194,0.37);border-radius: 0">
                                                 <div class="stepper-item {{($purchases->delivery_status == 'dispatch' || $purchases->delivery_status == 'delivered') ? 'completed' : ''}}">
                                                     <div class="step-counter"><i class="fa fa-check text-white"></i></div>
                                                     <div class="step-name">Shipped</div>
-                                                    <p class="fw-normal text-black">{{date('M d', strtotime($purchases->modify_at))}}</p>
+                                                    <p class="fw-normal text-black">{{($purchases->delivery_status == 'dispatch' || $purchases->delivery_status == 'delivered') ? date('M d', strtotime($purchases->dispatch_date)) : ''}}</p>
                                                 </div>
                                                 <div class="stepper-item {{($purchases->delivery_status == 'delivered') ? 'completed' : ''}}">
                                                     <div class="step-counter"><i class="fa fa-check text-white"></i></div>
                                                     <div class="step-name">Delivered</div>
-                                                    <p class="fw-normal text-black">{{date('M d', strtotime($purchases->modify_at))}}</p>
+                                                    <p class="fw-normal text-black">{{($purchases->delivery_status == 'delivered') ? date('M d', strtotime($purchases->delivery_date)) : ''}}</p>
                                                 </div>
                                             </div>
                                         </div>

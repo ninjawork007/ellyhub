@@ -76,7 +76,7 @@
             </ul>
         </div>
     </div>
-    <div class="header-main-area">
+    <div class="header-main-area mb-4">
         <div class="header_main">           
             <div class="container">
                 <div class="row align-items-center">
@@ -95,7 +95,7 @@
                         <ul class="nav header-customer-area justify-content-end">
                         @guest
                         <li class="menu-item become-vendor-link"><a title="My Account" href="{{url('vendor/register')}}">Become A Vendor</a></li>
-                        <li class="menu-item my-profile-menu"><a title="My Account" href="{{url('user/login_register')}}"><span>Sign in </span><img src="{{url('public/assets/web/images/user-icon-dark.png')}}" alt="My Profile"></a></li>
+                        <li class="menu-item my-profile-menu"><a title="My Account" href="{{url('user/login')}}"><span>Sign in </span><img src="{{url('public/assets/web/images/user-icon-dark.png')}}" alt="My Profile"></a></li>
                         <!-- <li class="menu-item"><a title="My Account" href="{{url('user/register')}}"><i class="icon amr-login-register"></i>User Register</a></li> -->
                         @else
                         <li class="dropdown">
@@ -236,6 +236,7 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">SELLER HUB</a>
                                 <div class="dropdown-menu saller-hub-div" style="min-width:200px;">
+                                    <div class="border-bottom ps-2"><a href="{{url('seller/dashboard')}}" class="saller-hub-links" >Dashboard</a></div>
                                     <div class="border-bottom ps-2"><a href="#" class="saller-hub-links" >Orders</a></div>
                                     <div class="border-bottom ps-2"><a href="#" class="saller-hub-links">Active Listings</a></div>
                                     <div class="border-bottom ps-2"><a href="#" class="saller-hub-links">Draft</a></div>
@@ -302,7 +303,7 @@
                                 <ul>
                                     @if(count($all_main_categories))
                                     @foreach($all_main_categories as $key)
-                                    <li><a href="{{url('category/')}}/{{preg_replace('/[^a-zA-Z0-9]+/','-', strtolower($key->name))}}-{{$key->id}}">{{ $key->name}}</a></li>
+                                    <li><a href="{{url('products/'.$key->id)}}">{{$key->name}}</a></li>
                                     @endforeach
                                     @endif
                                 </ul>
@@ -313,7 +314,7 @@
             </div>
         </div>
     </div>
-    <nav id="navbar-primary" class="navbar-primary desktop-only" aria-label="Navbar Primary" data-nav="flex-menu">
+    <!--<nav id="navbar-primary" class="navbar-primary desktop-only" aria-label="Navbar Primary" data-nav="flex-menu">
         <div class="container">
             <div id="menu-navbar-primary" class="row nav yamm d-flex">
                 @if(count($top_cat))
@@ -347,7 +348,7 @@
     </nav>
     <div class="load-more-category">
       <a href="javascript:;" class="bounce load-arow"><i class="fa fa-solid fa-angle-down"></i></a>
-    </div>
+    </div>-->
 </header>
 <aside class="off-canvas-wrapper">
     <div class="off-canvas-overlay"></div>

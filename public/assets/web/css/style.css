@@ -26575,7 +26575,7 @@ p.text-class{
     align-items: center;
 }
 
-.download-div button{
+.download-div a{
     border-radius: 50px;
     background: white;
     border: 1px solid #517EED;
@@ -27006,3 +27006,11 @@ input.checkbox.form-check-input[type=checkbox]:checked{
     background-color: #0d6efd !important;
     border-color: #000;
 }
+
+.report-main-div .filters i{display:none;}
+
+.report-main-div .filters .active i{
+    display:block;
+}
+
+.daterangepicker .drp-calendar{max-width:100% !important;}

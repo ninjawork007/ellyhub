@@ -52,6 +52,7 @@ li {
 <div class="content-area" id="primary">
     <main class="site-main" id="main">
         <div class="amrcart">
+            @include('common.alerts')
             @if(!$cart->isEmpty())
             @if(!Auth::user())
             <div class="amrcart-info">

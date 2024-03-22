@@ -3,6 +3,7 @@
 full-width
 @endsection
 @section('content')
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <div class="report-main-div container-fluid">
     <h2 class="header-main">Reports</h2>
     <h4 class="header-main">Financial Overview</h4>
@@ -11,23 +12,66 @@ full-width
             <div class="col-md-6 time-period-div position-relative">
                 <div class="time-period-dropdown">
                     <p>Time Period</p>
-                    <label class="main-label">Current month</label>
+                    <label class="main-label">{{$current}}</label>
                     <i class="fa fa-chevron-down"></i>
                 </div>
-                <label class="time-period-label">{{date('M 01, Y')}}-{{date('M d, Y')}}</label>
-                <div class="filters position-absolute" style="display:none;padding:10px 100px 10px 10px;top:60px;background-color: #fff;border-radius: 10px;border:1px solid #000">
-                    <a href="{{url('reports-taxes/current-month')}}" class="text-black">Current month</a><br>
-                    <a href="{{url('reports-taxes/last-week')}}" class="text-black">Last week</a><br>
-                    <a href="{{url('reports-taxes/last-month')}}" class="text-black">Last month</a><br>
-                    <a href="{{url('reports-taxes/last-year')}}" class="text-black">Last year</a><br>
-                    <a href="#" class="text-black">Custom</a>
+                @php
+                    $startenddate = date('M d, Y', strtotime($created_at_start)).'-'.date('M d, Y', strtotime($created_at_end));
+                @endphp
+                <label class="time-period-label">{{$startenddate}}</label>
+                <div class="filters position-absolute" style="width:30%;display:none;padding:10px 30px 10px 10px;top:60px;background-color: #fff;border-radius: 10px;border:1px solid #000">
+                    <div class="row {{(Request::is('reports-taxes')) ? 'active' : ''}}">
+                        <div class="col-md-10">
+                            <a href="{{url('reports-taxes')}}" class="text-black">Current month</a>
+                        </div>
+                        <div class="col-md-2 text-end">
+                            <i class="fa fa-check text-black"></i>
+                        </div>
+                    </div>
+                    <div class="row {{(Request::is('reports-taxes/last-week')) ? 'active' : ''}}">
+                        <div class="col-md-10">
+                            <a href="{{url('reports-taxes/last-week')}}" class="text-black">Last week</a><br>
+                        </div>
+                        <div class="col-md-2">
+                            <i class="fa fa-check text-black"></i>
+                        </div>
+                    </div>
+                    <div class="row {{(Request::is('reports-taxes/last-month')) ? 'active' : ''}}">
+                        <div class="col-md-10">
+                            <a href="{{url('reports-taxes/last-month')}}" class="text-black">Last month</a><br>
+                        </div>
+                        <div class="col-md-2">
+                            <i class="fa fa-check text-black"></i>
+                        </div>
+                    </div>
+                    <div class="row {{(Request::is('reports-taxes/last-year')) ? 'active' : ''}}">
+                        <div class="col-md-10">
+                            <a href="{{url('reports-taxes/last-year')}}" class="text-black">Last year</a><br>
+                        </div>
+                        <div class="col-md-2">
+                            <i class="fa fa-check text-black"></i>
+                        </div>
+                    </div>
+                    <div class="row {{($current == 'Custom') ? 'active' : ''}}">
+                        <div class="col-md-10">
+                            <a href="#" class="text-black open-datepicker">Custom</a>
+                        </div>
+                        <div class="col-md-2">
+                            <i class="fa fa-check text-black"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="open-daterange position-absolute" style="display:none;">
+                    <input type="text" name="daterange" value="" class="text-black" />
                 </div>
             </div>
             <div class="col-md-6 download-div">
-                <button type="button" class="btn btn-outline-primary">Download PDF</button>
-                <button type="button" class="btn btn-outline-primary">Download CSV</button>
+                <a href="{{url('payments/download/'.$filter)}}" class="btn btn-outline-primary">Download PDF</a>
+                <a class="btn btn-outline-primary">Download CSV</a>
             </div>
         </div>
+
         <div class="row total-col-data">
             <div class="col-md-3 ">
                 <div class="main-data-div">
@@ -36,12 +80,16 @@ full-width
                             <label class="div-label">Order <img src="{{url('public/assets/web/images/info-1.png')}}"></label>
                         </div>
                         <div class="col-md-6 download-icon-div">
-                            <img src="{{url('public/assets/web/images/download-icon.png')}}">
+                            <?php
+                                $currentPath = request()->path();
+                                $replacePath = str_replace('reports-taxes', '', $currentPath);
+                            ?>
+                            @if(!empty($ordersTotal))<a href="{{url('download-report'.$replacePath)}}"><img src="{{url('public/assets/web/images/download-icon.png')}}"></a>@endif
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <h3 class="total-label">${{(!empty($ordersTotal)) ? number_format($ordersTotal, 2) : ''}}</h3>
+                            <h3 class="total-label">${{(!empty($ordersTotal)) ? number_format($ordersTotal, 2) : '0.00'}}</h3>
                         </div>
                     </div>
                 </div>
@@ -58,8 +106,24 @@ full-width
                         </div>
                     </div>
                     <div class="row">
+                        <?php $finalprice = []; ?>
+                        @if(!empty($refundTotal))
+                            @foreach($refundTotal as $refunds)
+                                <?php
+                                    $quantityPrice = ($refunds->product_price * $refunds->product_quantity);
+                                    if(!empty($refunds->quantity)){
+                                        $finalprice[] = ($quantityPrice / $refunds->quantity);
+                                    }
+                                    else{
+                                        $finalprice[] = (($quantityPrice * $refunds->refund_percentage) / 100);
+                                    }
+                                ?>
+                            @endforeach
+                        @endif
+
+                            <?php $price = array_sum($finalprice) ?>
                         <div class="col-md-12">
-                            <h3 class="total-label">-$396.43</h3>
+                            <h3 class="total-label">${{number_format($price, 2)}}</h3>
                         </div>
                     </div>
                     <div class="price-data">
@@ -68,7 +132,7 @@ full-width
                                 <label class="gray-label">Gross refunds</label>
                             </div>
                             <div class="col-md-4 price-div">
-                                <label class="">-$396.43</label>
+                                <label class="">${{number_format($price, 2)}}</label>
                             </div>
                         </div>
                         <div class="row">
@@ -193,7 +257,7 @@ full-width
                         <p>These PDF files provides a summary of your selling activity, including orders,refunds,claims,payment... <u>show more</u></p>
                         <a href="#">See transaction reports explained</a>
                     </div>
-                    <div class="col-md-2"><a href="#"><img class="download-img-link" src="{{url('public/assets/web/images/blue-download-icon.png')}}"> <u>DEC-2023-statement-summary.pdf</u></a></div>
+                    <div class="col-md-2"><a href="{{url('/finanical-statements')}}"><img class="download-img-link" src="{{url('public/assets/web/images/blue-download-icon.png')}}"> <span class="text-decoration-underline">DEC-2023-statement-summary.pdf</span></a></div>
                     <div class="col-md-2"><a href="{{url('/finanical-statements')}}">See all</a></div>
                 </div>
                 <div class="row border-bottom">
@@ -219,7 +283,7 @@ full-width
                     <div class="col-md-2"><a href="#">See all</a></div>
                 </div>
             </div>
-            
+
         </div>
     </div>
     <h2 class="header-main taxes-h2">Taxes</h2>
@@ -232,7 +296,7 @@ full-width
             </div>
         </div>
     </div>
-    <h2 class="header-main taxes-h2">Form 1099-K</h2>
+    <h2 class="text-black fw-bold taxes-h2">Form 1099-K</h2>
     <p class="gray-text">You got a <span>Form 1099-K</span> if your sales meet minimum IRS reporting thershold in a calender year</p>
     <div class="filter-bar">
         <div class="col">
@@ -243,7 +307,7 @@ full-width
         </div>
     </div>
     <p class="gray-text mt-4">You'll receive 1099-k forms electronically.</p>
-    <table class="main-tabel-class table">
+    <table class="main-tabel-class table border-top">
         <thead class="table-light text-normal">
             <tr>
                 <th>Tax Year</th>
@@ -268,9 +332,28 @@ full-width
         </tr>
     </table>
 </div>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script>
     $('.time-period-dropdown').click(function(){
         $('.filters').fadeToggle();
+    });
+
+    $('.open-datepicker').click(function(e){
+        e.preventDefault();
+
+        $('.open-daterange').show();
+        $('.open-daterange .text-black').click();
+        $('.filters').fadeOut();
+    });
+
+    $(function() {
+        $('input[name="daterange"]').daterangepicker({
+            opens: 'right'
+        }, function(start, end, label) {
+            window.location.href='{{url('reports-taxes/custom')}}/'+start.format('YYYY-MM-DD')+'/'+end.format('YYYY-MM-DD');
+            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+        });
     });
 </script>
 @endsection

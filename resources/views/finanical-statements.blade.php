@@ -3,13 +3,7 @@
 full-width
 @endsection
 @section('content')
-<nav class="amrcart-breadcrumb">
-    <a href="{{url('/')}}">Home</a>
-    <span class="delimiter">
-        <i class="icon amr-breadcrumbs-arrow-right"></i>
-    </span> Reports
-</nav>
-<div class="report-main-div">
+<div class="report-main-div container-fluid">
     <h2 class="header-main taxes-h2">Financial Statements</h2>
     <p class="gray-text mt-4">These PDF files provide a summary of your selling activity, including orders,refunds,claims,payment disputes,payouts, and more for given month.</p>
     <a  class="link-tag mt-4" href="#">Learn more about financial statements</a>
@@ -21,13 +15,26 @@ full-width
                 <th>Options</th>
             </tr>
         </thead>
-        @for($i=1;$i<=18;$i++)
+        <?php
+        $months = array("1", "2", "3", "4", '5','6', '7', '8', '9', '10','11', '12');
+        ?>
+        @foreach ($months as $month)
+            <?php
+                $year = date('Y') - 1; // Get current year and subtract 1
+                $start = mktime(0, 0, 0, $month, 1, $year);
+
+                $monthstart = date('M 01, Y', $start);
+
+                $monthend = date('M t, Y', $start);
+
+                $yearMonth = date('M Y', $start);
+            ?>
         <tr>
-            <td>Dec 2023 Statement</td>
-            <td>Dec 1, 2023 - Dec 31, 2023</td>
-            <td><a  class="link-tag" href="#">Preview</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a  class="link-tag" href="#">Download</a></td>
+            <td>{{$yearMonth}} Statement</td>
+            <td>{{$monthstart.' - '.$monthend}}</td>
+            <td><a  class="link-tag" href="{{url('finanical-statements/preview/'.$monthstart.' - '.$monthend)}}">Preview</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a  class="link-tag" href="{{url('finanical-statements/download/'.$monthstart.' - '.$monthend)}}">Download</a></td>
         </tr>
-        @endfor
+        @endforeach
     </table>
 </div>
 @endsection

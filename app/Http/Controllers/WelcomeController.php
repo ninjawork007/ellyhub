@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use DB;
 use Hash;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Mail;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -972,6 +973,9 @@ class WelcomeController extends Controller
         $stripe_array['email'] = $request->email;
         $stripe_response = json_decode($common->stripePayment($stripe_array));
         if ($stripe_response->success){
+            Session::put('order.is_payment_done', $stripe_response->success);
+            Session::put('order.payment_id', $stripe_response->data->id);
+            Session::put('order.payment_message', $stripe_response->message);
             if (session('3d')) {
                 return redirect()->away($stripe_response->data->next_action->redirect_to_url->url);
             }else{
@@ -983,6 +987,7 @@ class WelcomeController extends Controller
     }
 
     public function make_order(Request $request){
+        //dd(session('order'));
         $address_array = [];
         $address_array['zip'] = session('order')['zip'];
         $address_array['city'] = session('order')['city'];
@@ -1010,13 +1015,18 @@ class WelcomeController extends Controller
             $wallet_used = $request->wallet_balance_used;
             $payment="paid";
         }else{
-            $wallet_used = 0;
-            $payment="pending";
+            if(session('order')['is_payment_done']){
+                $wallet_used = 0;
+                $payment="paid";
+            }
+            else{
+                $wallet_used = 0;
+                $payment="pending";
+            }
         }
        
 
         if ($data['cart_orders']->count()) {
-            // dd(session('order'));
             foreach ($data['cart_orders'] as $key) {
 
                 $product = DB::table('products')->where('id',$key->product_id)->first();
@@ -1040,7 +1050,7 @@ class WelcomeController extends Controller
                     'name'=>session('order')['name'],
                     'email'=>session('order')['email'],
                     'phone'=>session('order')['phone'],
-                    'street_address'=>session('order')['street_address'],
+                    'street_address'=>(isset(session('order')['street_address'])) ? session('order')['street_address'] : '',
                     'zip'=>session('order')['zip'],
                     'city'=>session('order')['city'],
                     'country'=>session('order')['country'],
@@ -1048,8 +1058,11 @@ class WelcomeController extends Controller
                     'razor_pay'=>null,
                     'payment_status'=>$payment,
                     'product_info'=>$key->product_info,
-                    'address_json'=>json_encode($address_array)
-
+                    'address_json'=>json_encode($address_array),
+                    'is_payment_done' => session('order')['is_payment_done'],
+                    'payment_id' => session('order')['payment_id'],
+                    'payment_message' => session('order')['payment_message'],
+                    'payment_date' => date('Y-m-d H:i:s', strtotime('now'))
                 ]);
 
                 $update = DB::table('products')->where('id',$key->product_id)->decrement('stock', $key->product_quantity);
@@ -1173,9 +1186,11 @@ class WelcomeController extends Controller
 
 
 
-    public function find_product(Request $request){
+    public function find_product($category_id = ''){
 
+        $request = Request();
         $where = [];
+
         $where[] = ['status','=','approved'];
 
         if (isset($request->keyword) && $request->keyword!='') {
@@ -1186,26 +1201,26 @@ class WelcomeController extends Controller
 
 
 
-        if (isset($request->product_cat) && $request->product_cat!='0') {
-
-            $where[] = ['products.category_id', '=', $request->product_cat];
+        if (!empty($category_id) && $category_id!='0') {
+            $where[] = ['products.category_id', '=', $category_id];
 
         }
 
         $data['products'] = DB::table('products')
 
-                            ->join('users','products.vendor_id','=','users.id')
-                            ->select('products.*','users.name as vendor_name')
+        ->join('users','products.vendor_id','=','users.id')
+        ->select('products.*','users.name as vendor_name')
 
-                            ->where($where)
+        ->where($where)
 
-                            ->orderby('id','desc')
+        ->orderby('id','desc')
 
-                            ->paginate(14);
-                            $userPairs = [];
-                            if(!empty($request->session()->get('userid'))){
-                                $userPairs = DB::table('wishlist')->where('userid','=',(string)$request->session()->get('userid'))->pluck('product_id','id')->toArray();
-                            }
+        ->paginate(14);
+
+        $userPairs = [];
+        if(!empty($request->session()->get('userid'))){
+            $userPairs = DB::table('wishlist')->where('userid','=',(string)$request->session()->get('userid'))->pluck('product_id','id')->toArray();
+        }
         $data['wishlists'] = $userPairs;
 
         return view('products',$data);

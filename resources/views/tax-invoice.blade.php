@@ -22,14 +22,27 @@ full-width
                 <th>Actions</th>
             </tr>
         </thead>
-        @for($i=1;$i<=18;$i++)
-        <tr>
-            <td>Dec 2023 tax invoice</td>
-            <td>Dec 31, 2023</td>
-            <td>Dec 1, 2023 - Dec 31, 2023</td>
-            <td><a  class="link-tag" href="#">Summary Download</a> | <a  class="link-tag" href="#">Detail Download</a></td>
-        </tr>
-        @endfor
+        <?php
+        $months = array("1", "2", "3", "4", '5','6', '7', '8', '9', '10','11', '12');
+        ?>
+        @foreach ($months as $month)
+            <?php
+            $year = date('Y') - 1; // Get current year and subtract 1
+            $start = mktime(0, 0, 0, $month, 1, $year);
+
+            $monthstart = date('M 01, Y', $start);
+
+            $monthend = date('M t, Y', $start);
+
+            $yearMonth = date('M Y', $start);
+            ?>
+            <tr>
+                <td>{{$yearMonth}} tax invoice</td>
+                <td>{{$monthend}}</td>
+                <td>{{$monthstart.' - '.$monthend}}</td>
+                <td><a  class="link-tag" href="{{url('tax-invoice/download/'.$monthstart.' - '.$monthend)}}">Summary Download</a> | <a  class="link-tag" href={{url('tax-invoice/download/'.$monthstart.' - '.$monthend)}}>Detail Download</a></td>
+            </tr>
+        @endforeach
     </table>
 </div>
 @endsection

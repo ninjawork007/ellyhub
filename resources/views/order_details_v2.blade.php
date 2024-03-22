@@ -22,8 +22,9 @@
                             <div class="row p-4">
                                 <div class="col-md-1">
                                     <?php
-                                    if(strpos('http', $orders[0]->image) !== false){
-                                        $url = $orders[0]->image;
+                                    if(strpos($orders[0]->image, 'http') !== false){
+                                        $explode = explode(',', $orders[0]->image);
+                                        $url = $explode[0];
                                     }
                                     else{
                                         $url = url('public/'.$orders[0]->image);
@@ -105,17 +106,17 @@
                                     <div class="stepper-item {{(!empty($purchases->is_payment_done)) ? 'completed' : ''}}">
                                         <div class="step-counter"><i class="fa fa-check text-white"></i></div>
                                         <div class="step-name">Paid</div>
-                                        <p class="fw-normal text-black">{{date('M d', strtotime($purchases->modify_at))}}</p>
+                                        <p class="fw-normal text-black">{{date('M d', strtotime($purchases->created_at))}}</p>
                                     </div>
                                     <div class="stepper-item {{($purchases->delivery_status == 'dispatch' || $purchases->delivery_status == 'delivered') ? 'completed' : ''}}">
                                         <div class="step-counter"><i class="fa fa-check text-white"></i></div>
                                         <div class="step-name">Shipped</div>
-                                        <p class="fw-normal text-black">{{date('M d', strtotime($purchases->modify_at))}}</p>
+                                        <p class="fw-normal text-black">{{($purchases->delivery_status == 'dispatch' || $purchases->delivery_status == 'delivered') ? date('M d', strtotime($purchases->dispatch_date)) : ''}}</p>
                                     </div>
                                     <div class="stepper-item {{($purchases->delivery_status == 'delivered') ? 'completed' : ''}}">
                                         <div class="step-counter"><i class="fa fa-check text-white"></i></div>
                                         <div class="step-name">Delivered</div>
-                                        <p class="fw-normal text-black">{{date('M d', strtotime($purchases->modify_at))}}</p>
+                                        <p class="fw-normal text-black">{{($purchases->delivery_status == 'delivered') ? date('M d', strtotime($purchases->delivery_date)) : ''}}</p>
                                     </div>
                                 </div>
                                 @if(!empty($purchases->tracking_id))

@@ -38,7 +38,7 @@ Route::get('sub-category/{id}', 'WelcomeController@sub_category_details')->name(
 Route::get('child-category/{id}', 'WelcomeController@child_category_details')->name('child_category_details');
 Route::get('product/{id}', 'WelcomeController@product_details')->name('product_details');
 Route::get('brand/{id}', 'WelcomeController@brand_details')->name('brand_details');
-Route::get('products','WelcomeController@find_product')->name('find_product');
+Route::get('products/{category_id?}','WelcomeController@find_product')->name('find_product');
 Route::get('contact-us','WelcomeController@contact_us')->name('contact_us');
 
 Route::get('vendor/register','WelcomeController@register_vendor')->name('vendor_register');
@@ -60,7 +60,7 @@ Route::get('make-order','WelcomeController@make_order')->name('make_order');
 Route::post('make_payment','WelcomeController@make_payment')->name('make_payment');
 Route::get('logout','WelcomeController@logout')->name('user_logout');
 // user routes
-Route::get('user/login','WelcomeController@user_login')->name('user_login');
+
 Route::get('user/login_register','WelcomeController@user_login_register')->name('user_login_register');
 Route::post('user/dologin','WelcomeController@user_do_login')->name('user_do_login');
 Route::get('user/register','WelcomeController@user_register')->name('user_register');
@@ -69,8 +69,6 @@ Route::get('user/verify/{email}','WelcomeController@user_email_verify')->name('u
 Route::get('user/forget-password','WelcomeController@user_forget_password')->name('user_forget_password');
 Route::post('user/send_password','WelcomeController@send_password')->name('send_password');
 Route::get('vendor/forget-password','WelcomeController@vendor_forget_password')->name('vendor_forget_password');
-
-Route::get('purchases/{id?}', 'PurchasesController@index');
 
 Route::get('vendor/{name}','WelcomeController@vendor_profile_view')->name('vendor_profile_view');
 // admin route
@@ -364,7 +362,10 @@ Route::get('test_sms','WelcomeController@test_sms')->name('test_sms');
 //reports-pages
 
 Route::group(['middleware' => 'userAuth'], function(){
-	Route::get('reports-taxes/{filter?}','reportsAndTeaxesController@getreportsAndTaxes')->name('reports-taxes');
+
+	Route::get('purchases/{id?}', 'PurchasesController@index');
+
+	Route::get('reports-taxes/{filter?}/{from?}/{to?}','reportsAndTeaxesController@getreportsAndTaxes')->name('reports-taxes');
 	Route::get('tax-invoice','reportsAndTeaxesController@getTaxInvoices')->name('tax-invoice');
 	Route::get('finanical-statements','reportsAndTeaxesController@getFinancialStatements')->name('finanical-statements');
 
@@ -379,4 +380,23 @@ Route::group(['middleware' => 'userAuth'], function(){
 	Route::get('chats/{order_id}/{product_id}', 'ChatController@index');
 
 	Route::get('taxes_pdf', 'reportsAndTeaxesController@downloadTaxPdf');
+
+	Route::get('download-report/{type?}/{from?}/{to?}', 'reportsAndTeaxesController@downloadReport');
+
+	Route::get('user/login','WelcomeController@user_login')->name('user_login');
+
+	Route::get('finanical-statements/download/{dates}', 'reportsAndTeaxesController@downloadFinancialReport');
+	Route::get('tax-invoice/download/{dates}', 'reportsAndTeaxesController@downloadTaxInvoices');
+
+	Route::get('payments/download/{dates?}/{from?}/{to?}', 'reportsAndTeaxesController@downloadPaymentsPdf');
+
+	Route::group(['prefix'=>'seller'], function(){
+		Route::get('dashboard', 'SellerhubController@index');
+
+		Route::get('orders', 'SellerhubController@ordersGet');
+
+		Route::get('get_orders', 'SellerhubController@findOrders');
+
+		Route::get('orders/order_details/{order_id}', 'SellerhubController@orderDetails');
+	});
 });

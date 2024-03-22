@@ -200,7 +200,7 @@ full-width @endsection
     });
 
     $(document).mouseup(function(e){
-        var container = $(".show-filters");
+        var container = $(".all-filters");
 
         // If the target of the click isn't the container
         if(!container.is(e.target) && container.has(e.target).length === 0){

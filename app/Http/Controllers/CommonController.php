@@ -438,20 +438,21 @@ class CommonController extends Controller
           }
    }
 
-    public function get_cart_ajax_v2(Request $request){
-    $html='';
-     if ($request->session()->has('userid')) {
-       $userid = $request->session()->get('userid');
-     }else{
-        $userid = 0;
-     }
+    public function get_cart_ajax_v2(){
+        $request = Request();
+        $html='';
+         if ($request->session()->has('userid')) {
+           $userid = $request->session()->get('userid');
+         }else{
+            $userid = 0;
+         }
 
-     $cart_product = DB::table('cart')->where([['userid','=',$userid]])->leftJoin('products', 'products.id', '=', 'cart.product_id')
+        $cart_product = DB::table('cart')->where([['userid','=',$userid]])->leftJoin('products', 'products.id', '=', 'cart.product_id')
          ->limit(4)
          ->get(array('cart.*', 'products.image', 'products.name', 'products.shipping_charges', 'products.product_price'));;
-     $setting = DB::select(DB::raw("SELECT * FROM settings WHERE id='1'"));
-     $total = DB::select(DB::raw("SELECT sum(total_price) as total FROM cart WHERE userid='".$userid."'"));
-          if (!$cart_product->isEmpty()) {
+        $setting = DB::select(DB::raw("SELECT * FROM settings WHERE id='1'"));
+        $total = DB::select(DB::raw("SELECT sum(total_price) as total FROM cart WHERE userid='".$userid."'"));
+        if (!$cart_product->isEmpty()) {
 
             foreach ($cart_product as $key) {
                 $is_upload = DB::table('products')->where('id',$key->product_id)->first()->is_uploaded;
@@ -502,31 +503,8 @@ class CommonController extends Controller
    
     public function remove_from_cart_ajax(Request $request){
       DB::table('cart')->where('id',$request->cartid)->delete();
-      $html='';
-     if ($request->session()->has('userid')) {
-       $userid = $request->session()->get('userid');
-     }else{
-        $userid = 0;
-     }
 
-     $cart_product = DB::table('cart')->where([['userid','=',$userid]])->get();
-
-     $total = DB::select(DB::raw("SELECT sum(total_price) as total FROM cart WHERE userid='".$userid."'"));
-          if (!$cart_product->isEmpty()) {
-            foreach ($cart_product as $key) {
-              $html.='<li class="amr-mc-item" id="cart_remove'.$key->id.'"><div class="amr-mc-detail">
-              <div class="amr-mc-thumb"><a href="javascript:;">
-              <img class="ps-product__thumbnail" src="'.url('public/'.$key->image).'" alt="alt"></a>
-              </div><div class="amr-mc-product-name"><a href="javascript:;">'.$key->product_name.'</a>
-              <p class="amr-mc-product-meta">
-              <span class="amr-mc-price">'.$setting[0]->currency_sign.$key->total_price.'</span>
-              <span class="amr-mc-quantity">(x'.$key->product_quantity.')</span></p></div></div>
-              <a class="amr-mc-item-remove" onclick="remove_cart_item('.$key->id.')"><i class="amr-close"></i></a></li>';
-            }
-              echo json_encode(array('success'=>true,'message'=>'product Added','data'=>$html,'total'=>$total[0]->total,'count'=>$cart_product->count()));
-          }else{
-            echo json_encode(array('success'=>true,'message'=>'No product in cart','data'=>$html,'total'=>0,'count'=>0));
-          }
+        return $this->get_cart_ajax_v2();
     }
 
    public function remove_from_cart(Request $request){
